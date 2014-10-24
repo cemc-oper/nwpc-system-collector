@@ -79,8 +79,10 @@ class DatabaseEngine(object):
             print self.cursor.statement
             raise
 
-    def get_message_count(self):
-        query = ("SELECT COUNT(message_id) FROM {table_name}".format(table_name=self.table_name))
+    def get_message_count(self, where_string=""):
+        query = "SELECT COUNT(message_id) FROM {table_name} ".format(table_name=self.table_name)
+        if len(where_string) > 0:
+            query += where_string + " "
         self.cursor.execute(query)
         count = -1
         for (count,) in self.cursor:
