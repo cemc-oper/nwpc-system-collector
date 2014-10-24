@@ -1,42 +1,36 @@
 import os
 import sys
 from datetime import date, datetime, timedelta
-import mysql.connector
 
 from sms_log_collector.message import Message
+from sms_log_collector.database_engine import DatabaseEngine
 
 
 def main():
     print datetime.now()
 
+    database = 'smslog'
     user_name = 'nwp_qu'
     host_name = 'cma18n03'
-    database_name = 'message_{user_name}_{host_name}'.format(user_name=user_name, host_name=host_name)
+    table_name = 'message_{user_name}_{host_name}'.format(user_name=user_name, host_name=host_name)
+    log_file_path = "/cma/u/{user_name}/smsworks/sms/{host_name}.sms.log".format(user_name=user_name,
+                                                                                 host_name=host_name)
+    engine_config = {
+        'user': 'wangdp',
+        'password': 'shenyang',
+        'host': 'localhost',
+        'database': database,
+        'table_name': table_name
+    }
 
-    connect = mysql.connector.connect(
-        user='wangdp',
-        password='shenyang',
-        host='localhost',
-        database='smslog'
-    )
+    engine = DatabaseEngine()
+    engine.create_connect(engine_config)
+    cursor = engine.create_cursor()
 
-    update_connect = mysql.connector.connect(
-        user='wangdp',
-        password='shenyang',
-        host='localhost',
-        database='smslog'
-    )
-    cursor = connect.cursor()
-    update_cursor = update_connect.cursor()
-    # print "Fetching total count of messages in database...",
-    # query = ("SELECT COUNT(message_id) FROM {database_name} "
-    #          "WHERE message_command in ('submitted','active', 'queued', 'complete', 'aborted') ".format(
-    #     database_name=database_name
-    # ))
-    # cursor.execute(query)
-    # message_count = 0
-    # for (count,) in cursor:
-    #     message_count = count
+    update_engine = DatabaseEngine()
+    update_engine.create_connect(engine_config)
+
+    # message_count = engine.get_message_count()
     # if message_count > 0:
     #     print message_count
     # else:
@@ -46,14 +40,10 @@ def main():
     print "Currently we test only last {message_count} messages which we selected.".format(message_count=message_count)
 
     print "Updating messages in database..."
-    query = ("SELECT message_id, message_type, message_time, message_command, message_fullname, "
-             "message_additional_information, message_string FROM {database_name} "
-             "WHERE message_command in ('submitted','active', 'queued', 'complete', 'aborted') "
-             "ORDER BY message_id DESC "
-             "LIMIT {message_count}".format(database_name=database_name, message_count=message_count))
-    cursor.execute(query)
-    message_id = None
-    message_string = None
+    engine.select_message(
+        where_string="WHERE message_command in ('submitted','active', 'queued', 'complete', 'aborted') ",
+        order_by_string="ORDER BY message_id DESC LIMIT {message_count} ".format(message_count=message_count)
+    )
     i = 0.0
     percent = 0
     for (message_id, message_type, message_time, message_command, message_fullname,
@@ -63,28 +53,21 @@ def main():
         if current_percent > percent:
             percent = current_percent
             print "{percent}%".format(percent=percent)
-            update_connect.commit()
+            update_engine.commit_connect()
 
-        #########################
         # analysis the message
-        #########################
-        changed_flag = False
         message = Message()
+        message.message_id = message_id
         message.parse(message_string)
+        update_engine.update_message(message)
 
-        update_query = "UPDATE {database_name} SET message_fullname = %(message_fullname)s " \
-                       "WHERE message_id = %(message_id)s".format(
-                       database_name=database_name)
-        update_cursor.execute(update_query, {'message_fullname': message.message_fullname,
-                                             'message_id': message.message_id})
+    engine.commit_connect()
+    engine.close_cursor()
+    engine.close_connect()
 
-    connect.commit()
-    cursor.close()
-    connect.close()
-
-    update_connect.commit()
-    update_cursor.close()
-    update_connect.close()
+    update_engine.commit_connect()
+    update_engine.close_cursor()
+    update_engine.close_connect()
 
     print datetime.now()
 

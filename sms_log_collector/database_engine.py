@@ -56,6 +56,10 @@ class DatabaseEngine(object):
             raise
 
     def update_message(self, message):
+        if message.message_id is None:
+            print "WARNING: message id must not be None!"
+            return
+
         query = "UPDATE {table_name} SET message_fullname = %(message_fullname)s " \
                 "WHERE message_id = %(message_id)s".format(
                 table_name=self.table_name)
@@ -82,6 +86,18 @@ class DatabaseEngine(object):
         for (count,) in self.cursor:
             pass
         return count
+
+    def select_message(self, where_string="", order_by_string=""):
+        query = "SELECT `message_id`,`message_type`,`message_time`,`message_command`, " \
+                "`message_fullname`,`message_additional_information`,`message_string` " \
+                "FROM {table_name} ".format(table_name=self.table_name)
+        if len(where_string) > 0:
+            query += where_string + ' '
+        if len(order_by_string) > 0:
+            query += order_by_string + ' '
+        q = (query,)
+        self.cursor.execute(query)
+        return self.cursor
 
     def get_message(self, where_string="", order_by_string=""):
         query = "SELECT `message_id`,`message_type`,`message_time`,`message_command`, " \
