@@ -37,7 +37,7 @@ def main():
         print 'None'
         sys.exit()
     #message_count = 1000
-    #print "Currently we test only last {message_count} messages which we selected.".format(message_count=message_count)
+    print "Currently we test only last {message_count} messages which we selected.".format(message_count=message_count)
 
     print "Updating messages in database..."
     engine.select_message(
@@ -46,6 +46,7 @@ def main():
     )
     i = 0.0
     percent = 0
+    update_count = 0
     for (message_id, message_type, message_time, message_command, message_fullname,
          message_additional_information, message_string) in cursor:
         i += 1
@@ -59,7 +60,12 @@ def main():
         message = Message()
         message.message_id = message_id
         message.parse(message_string)
-        update_engine.update_message(message)
+        if message.message_fullname != message_fullname or \
+            message.message_type != message_type or \
+            message.message_command != message_command or \
+            message.message_additional_information != message_additional_information:
+            update_engine.update_message(message)
+            update_count += 1
 
     engine.commit_connect()
     engine.close_cursor()
@@ -68,6 +74,7 @@ def main():
     update_engine.commit_connect()
     update_engine.close_cursor()
     update_engine.close_connect()
+    print "Count of updated messages...",update_count
 
     print datetime.now()
 
