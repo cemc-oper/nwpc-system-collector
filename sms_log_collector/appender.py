@@ -3,6 +3,8 @@ import sys
 from datetime import date, datetime, timedelta
 import mysql.connector
 
+from sms_log_collector.message import Message
+
 
 def main():
     print datetime.now()
@@ -83,8 +85,8 @@ def main():
                        "`message_fullname`,`message_additional_information`,`message_string`) "
                        "VALUES (%(message_id)s, %(message_type)s, %(message_time)s, %(message_command)s, "
                        "%(message_fullname)s, %(message_additional_information)s, %(message_string)s) ".format(
-            database_name=database_name
-        ))
+                       database_name=database_name
+                       ))
 
         for line in lines:
             i += 1
@@ -94,38 +96,18 @@ def main():
                 print "[{percent}%]".format(percent=percent)
                 connect.commit()
 
-            start_pos = 2
-            end_pos = line.find(':')
-            message_type = line[start_pos:end_pos]
-
-            start_pos = end_pos + 2
-            end_pos = line.find(']',start_pos)
-            message_time_string = line[start_pos:end_pos]
-            message_time = datetime.strptime(message_time_string, '%H:%M:%S %d.%m.%Y')
-
-            start_pos = end_pos + 2
-            end_pos = line.find(":", start_pos)
-            message_command = line[start_pos:end_pos]
-            if message_command in count:
-                count[message_command] += 1
-            else:
-                count[message_command] = 1
-                message[message_command] = line
-
-            message_fullname = None
-            message_additional_information = None
-
-            message_string = line
+            message = Message()
+            message.parse(message_string)
 
             message_data = {
                 'database_name': database_name,
-                'message_id': None,
-                'message_type': message_type,
-                'message_time': message_time,
-                'message_command': message_command,
-                'message_fullname': message_fullname,
-                'message_additional_information': message_additional_information,
-                'message_string': message_string
+                'message_id': message.message_id,
+                'message_type': message.message_type,
+                'message_time': message.message_time,
+                'message_command': message.message_command,
+                'message_fullname': message.message_fullname,
+                'message_additional_information': message.message_additional_information,
+                'message_string': message.message_string
             }
             try:
                 cursor.execute(add_message, message_data)
