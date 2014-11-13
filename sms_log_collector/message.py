@@ -28,3 +28,8 @@ class Message(object):
 
         if self.message_command in ('submitted', 'active', 'queued', 'complete', 'aborted'):
             self.message_fullname = line[end_pos+1:].strip()
+        elif self.message_command == 'alter':
+            start_pos = end_pos+1
+            pos = line.find(' [v', start_pos)
+            if pos != -1:
+                self.message_fullname = line[start_pos: pos]

@@ -10,8 +10,8 @@ from sms_log_collector.database_engine import DatabaseEngine
 def main():
     print datetime.now()
 
-    user_name = 'nwp_qu'
-    host_name = 'cma18n03'
+    user_name = 'nwp'
+    host_name = 'cma20n03'
     table_name = 'message_{user_name}_{host_name}'.format(user_name=user_name, host_name=host_name)
     log_file_path = "/cma/u/{user_name}/smsworks/sms/{host_name}.sms.log".format(user_name=user_name,
                                                                                  host_name=host_name)
