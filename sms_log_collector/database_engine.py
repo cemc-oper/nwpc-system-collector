@@ -60,9 +60,9 @@ class DatabaseEngine(object):
             print "WARNING: message id must not be None!"
             return
 
-        query = "UPDATE {table_name} SET message_fullname = %(message_fullname)s " \
-                "WHERE message_id = %(message_id)s".format(
-                table_name=self.table_name)
+        query = "UPDATE {table_name} SET message_fullname = %(message_fullname)s, " \
+                " message_additional_information = %(message_additional_information)s " \
+                "WHERE message_id = %(message_id)s".format(table_name=self.table_name)
         message_data = {
             'table_name': self.table_name,
             'message_id': message.message_id,

@@ -30,18 +30,20 @@ def main():
     update_engine.create_cursor()
 
     message_count = engine.get_message_count(
-        where_string="WHERE message_command in ('submitted','active', 'queued', 'complete', 'aborted', 'alter') ")
+        where_string="WHERE message_command in ('submitted','active', 'queued', "
+                     "'complete', 'aborted', 'alter', 'meter') ")
     if message_count > 0:
         print message_count
     else:
         print 'None'
         sys.exit()
-    #message_count = 10000
+    #message_count = 1000
     print "Currently we test only last {message_count} messages which we selected.".format(message_count=message_count)
 
     print "Updating messages in database..."
     engine.select_message(
-        where_string="WHERE message_command in ('submitted','active', 'queued', 'complete', 'aborted', 'alter') ",
+        where_string="WHERE message_command in ('submitted','active', 'queued', "
+                     "'complete', 'aborted', 'alter', 'meter') ",
         order_by_string="ORDER BY message_id DESC LIMIT {message_count} ".format(message_count=message_count)
     )
     i = 0.0

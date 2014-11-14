@@ -18,7 +18,7 @@ class Message(object):
         self.message_type = line[start_pos:end_pos]
 
         start_pos = end_pos + 2
-        end_pos = line.find(']',start_pos)
+        end_pos = line.find(']', start_pos)
         message_time_string = line[start_pos:end_pos]
         self.message_time = datetime.strptime(message_time_string, '%H:%M:%S %d.%m.%Y')
 
@@ -32,4 +32,10 @@ class Message(object):
             start_pos = end_pos+1
             pos = line.find(' [v', start_pos)
             if pos != -1:
-                self.message_fullname = line[start_pos: pos]
+                self.message_fullname = line[start_pos:pos]
+        elif self.message_command == 'meter':
+            start_pos = end_pos + 1
+            end_pos = line.find(' ', start_pos)
+            self.message_fullname = line[start_pos:end_pos]
+            start_pos = end_pos + 4
+            self.message_additional_information = line[start_pos:]
