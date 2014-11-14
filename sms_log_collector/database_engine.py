@@ -3,6 +3,14 @@ from sms_log_collector.message import Message
 
 
 class DatabaseEngine(object):
+    default_config = {
+        'user': 'wangdp',
+        'password': 'shenyang',
+        'host': 'localhost',
+        'database': 'smslog',
+        'table_name': 'message_nwp_qu_cma20n03'
+    }
+
     def __init__(self):
         self.connect = None
         self.cursor = None
