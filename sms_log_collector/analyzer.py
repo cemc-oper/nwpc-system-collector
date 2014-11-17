@@ -10,11 +10,11 @@ def main():
     print datetime.now()
 
     database = 'smslog'
-    user_name = 'nwp_qu'
-    host_name = 'cma18n03'
-    table_name = 'message_{user_name}_{host_name}'.format(user_name=user_name, host_name=host_name)
+    user_name = 'nwp'
+    host_name = 'cma20n03'
+    table_name = 'message_choice_{user_name}_{host_name}'.format(user_name=user_name, host_name=host_name)
     engine_config = {
-        'user': 'wangdp',
+        'user': 'windroc',
         'password': 'shenyang',
         'host': 'localhost',
         'database': database,

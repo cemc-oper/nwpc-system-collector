@@ -5,30 +5,49 @@ from sms_log_collector import time_analyser
 
 
 class TimeAnalyserTest(unittest.TestCase):
-    def test_calculate_meter_step_time(self):
-        print "begin at ", datetime.now()
-        database = 'smslog'
-        user_name = 'nwp_qu'
-        host_name = 'cma18n03'
-        table_name = 'message_{user_name}_{host_name}'.format(user_name=user_name, host_name=host_name)
-        engine_config = {
-            'user': 'wangdp',
+
+    def setUp(self):
+        self.start_time = datetime.now()
+        print "begin at ", self.start_time
+        self.database = 'smslog'
+        self.user_name = 'nwp'
+        self.host_name = 'cma20n03'
+        self.table_name = 'message_choice_{user_name}_{host_name}'.format(
+            user_name=self.user_name, host_name=self.host_name)
+        self.engine_config = {
+            'user': 'windroc',
             'password': 'shenyang',
             'host': 'localhost',
-            'database': database,
-            'table_name': table_name
+            'database': self.database,
+            'table_name': self.table_name
         }
+        self.engine = database_engine.DatabaseEngine()
+        self.engine.create_connect(self.engine_config)
+        self.cursor = self.engine.create_cursor()
 
-        engine = database_engine.DatabaseEngine()
-        engine.create_connect(engine_config)
-        cursor = engine.create_cursor()
+    def tearDown(self):
+        self.engine.close_cursor()
+        self.engine.close_connect()
+        self.end_time = datetime.now()
+        print "end at ", self.end_time
+        print self.end_time - self.start_time
 
-        ta = time_analyser.TimeAnalyser(engine)
-        ta.calculate_meter_step_time('/geps_t639/00/members/pair_3/mem1/model/forecast:completed',
-                                     '2014-11-03', 1, 2160)
+    def test_calculate_meter_total_time(self):
+        ta = time_analyser.TimeAnalyser(self.engine)
+        ta.calculate_meter_total_time('/grapes_meso_v4_0/cold/00/model/fcst:steps',
+                                      '2014-10-03', 1, 4320)
 
-        print "end at ",datetime.now()
+    def test_get_meter_step_time_list(self):
+        ta = time_analyser.TimeAnalyser(self.engine)
+        time_map = ta.get_meter_step_time_list(
+            '/grapes_meso_v4_0/cold/00/model/fcst:steps', '2014-10-03')
+        print time_map
 
+    def test_calculate_node_time(self):
+        ta = time_analyser.TimeAnalyser(self.engine)
+        node_time = ta.calculate_node_time(
+            '/grapes_meso_v4_0/cold/00/model/fcst', '2014-10-03')
+        print node_time
 
 if __name__ == '__main__':
     unittest.main()
