@@ -39,3 +39,7 @@ class Message(object):
             self.message_fullname = line[start_pos:end_pos]
             start_pos = end_pos + 4
             self.message_additional_information = line[start_pos:]
+        elif self.message_command == 'begin':
+            start_pos = end_pos + 1
+            end_pos = line.find(' ', start_pos)
+            self.message_fullname = line[start_pos: end_pos]

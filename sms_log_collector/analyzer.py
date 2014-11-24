@@ -31,7 +31,7 @@ def main():
 
     message_count = engine.get_message_count(
         where_string="WHERE message_command in ('submitted','active', 'queued', "
-                     "'complete', 'aborted', 'alter', 'meter') ")
+                     "'complete', 'aborted', 'alter', 'meter', 'begin') ")
     if message_count > 0:
         print message_count
     else:
@@ -43,7 +43,7 @@ def main():
     print "Updating messages in database..."
     engine.select_message(
         where_string="WHERE message_command in ('submitted','active', 'queued', "
-                     "'complete', 'aborted', 'alter', 'meter') ",
+                     "'complete', 'aborted', 'alter', 'meter', 'begin') ",
         order_by_string="ORDER BY message_id DESC LIMIT {message_count} ".format(message_count=message_count)
     )
     i = 0.0
