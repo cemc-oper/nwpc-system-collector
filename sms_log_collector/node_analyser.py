@@ -33,13 +33,14 @@ class Bunch(Node):
         Node.__init__(self)
 
     def add_node(self, node_path):
+        if node_path == '/':
+            return self
         node = None
         if node_path[0] != '/':
             return node
         node_path = node_path[1:]
         tokens = node_path.split("/")
         cur_node = self
-
         for a_token in tokens:
             t_node = None
             for a_child in cur_node.children:
@@ -52,8 +53,11 @@ class Bunch(Node):
                 t_node.name = a_token
                 cur_node.add_child(t_node)
             cur_node = t_node
+        return cur_node
 
     def find_node(self, node_path):
+        if node_path == '/':
+            return self
         if node_path[0] != '/':
             return None
         node_path = node_path[1:]
