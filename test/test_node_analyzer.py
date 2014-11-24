@@ -33,12 +33,14 @@ class NodeAnalyserTestCase(unittest.TestCase):
 
     def test_get_bunch(self):
         na = node_analyser.NodeAnalyser(self.engine)
-        print na.get_bunch("2014-10-01")
+        bunch = na.get_bunch("2014-10-01")
+        for node in bunch.children:
+            print node.get_node_path()
 
     def test_get_task_node_list(self):
         na = node_analyser.NodeAnalyser(self.engine)
         task_node_list = na.get_task_node_list("2014-10-01")
-        print task_node_list
+        print task_node_list,
 
 
 if __name__ == '__main__':
