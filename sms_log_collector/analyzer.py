@@ -2,7 +2,7 @@ import os
 import sys
 from datetime import date, datetime, timedelta
 
-from sms_log_collector.message import Message
+from sms_log_collector.record import Message
 from sms_log_collector.database_engine import DatabaseEngine
 
 

@@ -1,5 +1,5 @@
 import mysql.connector
-from sms_log_collector.message import Message
+from sms_log_collector.record import Record
 
 
 class DatabaseEngine(object):
@@ -39,26 +39,31 @@ class DatabaseEngine(object):
     def commit_connect(self):
         self.connect.commit()
 
-    def insert_message(self, message):
-        query = ("INSERT INTO {table_name} "
-                 "(`message_id`,`message_type`,`message_time`,`message_command`,"
-                 "`message_fullname`,`message_additional_information`,`message_string`) "
-                 "VALUES (%(message_id)s, %(message_type)s, %(message_time)s, %(message_command)s, "
-                 "%(message_fullname)s, %(message_additional_information)s, %(message_string)s) ".format(
+    def insert_record(self, record):
+        query = ("INSERT INTO {table_name} (`record_id`, `repo_id`, `version_id`, `line_no`, "
+                 "`record_type`, `record_date`, `record_time`, " \
+                 "`record_command`,  `record_fullname`,`record_additional_information`, `record_string`) " \
+                 "VALUES (%(record_id)s, %(repo_id)s, %(version_id)s, %(line_no)s, " \
+                 "%(record_type)s, %(record_date)s,  %(record_time)s, %(record_command)s, " \
+                 "%(record_fullname)s, %(record_additional_information)s, %(record_string)s);".format(
                  table_name=self.table_name))
 
-        message_data = {
+        record_data = {
             'table_name': self.table_name,
-            'message_id': message.message_id,
-            'message_type': message.message_type,
-            'message_time': message.message_time,
-            'message_command': message.message_command,
-            'message_fullname': message.message_fullname,
-            'message_additional_information': message.message_additional_information,
-            'message_string': message.message_string
+            'record_id': record.record_id,
+            'repo_id': record.repo_id,
+            'version_id': record.version_id,
+            'line_no': record.line_no,
+            'record_type': record.record_type,
+            'record_date': record.record_date,
+            'record_time': record.record_time,
+            'record_command': record.record_command,
+            'record_fullname': record.record_fullname,
+            'record_additional_information': record.record_additional_information,
+            'record_string': record.record_string
         }
         try:
-            self.cursor.execute(query, message_data)
+            self.cursor.execute(query, record_data)
         except mysql.connector.errors.ProgrammingError:
             print self.cursor.statement
             raise
