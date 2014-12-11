@@ -12,7 +12,7 @@ def main():
 
     user_id = 1
     user_name = 'nwp_xp'
-    repo_name = 'nwp_qu_cma20n03'
+    repo_name = 'nwp_qu_cma18n03'
 
     table_name = 'record_{repo_name}'.format(repo_name=repo_name)
 
@@ -89,9 +89,9 @@ def main():
         # read line_no lines from files, line 1 is already read in the beginning.
         print "Searching the log file for the last line in database... ",
         for i in range(2, int(line_no)+1):
-            log_file.readline()
             line = log_file.readline()
         print "Done"
+        print line
 
         # read all lines
         print "Reading all lines that are not in the database...",

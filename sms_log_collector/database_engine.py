@@ -8,7 +8,7 @@ class DatabaseEngine(object):
         'password': 'shenyang',
         'host': 'localhost',
         'database': 'smslog',
-        'table_name': 'message_nwp_qu_cma20n03'
+        'table_name': 'record_nwp_qu_cma18n03'
     }
 
     def __init__(self):
@@ -41,10 +41,10 @@ class DatabaseEngine(object):
 
     def insert_record(self, record):
         query = ("INSERT INTO {table_name} (`record_id`, `repo_id`, `version_id`, `line_no`, "
-                 "`record_type`, `record_date`, `record_time`, " \
-                 "`record_command`,  `record_fullname`,`record_additional_information`, `record_string`) " \
-                 "VALUES (%(record_id)s, %(repo_id)s, %(version_id)s, %(line_no)s, " \
-                 "%(record_type)s, %(record_date)s,  %(record_time)s, %(record_command)s, " \
+                 "`record_type`, `record_date`, `record_time`, "
+                 "`record_command`,  `record_fullname`,`record_additional_information`, `record_string`) "
+                 "VALUES (%(record_id)s, %(repo_id)s, %(version_id)s, %(line_no)s, "
+                 "%(record_type)s, %(record_date)s,  %(record_time)s, %(record_command)s, "
                  "%(record_fullname)s, %(record_additional_information)s, %(record_string)s);".format(
                  table_name=self.table_name))
 
