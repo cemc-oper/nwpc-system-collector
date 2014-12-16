@@ -13,17 +13,15 @@ def main():
     user_id = 1
     user_name = 'nwp_xp'
     repo_name = 'nwp_qu_cma18n03'
-
     table_name = 'record_{repo_name}'.format(repo_name=repo_name)
 
     engine_config = {
-        'user': 'wangdp',
+        'user': 'windroc',
         'password': 'shenyang',
-        'host': 'localhost',
+        'host': '10.28.32.175',
         'database': 'smslog',
         'table_name': table_name
     }
-
     engine = DatabaseEngine()
     engine.create_connect(engine_config)
     cursor = engine.create_cursor()
@@ -36,7 +34,7 @@ def main():
             "AND repo.repo_id = repo_version.repo_id "\
             "AND repo.current_version_id = repo_version.version_id;".format(
             user_id=user_id, repo_name=repo_name
-    )
+            )
     cursor.execute(query)
     for (repo_id, repo_location, current_version_id, version_name, version_location, head_line) in cursor:
         pass
@@ -65,13 +63,11 @@ def main():
 
         # get the last record line in database.
         print "Fetching the last record in database...",
-        query = "SELECT record_id, line_no, " \
-                "record_type, record_date, record_time, record_command, " \
+        query = "SELECT record_id, line_no, record_type, record_date, record_time, record_command, " \
                 "record_fullname, record_additional_information, record_string " \
                 "FROM {table_name} " \
                 "WHERE repo_id={repo_id} AND version_id={version_id} " \
-                "ORDER BY line_no DESC " \
-                "LIMIT 1 ".format(
+                "ORDER BY line_no DESC LIMIT 1 ".format(
                 table_name=table_name, repo_id=repo_id, version_id=current_version_id)
         cursor.execute(query)
         record_id = -1
@@ -127,11 +123,7 @@ def main():
             record.line_no = cur_line_no
             record.parse(line)
 
-            #record.show()
-
             engine.insert_record(record)
-
-        #return
 
     engine.commit_connect()
     engine.close_cursor()

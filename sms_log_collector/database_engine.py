@@ -4,9 +4,9 @@ from sms_log_collector.record import Record
 
 class DatabaseEngine(object):
     default_config = {
-        'user': 'wangdp',
+        'user': 'windroc',
         'password': 'shenyang',
-        'host': 'localhost',
+        'host': '10.28.32.175',
         'database': 'smslog',
         'table_name': 'record_nwp_qu_cma18n03'
     }
