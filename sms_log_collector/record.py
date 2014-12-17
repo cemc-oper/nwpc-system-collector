@@ -31,6 +31,15 @@ class Record(object):
     def parse(self, line):
         self.record_string = line
 
+        if not self.record_string.startswith("# "):
+            """some line don't start with '# '
+
+                exit
+
+            just ignore it.
+            """
+            return
+
         start_pos = 2
         end_pos = line.find(':')
         self.record_type = line[start_pos:end_pos]

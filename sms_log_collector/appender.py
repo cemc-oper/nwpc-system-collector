@@ -12,13 +12,13 @@ def main():
 
     user_id = 1
     user_name = 'nwp_xp'
-    repo_name = 'nwp_qu_cma18n03'
+    repo_name = 'nwp_cma20n03'
     table_name = 'record_{repo_name}'.format(repo_name=repo_name)
 
     engine_config = {
         'user': 'windroc',
         'password': 'shenyang',
-        'host': '10.28.32.175',
+        'host': '192.168.3.1',
         'database': 'smslog',
         'table_name': table_name
     }
@@ -39,6 +39,7 @@ def main():
     for (repo_id, repo_location, current_version_id, version_name, version_location, head_line) in cursor:
         pass
 
+    print ""
     log_file_path = version_location
 
     # check file
