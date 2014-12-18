@@ -2,6 +2,7 @@ import unittest
 from datetime import datetime
 from sms_log_collector import database_engine
 from sms_log_collector import time_analyser
+from sms_log_collector.message import Message
 
 
 class TimeAnalyserTest(unittest.TestCase):
@@ -17,7 +18,7 @@ class TimeAnalyserTest(unittest.TestCase):
         self.engine_config = {
             'user': 'windroc',
             'password': 'shenyang',
-            'host': 'localhost',
+            'host': '10.28.32.175',
             'database': self.database,
             'table_name': self.table_name
         }

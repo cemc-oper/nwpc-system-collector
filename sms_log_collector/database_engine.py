@@ -1,5 +1,6 @@
 import mysql.connector
 from sms_log_collector.record import Record
+from sms_log_collector.message import Message
 
 
 class DatabaseEngine(object):
