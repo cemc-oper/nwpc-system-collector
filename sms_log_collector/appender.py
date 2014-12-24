@@ -12,7 +12,7 @@ def main():
 
     user_id = 1
     user_name = 'nwp_xp'
-    repo_name = 'nwp_qu_cma18n03'
+    repo_name = 'nwp_qu_cma20n03'
     table_name = 'record_{repo_name}'.format(repo_name=repo_name)
 
     engine_config = {
@@ -69,7 +69,7 @@ def main():
                 "FROM {table_name} " \
                 "WHERE repo_id={repo_id} AND version_id={version_id} " \
                 "ORDER BY line_no DESC LIMIT 1 ".format(
-                table_name=table_name, repo_id=repo_id, version_id=current_version_id)
+                    table_name=table_name, repo_id=repo_id, version_id=current_version_id)
         cursor.execute(query)
         record_id = -1
         line_no = 0
