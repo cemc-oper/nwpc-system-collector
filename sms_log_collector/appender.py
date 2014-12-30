@@ -12,7 +12,7 @@ def main():
 
     user_id = 1
     user_name = 'nwp_xp'
-    repo_name = 'nwp_qu_cma20n03'
+    repo_name = 'nwp_cma20n03'
     table_name = 'record_{repo_name}'.format(repo_name=repo_name)
 
     engine_config = {

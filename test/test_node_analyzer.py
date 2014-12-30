@@ -16,7 +16,7 @@ class NodeAnalyserTestCase(unittest.TestCase):
         self.engine_config = {
             'user': 'windroc',
             'password': 'shenyang',
-            'host': 'localhost',
+            'host': '10.28.32.175',
             'database': self.database,
             'table_name': self.table_name
         }

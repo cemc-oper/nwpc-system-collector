@@ -75,7 +75,13 @@ class Record(object):
         self.record_command = line[start_pos:end_pos]
 
         if self.record_command in ('submitted', 'active', 'queued', 'complete', 'aborted'):
-            self.record_fullname = line[end_pos+1:].strip()
+            start_pos = end_pos+1
+            end_pos = line.find(' ', start_pos)
+            if end_pos == -1:
+                self.record_fullname = line[start_pos:].strip()
+            else:
+                self.record_fullname = line[start_pos:end_pos]
+                self.record_additional_information = line[end_pos+1:]
         elif self.record_command == 'alter':
             start_pos = end_pos+1
             pos = line.find(' [v', start_pos)
