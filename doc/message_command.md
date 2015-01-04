@@ -77,6 +77,14 @@
 	
 	LOG:[10:27:11 31.3.2014] cancel:/gmf_gsi_v1r5/T639/00/prods/grib2/grads2grib2_000/alias0 by nwp@5801977
 	LOG:[02:56:54 9.4.2014] cancel:/gda_gsi_v1r5 by nwp@6018242
+
+###suspend
+
+挂起节点
+	
+	MSG:[23:56:07 2.1.2015] suspend:/gda_grapes_v1423/grapes_global/12/model/fcst at status queued
+	MSG:[23:56:07 2.1.2015] suspend:/gda_grapes_v1423/grapes_global/12/model/fcst by nwp@34167272
+	
  
 ##非常用命令
 

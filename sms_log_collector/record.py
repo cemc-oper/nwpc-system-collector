@@ -74,7 +74,7 @@ class Record(object):
             return
         self.record_command = line[start_pos:end_pos]
 
-        if self.record_command in ('submitted', 'active', 'queued', 'complete', 'aborted'):
+        if self.record_command in ('submitted', 'active', 'queued', 'complete', 'aborted', 'suspend'):
             start_pos = end_pos+1
             end_pos = line.find(' ', start_pos)
             if end_pos == -1:
@@ -97,7 +97,7 @@ class Record(object):
             start_pos = end_pos + 1
             end_pos = line.find(' ', start_pos)
             self.record_fullname = line[start_pos: end_pos]
-        elif self.record_command == 'force':
+        elif self.record_command == 'force' or self.record_command == 'force(recursively)':
             start_pos = end_pos + 1
             end_pos = line.find(' ', start_pos)
             self.record_fullname = line[start_pos:end_pos]

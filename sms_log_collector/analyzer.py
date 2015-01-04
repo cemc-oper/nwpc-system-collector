@@ -11,7 +11,7 @@ def main():
 
     user_id = 1
     user_name = 'nwp_xp'
-    repo_name = 'nwp_qu_cma20n03'
+    repo_name = 'nwp_cma20n03'
     table_name = 'record_{repo_name}'.format(repo_name=repo_name)
 
     engine_config = {
@@ -29,7 +29,7 @@ def main():
     update_engine.create_connect(engine_config)
     update_engine.create_cursor()
 
-    where_string = "WHERE 1"
+    where_string = "WHERE record_command IN ('suspend', 'force(recursively)') "
     query = "SELECT COUNT(record_id) FROM {table_name} {where_string}".format(
         table_name=table_name, where_string=where_string)
     cursor.execute(query)
