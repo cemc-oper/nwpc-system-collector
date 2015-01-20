@@ -1,4 +1,5 @@
-import os, json
+import os
+import json
 
 import zmq
 from sqlalchemy import text
