@@ -1,4 +1,4 @@
-import os, sys
+import os, json
 
 import zmq
 from sqlalchemy import text
@@ -66,32 +66,44 @@ def main():
         if line_no == 0:
             lines.append(head_line)
         new_lines = log_file.readlines()
-        # new_lines=[]
-        # for i in range(0,100):
-        #     new_lines.append(log_file.readline())
 
         lines.extend([l.strip() for l in new_lines])
         print "Done"
         total_count = len(lines)
         print "Found {line_count} lines to be store in database".format(line_count=total_count)
 
+        print "Now, publish them to the collector..."
         context = zmq.Context()
 
         agent_socket = context.socket(zmq.REQ)
         agent_socket.connect("tcp://localhost:{agent_socket_no}".format(agent_socket_no=config.AGENT_SOCKET_NO))
 
+        agent_socket_topic = 'smslog'
+
         for line in lines:
             line_no += 1
 
-            request = {
+            message_body = {
                 'type': 'smslog',
                 'line_no': line_no,
                 'content': line
             }
 
-            agent_socket.send_json(request)
+            agent_socket.send_multipart([agent_socket_topic, json.dumps(message_body)])
             response = agent_socket.recv_json()
-            #print response
+
+        print "Done"
+
+        print "Sending control command...",
+        command_message_body = {
+            'type': 'control',
+            'command': 'commit'
+        }
+        agent_socket.send_multipart([agent_socket_topic, json.dumps(command_message_body)])
+        response = agent_socket.recv_json()
+        print "Done"
+
+        print "Goodbye"
 
 
 if __name__ == '__main__':

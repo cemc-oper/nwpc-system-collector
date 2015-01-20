@@ -1,4 +1,4 @@
-import time
+import json,time
 
 import zmq
 
@@ -17,7 +17,7 @@ def main():
     processor_socket = context.socket(zmq.SUB)
     processor_socket.connect("tcp://localhost:{processor_socket_no}"
                              .format(processor_socket_no=config.PROCESSOR_SOCKET_NO))
-    processor_socket.setsockopt(zmq.SUBSCRIBE, '')
+    processor_socket.setsockopt(zmq.SUBSCRIBE, 'smslog')
 
     print "Processor is listening on tcp://localhost:{processor_socket_no}..."\
         .format(processor_socket_no=config.PROCESSOR_SOCKET_NO)
@@ -25,13 +25,28 @@ def main():
     message_list = []
 
     while True:
-        message = processor_socket.recv_json()
-        message_list.append(message)
-        if len(message_list) >= count_per_commit:
-            print 'commit message...',
-            time.sleep(1)
-            print 'Done'
-            message_list = []
+        message = processor_socket.recv_multipart()
+
+        if len(message) != 2:
+            print "Error message:", message
+            continue
+
+        message_topic = message[0]
+        message_body = json.loads(message[1])
+
+        if message_body['type'] == 'smslog':
+            message_list.append(message_body)
+            if len(message_list) >= count_per_commit:
+                print 'commit message...',
+                time.sleep(1)
+                print len(message_list), 'committed'
+                message_list = []
+        elif message_body['type'] == 'control':
+            if message_body['command'] == 'commit':
+                print 'commit message...',
+                time.sleep(1)
+                print len(message_list), 'committed'
+                message_list = []
 
 
 if __name__ == "__main__":
