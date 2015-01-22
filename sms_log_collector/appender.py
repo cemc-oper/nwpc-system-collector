@@ -1,7 +1,7 @@
+import argparse
 import os
 import sys
 from datetime import date, datetime, timedelta
-import mysql.connector
 
 from sms_log_collector.record import Record
 from sms_log_collector.database_engine import DatabaseEngine
@@ -10,9 +10,33 @@ from sms_log_collector.database_engine import DatabaseEngine
 def main():
     print datetime.now()
 
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description="""\
+DESCRIPTION
+    Append sms log.""")
+
+    parser.add_argument("-i", "--id", type=int, help="user id")
+    parser.add_argument("-r", "--repo", help="repo name")
+
+    args = parser.parse_args()
+
     user_id = 1
     user_name = 'nwp_xp'
-    repo_name = 'nwp_qu_cma18n03'
+    repo_name = 'nwp_cma20n03'
+
+    if args.id:
+        user_id = args.id
+        print 'user id: {user_id}'.format(user_id=user_id)
+    else:
+        print "Use default user id: {user_id}".format(user_id=user_id)
+
+    if args.repo:
+        repo_name = args.repo
+        print 'repo name: {repo_name}'.format(repo_name=repo_name)
+    else:
+        print "Use default repo name: {repo_name}".format(repo_name=repo_name)
+
     table_name = 'record_{repo_name}'.format(repo_name=repo_name)
 
     engine_config = {

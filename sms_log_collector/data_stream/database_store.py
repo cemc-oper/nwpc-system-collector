@@ -17,6 +17,7 @@ def main():
     processor_socket = context.socket(zmq.SUB)
     processor_socket.connect("tcp://localhost:{processor_socket_no}"
                              .format(processor_socket_no=config.PROCESSOR_SOCKET_NO))
+
     processor_socket.setsockopt(zmq.SUBSCRIBE, 'smslog')
 
     print "Done"
