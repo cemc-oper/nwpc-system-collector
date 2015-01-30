@@ -1,6 +1,7 @@
 import os
 import json
 import datetime
+import argparse
 import requests
 
 
@@ -21,9 +22,7 @@ def post_sms_log_content(owner, repo, content, version, repo_id=None):
     return
 
 
-def main():
-    owner = 'nwp_xp'
-    repo = 'nwp_cma20n03'
+def agent_appender(owner, repo):
     post_max_count = 1000
 
     info_url = 'http://10.28.32.175:5000/agent/repos/{owner}/{repo}/sms/log-file/info'.format(
@@ -95,7 +94,7 @@ def main():
         lines.extend([l.strip() for l in new_lines])
         print "Done"
         # total_count = len(lines)
-        total_count = 1000
+        total_count = 100000
         print "Found {line_count} lines to be store in database".format(line_count=total_count)
 
         submit_lines = lines[0:total_count]
@@ -128,6 +127,34 @@ def main():
 
 if __name__ == "__main__":
     start_time = datetime.datetime.now()
-    main()
+
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description="""\
+DESCRIPTION
+    Append sms log.""")
+
+    parser.add_argument("-u", "--user", type=int, help="user NAME")
+    parser.add_argument("-r", "--repo", help="repo name")
+
+    args = parser.parse_args()
+
+    user_name = 'nwp_xp'
+    repo_name = 'nwp_cma20n03'
+
+    if args.user:
+        user_name = args.user
+        print 'user name: {user_name}'.format(user_name=user_name)
+    else:
+        print "Use default user: {user_name}".format(user_name=user_name)
+
+    if args.repo:
+        repo_name = args.repo
+        print 'repo name: {repo_name}'.format(repo_name=repo_name)
+    else:
+        print "Use default repo name: {repo_name}".format(repo_name=repo_name)
+
+    agent_appender(user_name, repo_name)
+
     end_time = datetime.datetime.now()
     print end_time - start_time
