@@ -1,15 +1,20 @@
 import os
 import json
+import datetime
 import requests
 
 
-def post_sms_log_content(owner, repo, content):
+def post_sms_log_content(owner, repo, content, version, repo_id=None):
     post_url = 'http://10.28.32.175:5000/agent/repos/{owner}/{repo}/sms/log-file'.format(
         owner=owner, repo=repo
     )
     post_data = {
-        'content': json.dumps(content)
+        'content': json.dumps(content),
+        'version_id': version
     }
+    if repo_id is not None:
+        post_data['repo_id'] = repo_id
+
     print "Posting log content to server...",
     r = requests.post(post_url, data=post_data)
     print "Done"
@@ -32,6 +37,8 @@ def main():
     sms_log_file_path = info_response['path']
     head_line = info_response['head_line']
     last_line_no = info_response['last_line_no']
+    repo_id = info_response['repo_id']
+    version = info_response['version']
 
     print """Log info for {owner}/{repo}:
     version: {version}
@@ -39,7 +46,7 @@ def main():
     head_line: {head_line}
     last_line_no: {last_line_no}
 """.format(owner=owner, repo=repo,
-           version=info_response['version'],
+           version=version,
            path=sms_log_file_path,
            head_line=head_line,
            last_line_no=last_line_no)
@@ -87,8 +94,11 @@ def main():
 
         lines.extend([l.strip() for l in new_lines])
         print "Done"
-        total_count = len(lines)
+        # total_count = len(lines)
+        total_count = 1000
         print "Found {line_count} lines to be store in database".format(line_count=total_count)
+
+        submit_lines = lines[0:total_count]
 
         print "Appending lines to agent server..."
 
@@ -96,7 +106,7 @@ def main():
         percent = 0
         i = 0
         cur_line_no = line_no
-        for line in lines:
+        for line in submit_lines:
             cur_line_no += 1
             i += 1
             cur_percent = i*100/total_count
@@ -108,13 +118,16 @@ def main():
                 'line': line
             })
             if len(content) >= post_max_count:
-                post_sms_log_content(owner, repo, content)
+                post_sms_log_content(owner, repo, content, version, repo_id)
                 content = []
-        post_sms_log_content(owner, repo, content)
+        post_sms_log_content(owner, repo, content, version, repo_id)
         content = []
         print "Posted all lines."
         print "Goodbye"
 
 
 if __name__ == "__main__":
+    start_time = datetime.datetime.now()
     main()
+    end_time = datetime.datetime.now()
+    print end_time - start_time
