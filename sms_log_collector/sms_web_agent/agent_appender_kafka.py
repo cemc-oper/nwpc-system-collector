@@ -94,7 +94,9 @@ def agent_appender(owner, repo):
         lines.extend([l.strip() for l in new_lines])
         print "Done"
         total_count = len(lines)
-        # total_count = 10000
+        # test_total_count = 10
+        # if total_count > test_total_count:
+        #     total_count = test_total_count
         print "Found {line_count} lines to be store in database".format(line_count=total_count)
 
         submit_lines = lines[0:total_count]
