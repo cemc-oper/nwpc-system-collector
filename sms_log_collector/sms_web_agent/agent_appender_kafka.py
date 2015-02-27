@@ -22,9 +22,10 @@ def post_sms_log_content(owner, repo, content, version, repo_id=None):
     return
 
 
-def agent_appender(owner, repo):
+def agent_appender(owner, repo, limit_count=-1):
     post_max_count = 1000
 
+    # TODO: check whether web site is available.
     info_url = 'http://10.28.32.175:5000/agent/repos/{owner}/{repo}/sms/log-file/info'.format(
         owner=owner, repo=repo
     )
@@ -94,10 +95,11 @@ def agent_appender(owner, repo):
         lines.extend([l.strip() for l in new_lines])
         print "Done"
         total_count = len(lines)
-        # test_total_count = 10
-        # if total_count > test_total_count:
-        #     total_count = test_total_count
         print "Found {line_count} lines to be store in database".format(line_count=total_count)
+        if limit_count != -1:
+            if total_count > limit_count:
+                total_count = limit_count
+                print "But user has limited to {line_count}".format(line_count=total_count)
 
         submit_lines = lines[0:total_count]
 
@@ -136,13 +138,15 @@ if __name__ == "__main__":
 DESCRIPTION
     Append sms log.""")
 
-    parser.add_argument("-u", "--user", type=int, help="user NAME")
+    parser.add_argument("-u", "--user", help="user NAME")
     parser.add_argument("-r", "--repo", help="repo name")
+    parser.add_argument("-l", "--limit", type=int, help="limit count")
 
     args = parser.parse_args()
 
     user_name = 'nwp_xp'
-    repo_name = 'nwp_cma20n03'
+    repo_name = 'nwp_qu_cma20n03'
+    limit_count = -1
 
     if args.user:
         user_name = args.user
@@ -156,7 +160,11 @@ DESCRIPTION
     else:
         print "Use default repo name: {repo_name}".format(repo_name=repo_name)
 
-    agent_appender(user_name, repo_name)
+    if args.limit:
+        limit_count = args.limit
+        print "The number of appended records is limited to {limit_count}".format(limit_count=limit_count)
+
+    agent_appender(owner=user_name, repo=repo_name, limit_count=limit_count)
 
     end_time = datetime.datetime.now()
     print end_time - start_time
