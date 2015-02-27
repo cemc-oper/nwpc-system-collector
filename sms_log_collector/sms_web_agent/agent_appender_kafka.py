@@ -5,6 +5,15 @@ import argparse
 import requests
 
 
+def get_sms_log_info(owner, repo):
+    info_url = 'http://10.28.32.175:5000/agent/repos/{owner}/{repo}/sms/log-file/info'.format(
+        owner=owner, repo=repo
+    )
+    info_request = requests.get(info_url)
+    info_response = info_request.json()
+    return info_response
+
+
 def post_sms_log_content(owner, repo, content, version, repo_id=None):
     post_url = 'http://10.28.32.175:5000/agent/repos/{owner}/{repo}/sms/log-file/kafka'.format(
         owner=owner, repo=repo
@@ -26,13 +35,9 @@ def agent_appender(owner, repo, limit_count=-1):
     post_max_count = 1000
 
     # TODO: check whether web site is available.
-    info_url = 'http://10.28.32.175:5000/agent/repos/{owner}/{repo}/sms/log-file/info'.format(
-        owner=owner, repo=repo
-    )
     print "Getting sms log info from server...",
-    info_request = requests.get(info_url)
+    info_response = get_sms_log_info(owner, repo)
     print "Done"
-    info_response = info_request.json()
 
     sms_log_file_path = info_response['path']
     head_line = info_response['head_line']
@@ -136,7 +141,7 @@ if __name__ == "__main__":
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description="""\
 DESCRIPTION
-    Append sms log.""")
+    Append sms log to a web agent.""")
 
     parser.add_argument("-u", "--user", help="user NAME")
     parser.add_argument("-r", "--repo", help="repo name")
@@ -146,7 +151,7 @@ DESCRIPTION
 
     user_name = 'nwp_xp'
     repo_name = 'nwp_qu_cma20n03'
-    limit_count = -1
+    limit_count_number = -1
 
     if args.user:
         user_name = args.user
@@ -161,10 +166,10 @@ DESCRIPTION
         print "Use default repo name: {repo_name}".format(repo_name=repo_name)
 
     if args.limit:
-        limit_count = args.limit
-        print "The number of appended records is limited to {limit_count}".format(limit_count=limit_count)
+        limit_count_number = args.limit
+        print "The number of appended records is limited to {limit_count}".format(limit_count=limit_count_number)
 
-    agent_appender(owner=user_name, repo=repo_name, limit_count=limit_count)
+    agent_appender(owner=user_name, repo=repo_name, limit_count=limit_count_number)
 
     end_time = datetime.datetime.now()
     print end_time - start_time
