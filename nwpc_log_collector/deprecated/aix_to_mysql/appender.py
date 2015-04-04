@@ -3,8 +3,8 @@ import os
 import sys
 from datetime import date, datetime, timedelta
 
-from sms_log_collector.record import Record
-from sms_log_collector.database_engine import DatabaseEngine
+from nwpc_log_collector.record import Record
+from nwpc_log_collector.database_engine import DatabaseEngine
 
 
 def main():

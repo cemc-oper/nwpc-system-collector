@@ -5,7 +5,7 @@ import zmq
 from sqlalchemy import text
 
 import config
-from sms_log_collector.sms_log_model import Session, RepoVersion, Repo, Record
+from nwpc_log_collector.sms_log_model import Session, RepoVersion, Repo, Record
 
 
 def main():
