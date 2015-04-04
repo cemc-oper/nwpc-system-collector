@@ -1,3 +1,7 @@
+# coding=utf-8
+"""
+读取sms日志文件，发送到agent server的mysql接口，将日志条目存储到mysql中。
+"""
 import os
 import json
 import datetime
