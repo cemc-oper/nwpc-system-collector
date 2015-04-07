@@ -6,11 +6,12 @@ import os
 import json
 import datetime
 import argparse
+import logging
 import requests
 
 
 def post_sms_log_content(owner, repo, content, version, repo_id=None):
-    post_url = 'http://10.28.32.175:5000/agent/repos/{owner}/{repo}/sms/log-file'.format(
+    post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/sms/log-file'.format(
         owner=owner, repo=repo
     )
     post_data = {
@@ -29,19 +30,25 @@ def post_sms_log_content(owner, repo, content, version, repo_id=None):
 def agent_appender(owner, repo):
     post_max_count = 1000
 
-    info_url = 'http://10.28.32.175:5000/agent/repos/{owner}/{repo}/sms/log-file/info'.format(
+    info_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/sms/log-file/info'.format(
         owner=owner, repo=repo
     )
     print "Getting sms log info from server...",
     info_request = requests.get(info_url)
     print "Done"
     info_response = info_request.json()
+    if 'error' in info_response:
+        print "There is some error:"
+        print info_response['data']['error-type']
+        print "Collector exist."
+        return
 
-    sms_log_file_path = info_response['path']
-    head_line = info_response['head_line']
-    last_line_no = info_response['last_line_no']
-    repo_id = info_response['repo_id']
-    version = info_response['version']
+    info_data = info_response['data']
+    sms_log_file_path = info_data['path']
+    head_line = info_data['head_line']
+    last_line_no = info_data['last_line_no']
+    repo_id = info_data['repo_id']
+    version = info_data['version']
 
     print """Log info for {owner}/{repo}:
     version: {version}
