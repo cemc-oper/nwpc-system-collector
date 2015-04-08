@@ -9,7 +9,7 @@ import argparse
 import requests
 
 
-def get_sms_log_info(owner, repo):
+def get_sms_log_collector_info(owner, repo):
     info_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/sms/file/info'.format(
         owner=owner, repo=repo
     )
@@ -18,8 +18,8 @@ def get_sms_log_info(owner, repo):
     return info_response
 
 
-def logout_sms_log(owner, repo):
-    print "Logout collector from agent...",
+def logout_sms_log_collector(owner, repo):
+    post_collector_log(owner, repo, "Logout collector from agent...")
     post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/sms/file/manage/logout'.format(
         owner=owner, repo=repo
     )
@@ -27,7 +27,19 @@ def logout_sms_log(owner, repo):
         'status': 'complete'
     }
     r = requests.post(post_url, data=post_data)
-    print "Done"
+    post_collector_log(owner, repo, "Done")
+    return
+
+
+def post_collector_log(owner, repo, message):
+    print message
+    post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/log'.format(
+        owner=owner, repo=repo
+    )
+    post_data = {
+        'content': message
+    }
+    r = requests.post(post_url, data=post_data)
     return
 
 
@@ -42,9 +54,9 @@ def post_sms_log_content(owner, repo, content, version, repo_id=None):
     if repo_id is not None:
         post_data['repo_id'] = repo_id
 
-    print "Posting log content to server...",
+    post_collector_log(owner, repo, "Posting log content to server...")
     r = requests.post(post_url, data=post_data)
-    print "Done"
+    post_collector_log(owner, repo, "Done")
     return
 
 
@@ -52,13 +64,13 @@ def agent_appender(owner, repo, limit_count=-1):
     post_max_count = 1000
 
     # TODO: check whether web site is available.
-    print "Getting sms log info from server...",
-    info_response = get_sms_log_info(owner, repo)
-    print "Done"
+    post_collector_log(owner, repo, "Getting sms log info from server...")
+    info_response = get_sms_log_collector_info(owner, repo)
+    post_collector_log(owner, repo, "Done")
     if 'error' in info_response:
-        print "There is some error:"
-        print info_response['error_type']
-        print "ERROR: Collector exist."
+        post_collector_log(owner, repo, "There is some error:")
+        post_collector_log(owner, repo, info_response['error_type'])
+        post_collector_log(owner, repo, "ERROR: Collector exist.")
         return
 
     info_data = info_response['data']
@@ -68,7 +80,7 @@ def agent_appender(owner, repo, limit_count=-1):
     repo_id = info_data['repo_id']
     version = info_data['version']
 
-    print """Log info for {owner}/{repo}:
+    post_collector_log(owner, repo, """Log info for {owner}/{repo}:
     version: {version}
     path: {path}
     head_line: {head_line}
@@ -77,61 +89,61 @@ def agent_appender(owner, repo, limit_count=-1):
            version=version,
            path=sms_log_file_path,
            head_line=head_line,
-           last_line_no=last_line_no)
+           last_line_no=last_line_no))
 
-    print "Checking whether the file exists...",
+    post_collector_log(owner, repo, "Checking whether the file exists...")
     if not os.path.isfile(sms_log_file_path):
-        print "Not Found"
-        print "Error!"
+        post_collector_log(owner, repo, "Not Found")
+        post_collector_log(owner, repo, "Error!")
         return -2
-    print "Found"
+    post_collector_log(owner, repo, "Found")
 
     with open(sms_log_file_path, 'r') as log_file:
         # check the repo version by reading the first line.
-        print "Matching the head line...",
+        post_collector_log(owner, repo, "Matching the head line...")
         pos = 0
         line = log_file.readline().strip()
         pos += 1
         if line == head_line:
-            print "Matched"
+            post_collector_log(owner, repo, "Matched")
         else:
-            print "Not Matched"
-            print "file line:", line
-            print "head line:", head_line
-            print "We need a new version for repo which is not implemented."
+            post_collector_log(owner, repo, "Not Matched")
+            post_collector_log(owner, repo, "file line: "+line)
+            post_collector_log(owner, repo, "head line:"+head_line)
+            post_collector_log(owner, repo, "We need a new version for repo which is not implemented.")
             return -1
 
         # get the last record line in database.
-        print "Fetching the last record in database...",
+        post_collector_log(owner, repo, "Fetching the last record in database...")
         line_no = last_line_no
-        print "Cached"
+        post_collector_log(owner, repo, "Cached")
 
         # read line_no lines from files, line 1 is already read in the beginning.
-        print "Searching the log file for the last line in database... ",
+        post_collector_log(owner, repo, "Searching the log file for the last line in database... ")
         for i in range(2, int(line_no)+1):
             line = log_file.readline()
-        print "Done"
-        print line.strip()
+        post_collector_log(owner, repo, "Done")
+        post_collector_log(owner, repo, line.strip())
 
         # read all lines
-        print "Reading all lines that are not in the database...",
+        post_collector_log(owner, repo, "Reading all lines that are not in the database...")
         lines = []
         if line_no == 0:
             lines.append(head_line)
         new_lines = log_file.readlines()
 
         lines.extend([l.strip() for l in new_lines])
-        print "Done"
+        post_collector_log(owner, repo, "Done")
         total_count = len(lines)
-        print "Found {line_count} lines to be store in database".format(line_count=total_count)
+        post_collector_log(owner, repo, "Found {line_count} lines to be store in database".format(line_count=total_count))
         if limit_count != -1:
             if total_count > limit_count:
                 total_count = limit_count
-                print "But user has limited to {line_count}".format(line_count=total_count)
+                post_collector_log(owner, repo, "But user has limited to {line_count}".format(line_count=total_count))
 
         submit_lines = lines[0:total_count]
 
-        print "Appending lines to agent server..."
+        post_collector_log(owner, repo, "Appending lines to agent server...")
 
         content = []
         percent = 0
@@ -143,7 +155,7 @@ def agent_appender(owner, repo, limit_count=-1):
             cur_percent = i*100/total_count
             if cur_percent > percent:
                 percent = int(cur_percent)
-                print "[{percent}%]".format(percent=percent)
+                post_collector_log(owner, repo, "[{percent}%]".format(percent=percent))
             content.append({
                 'no': cur_line_no,
                 'line': line
@@ -153,11 +165,11 @@ def agent_appender(owner, repo, limit_count=-1):
                 content = []
         post_sms_log_content(owner, repo, content, version, repo_id)
         content = []
-        print "Posted all lines."
+        post_collector_log(owner, repo, "Posted all lines.")
 
-        logout_sms_log(owner, repo)
+        logout_sms_log_collector(owner, repo)
 
-        print "Goodbye"
+        post_collector_log(owner, repo, "Goodbye")
 
 
 if __name__ == "__main__":
