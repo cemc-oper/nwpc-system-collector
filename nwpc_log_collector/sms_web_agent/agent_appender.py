@@ -11,7 +11,7 @@ import requests
 
 
 def post_sms_log_content(owner, repo, content, version, repo_id=None):
-    post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/sms/log-file'.format(
+    post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/sms/file'.format(
         owner=owner, repo=repo
     )
     post_data = {
@@ -30,7 +30,7 @@ def post_sms_log_content(owner, repo, content, version, repo_id=None):
 def agent_appender(owner, repo):
     post_max_count = 1000
 
-    info_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/sms/log-file/info'.format(
+    info_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/sms/file/info'.format(
         owner=owner, repo=repo
     )
     print "Getting sms log info from server...",

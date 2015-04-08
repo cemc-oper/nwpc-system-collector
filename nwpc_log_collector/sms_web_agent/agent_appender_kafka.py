@@ -10,7 +10,7 @@ import requests
 
 
 def get_sms_log_info(owner, repo):
-    info_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/sms/log-file/info'.format(
+    info_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/sms/file/info'.format(
         owner=owner, repo=repo
     )
     info_request = requests.get(info_url)
@@ -19,7 +19,7 @@ def get_sms_log_info(owner, repo):
 
 
 def post_sms_log_content(owner, repo, content, version, repo_id=None):
-    post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/sms/log-file/kafka'.format(
+    post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/sms/file/kafka'.format(
         owner=owner, repo=repo
     )
     post_data = {
