@@ -40,7 +40,7 @@ def agent_appender(owner, repo):
     if 'error' in info_response:
         print "There is some error:"
         print info_response['data']['error-type']
-        print "Collector exist."
+        print "ERROR: Collector exist."
         return
 
     info_data = info_response['data']

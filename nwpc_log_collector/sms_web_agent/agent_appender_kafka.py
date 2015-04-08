@@ -42,12 +42,18 @@ def agent_appender(owner, repo, limit_count=-1):
     print "Getting sms log info from server...",
     info_response = get_sms_log_info(owner, repo)
     print "Done"
+    if 'error' in info_response:
+        print "There is some error:"
+        print info_response['data']['error-type']
+        print "ERROR: Collector exist."
+        return
 
-    sms_log_file_path = info_response['path']
-    head_line = info_response['head_line']
-    last_line_no = info_response['last_line_no']
-    repo_id = info_response['repo_id']
-    version = info_response['version']
+    info_data = info_response['data']
+    sms_log_file_path = info_data['path']
+    head_line = info_data['head_line']
+    last_line_no = info_data['last_line_no']
+    repo_id = info_data['repo_id']
+    version = info_data['version']
 
     print """Log info for {owner}/{repo}:
     version: {version}
