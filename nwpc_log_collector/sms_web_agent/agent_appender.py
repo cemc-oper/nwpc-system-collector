@@ -10,6 +10,19 @@ import logging
 import requests
 
 
+def logout_sms_log(owner, repo):
+    print "Logout collector from agent...",
+    post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/sms/file/manage/logout'.format(
+        owner=owner, repo=repo
+    )
+    post_data = {
+        'status': 'complete'
+    }
+    r = requests.post(post_url, data=post_data)
+    print "Done"
+    return
+
+
 def post_sms_log_content(owner, repo, content, version, repo_id=None):
     post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/sms/file'.format(
         owner=owner, repo=repo
@@ -39,7 +52,7 @@ def agent_appender(owner, repo):
     info_response = info_request.json()
     if 'error' in info_response:
         print "There is some error:"
-        print info_response['data']['error-type']
+        print info_response['error_type']
         print "ERROR: Collector exist."
         return
 
@@ -133,6 +146,9 @@ def agent_appender(owner, repo):
         post_sms_log_content(owner, repo, content, version, repo_id)
         content = []
         print "Posted all lines."
+
+        logout_sms_log(owner, repo)
+
         print "Goodbye"
 
 
