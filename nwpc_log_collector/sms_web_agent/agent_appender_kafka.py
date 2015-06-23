@@ -27,7 +27,7 @@ def logout_sms_log_collector(owner, repo):
         'status': 'complete'
     }
     r = requests.post(post_url, data=post_data)
-    post_collector_log(owner, repo, "Done")
+    post_collector_log(owner, repo, "Logout collector from agent...Done")
     return
 
 
@@ -56,7 +56,7 @@ def post_sms_log_content(owner, repo, content, version, repo_id=None):
 
     post_collector_log(owner, repo, "Posting log content to server...")
     r = requests.post(post_url, data=post_data)
-    post_collector_log(owner, repo, "Done")
+    post_collector_log(owner, repo, "Posting log content to server...Done")
     return
 
 
@@ -66,7 +66,7 @@ def agent_appender(owner, repo, limit_count=-1):
     # TODO: check whether web site is available.
     post_collector_log(owner, repo, "Getting sms log info from server...")
     info_response = get_sms_log_collector_info(owner, repo)
-    post_collector_log(owner, repo, "Done")
+    post_collector_log(owner, repo, "Getting sms log info from server...Done")
     if 'error' in info_response:
         post_collector_log(owner, repo, "There is some error:")
         post_collector_log(owner, repo, info_response['error_type'])
@@ -93,10 +93,10 @@ def agent_appender(owner, repo, limit_count=-1):
 
     post_collector_log(owner, repo, "Checking whether the file exists...")
     if not os.path.isfile(sms_log_file_path):
-        post_collector_log(owner, repo, "Not Found")
+        post_collector_log(owner, repo, "Checking whether the file exists...Not Found")
         post_collector_log(owner, repo, "Error!")
         return -2
-    post_collector_log(owner, repo, "Found")
+    post_collector_log(owner, repo, "Checking whether the file exists...Found")
 
     with open(sms_log_file_path, 'r') as log_file:
         # check the repo version by reading the first line.
@@ -105,9 +105,9 @@ def agent_appender(owner, repo, limit_count=-1):
         line = log_file.readline().strip()
         pos += 1
         if line == head_line:
-            post_collector_log(owner, repo, "Matched")
+            post_collector_log(owner, repo, "Matching the head line...Matched")
         else:
-            post_collector_log(owner, repo, "Not Matched")
+            post_collector_log(owner, repo, "Matching the head line...Not Matched")
             post_collector_log(owner, repo, "file line: "+line)
             post_collector_log(owner, repo, "head line:"+head_line)
             post_collector_log(owner, repo, "We need a new version for repo which is not implemented.")
@@ -116,13 +116,13 @@ def agent_appender(owner, repo, limit_count=-1):
         # get the last record line in database.
         post_collector_log(owner, repo, "Fetching the last record in database...")
         line_no = last_line_no
-        post_collector_log(owner, repo, "Cached")
+        post_collector_log(owner, repo, "Fetching the last record in database...Cached")
 
         # read line_no lines from files, line 1 is already read in the beginning.
-        post_collector_log(owner, repo, "Searching the log file for the last line in database... ")
+        post_collector_log(owner, repo, "Searching the log file for the last line in database...")
         for i in range(2, int(line_no)+1):
             line = log_file.readline()
-        post_collector_log(owner, repo, "Done")
+        post_collector_log(owner, repo, "Searching the log file for the last line in database...Done")
         post_collector_log(owner, repo, line.strip())
 
         # read all lines
@@ -133,7 +133,7 @@ def agent_appender(owner, repo, limit_count=-1):
         new_lines = log_file.readlines()
 
         lines.extend([l.strip() for l in new_lines])
-        post_collector_log(owner, repo, "Done")
+        post_collector_log(owner, repo, "Reading all lines that are not in the database...Done")
         total_count = len(lines)
         post_collector_log(owner, repo, "Found {line_count} lines to be store in database".format(line_count=total_count))
         if limit_count != -1:
@@ -148,6 +148,7 @@ def agent_appender(owner, repo, limit_count=-1):
         content = []
         percent = 0
         i = 0
+        post_start_time = datetime.datetime.now()
         cur_line_no = line_no
         for line in submit_lines:
             cur_line_no += 1
@@ -155,7 +156,15 @@ def agent_appender(owner, repo, limit_count=-1):
             cur_percent = i*100/total_count
             if cur_percent > percent:
                 percent = int(cur_percent)
-                post_collector_log(owner, repo, "[{percent}%]".format(percent=percent))
+                post_current_time = datetime.datetime.now()
+                post_current_time_delta = post_current_time - post_start_time
+                post_current_seconds = post_current_time_delta.days * 86400 + post_current_time_delta.seconds
+                total_seconds = int(post_current_seconds / (percent/100.0))
+                left_time_delta = datetime.timedelta(seconds= total_seconds - post_current_seconds)
+                post_collector_log(owner, repo, "[{percent}%] left time: {left_time}".format(percent=percent,
+                                                                                             left_time=left_time_delta))
+
+
             content.append({
                 'no': cur_line_no,
                 'line': line
