@@ -9,8 +9,20 @@ import argparse
 import requests
 
 
+NWPC_LOG_AGENT_HOST = "10.28.32.175"
+NWPC_LOG_AGENT_PORT = "5001"
+
+
 def get_sms_log_collector_info(owner, repo):
-    info_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/sms/file/info'.format(
+    """
+    获取 sms log 的信息，并注册一个新的 collector。相当于开始日期收集。
+    :param owner:
+    :param repo:
+    :return:
+    """
+    info_url = 'http://{log_agent_host}:{log_agent_port}/agent/repos/{owner}/{repo}/collector/sms/file/info'.format(
+        log_agent_host=NWPC_LOG_AGENT_HOST,
+        log_agent_port=NWPC_LOG_AGENT_PORT,
         owner=owner, repo=repo
     )
     info_request = requests.get(info_url)
@@ -19,8 +31,16 @@ def get_sms_log_collector_info(owner, repo):
 
 
 def logout_sms_log_collector(owner, repo):
+    """
+    注销当前 collector。相当于结束日志收集。
+    :param owner:
+    :param repo:
+    :return:
+    """
     post_collector_log(owner, repo, "Logout collector from agent...")
-    post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/sms/file/manage/logout'.format(
+    post_url = 'http://{log_agent_host}:{log_agent_port}/agent/repos/{owner}/{repo}/collector/sms/file/manage/logout'.format(
+        log_agent_host=NWPC_LOG_AGENT_HOST,
+        log_agent_port=NWPC_LOG_AGENT_PORT,
         owner=owner, repo=repo
     )
     post_data = {
@@ -32,8 +52,12 @@ def logout_sms_log_collector(owner, repo):
 
 
 def post_collector_log(owner, repo, message):
+    # show message in console, so as in a celery task's console output.
     print message
-    post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/log'.format(
+
+    post_url = 'http://{log_agent_host}:{log_agent_port}/agent/repos/{owner}/{repo}/collector/log'.format(
+        log_agent_host=NWPC_LOG_AGENT_HOST,
+        log_agent_port=NWPC_LOG_AGENT_PORT,
         owner=owner, repo=repo
     )
     post_data = {
@@ -44,7 +68,18 @@ def post_collector_log(owner, repo, message):
 
 
 def post_sms_log_content(owner, repo, content, version, repo_id=None):
-    post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/sms/file/kafka'.format(
+    """
+    上传 sms log 日志条目
+    :param owner:
+    :param repo:
+    :param content:
+    :param version:
+    :param repo_id:
+    :return:
+    """
+    post_url = 'http://{log_agent_host}:{log_agent_port}/agent/repos/{owner}/{repo}/collector/sms/file/kafka'.format(
+        log_agent_host=NWPC_LOG_AGENT_HOST,
+        log_agent_port=NWPC_LOG_AGENT_PORT,
         owner=owner, repo=repo
     )
     post_data = {
