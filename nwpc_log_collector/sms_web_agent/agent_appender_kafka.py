@@ -164,7 +164,6 @@ def agent_appender(owner, repo, limit_count=-1):
                 post_collector_log(owner, repo, "[{percent}%] left time: {left_time}".format(percent=percent,
                                                                                              left_time=left_time_delta))
 
-
             content.append({
                 'no': cur_line_no,
                 'line': line
@@ -172,6 +171,13 @@ def agent_appender(owner, repo, limit_count=-1):
             if len(content) >= post_max_count:
                 post_sms_log_content(owner, repo, content, version, repo_id)
                 content = []
+                post_current_time = datetime.datetime.now()
+                post_current_time_delta = post_current_time - post_start_time
+                post_current_seconds = post_current_time_delta.days * 86400 + post_current_time_delta.seconds
+                total_seconds = int(post_current_seconds / (i*0.1/total_count))
+                left_time_delta = datetime.timedelta(seconds= total_seconds - post_current_seconds)
+                post_collector_log(owner, repo, "left time: {left_time}".format(left_time=left_time_delta))
+
         post_sms_log_content(owner, repo, content, version, repo_id)
         content = []
         post_collector_log(owner, repo, "Posted all lines.")
