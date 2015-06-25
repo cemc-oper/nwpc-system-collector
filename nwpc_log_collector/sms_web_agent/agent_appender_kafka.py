@@ -68,6 +68,22 @@ def post_collector_log(owner, repo, message):
     return
 
 
+def post_collector_error_log(owner, repo, message):
+    # TODO: repeat is evil
+    print message
+
+    post_url = 'http://{log_agent_host}:{log_agent_port}/agent/repos/{owner}/{repo}/collector/log/error'.format(
+        log_agent_host=NWPC_LOG_AGENT_HOST,
+        log_agent_port=NWPC_LOG_AGENT_PORT,
+        owner=owner, repo=repo
+    )
+    post_data = {
+        'content': message
+    }
+    r = requests.post(post_url, data=post_data)
+    return
+
+
 def post_sms_log_content(owner, repo, content, version, repo_id=None):
     """
     上传 sms log 日志条目
@@ -107,6 +123,7 @@ def agent_appender(owner, repo, limit_count=-1):
         post_collector_log(owner, repo, "There is some error:")
         post_collector_log(owner, repo, info_response['error_type'])
         post_collector_log(owner, repo, "ERROR: Collector exist.")
+        post_collector_error_log(owner, repo, "Collector exist.")
         return
 
     info_data = info_response['data']
@@ -131,6 +148,7 @@ def agent_appender(owner, repo, limit_count=-1):
     if not os.path.isfile(sms_log_file_path):
         post_collector_log(owner, repo, "Checking whether the file exists...Not Found")
         post_collector_log(owner, repo, "Error!")
+        post_collector_error_log(owner, repo, "Log file doesn't exist.")
         logout_sms_log_collector(owner, repo, status='error')
         return -2
     post_collector_log(owner, repo, "Checking whether the file exists...Found")
@@ -148,6 +166,7 @@ def agent_appender(owner, repo, limit_count=-1):
             post_collector_log(owner, repo, "file line: "+line)
             post_collector_log(owner, repo, "head line:"+head_line)
             post_collector_log(owner, repo, "We need a new version for repo which is not implemented.")
+            post_collector_error_log(owner, repo, "Head line doesn't match.")
             logout_sms_log_collector(owner, repo, status='error')
             return -1
 
