@@ -30,11 +30,12 @@ def get_sms_log_collector_info(owner, repo):
     return info_response
 
 
-def logout_sms_log_collector(owner, repo):
+def logout_sms_log_collector(owner, repo, status='complete'):
     """
     注销当前 collector。相当于结束日志收集。
     :param owner:
     :param repo:
+    :param status: complete 表示正常退出，其它值表示异常结束
     :return:
     """
     post_collector_log(owner, repo, "Logout collector from agent...")
@@ -44,7 +45,7 @@ def logout_sms_log_collector(owner, repo):
         owner=owner, repo=repo
     )
     post_data = {
-        'status': 'complete'
+        'status': status
     }
     r = requests.post(post_url, data=post_data)
     post_collector_log(owner, repo, "Logout collector from agent...Done")
@@ -130,6 +131,7 @@ def agent_appender(owner, repo, limit_count=-1):
     if not os.path.isfile(sms_log_file_path):
         post_collector_log(owner, repo, "Checking whether the file exists...Not Found")
         post_collector_log(owner, repo, "Error!")
+        logout_sms_log_collector(owner, repo, status='error')
         return -2
     post_collector_log(owner, repo, "Checking whether the file exists...Found")
 
@@ -146,6 +148,7 @@ def agent_appender(owner, repo, limit_count=-1):
             post_collector_log(owner, repo, "file line: "+line)
             post_collector_log(owner, repo, "head line:"+head_line)
             post_collector_log(owner, repo, "We need a new version for repo which is not implemented.")
+            logout_sms_log_collector(owner, repo, status='error')
             return -1
 
         # get the last record line in database.
@@ -217,7 +220,7 @@ def agent_appender(owner, repo, limit_count=-1):
         content = []
         post_collector_log(owner, repo, "Posted all lines.")
 
-        logout_sms_log_collector(owner, repo)
+        logout_sms_log_collector(owner, repo, status='complete')
 
         post_collector_log(owner, repo, "Goodbye")
 
