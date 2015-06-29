@@ -20,7 +20,7 @@ def get_sms_log_collector_info(owner, repo):
     :param repo:
     :return:
     """
-    info_url = 'http://{log_agent_host}:{log_agent_port}/agent/repos/{owner}/{repo}/collector/sms/file/info'.format(
+    info_url = 'http://{log_agent_host}:{log_agent_port}/agent/repos/{owner}/{repo}/collector/sms/file/manage/login'.format(
         log_agent_host=NWPC_LOG_AGENT_HOST,
         log_agent_port=NWPC_LOG_AGENT_PORT,
         owner=owner, repo=repo
@@ -28,6 +28,10 @@ def get_sms_log_collector_info(owner, repo):
     info_request = requests.get(info_url)
     info_response = info_request.json()
     return info_response
+
+
+def login_sms_log_collector(owner, repo):
+    pass
 
 
 def logout_sms_log_collector(owner, repo, status='complete'):
