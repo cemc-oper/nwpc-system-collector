@@ -13,7 +13,7 @@ NWPC_LOG_AGENT_HOST = "10.28.32.175"
 NWPC_LOG_AGENT_PORT = "5001"
 
 
-def get_sms_log_collector_info(owner, repo):
+def login_sms_log_collector(owner, repo):
     """
     获取 sms log 的信息，并注册一个新的 collector。相当于开始日期收集。
     :param owner:
@@ -28,10 +28,6 @@ def get_sms_log_collector_info(owner, repo):
     info_request = requests.get(info_url)
     info_response = info_request.json()
     return info_response
-
-
-def login_sms_log_collector(owner, repo):
-    pass
 
 
 def logout_sms_log_collector(owner, repo, status='complete'):
@@ -56,15 +52,22 @@ def logout_sms_log_collector(owner, repo, status='complete'):
     return
 
 
-def post_collector_log(owner, repo, message):
+def post_collector_log(owner, repo, message, message_type=None):
     # show message in console, so as in a celery task's console output.
     print message
 
-    post_url = 'http://{log_agent_host}:{log_agent_port}/agent/repos/{owner}/{repo}/collector/log'.format(
-        log_agent_host=NWPC_LOG_AGENT_HOST,
-        log_agent_port=NWPC_LOG_AGENT_PORT,
-        owner=owner, repo=repo
-    )
+    if message_type == 'error':
+        post_url = 'http://{log_agent_host}:{log_agent_port}/agent/repos/{owner}/{repo}/collector/log/error'.format(
+            log_agent_host=NWPC_LOG_AGENT_HOST,
+            log_agent_port=NWPC_LOG_AGENT_PORT,
+            owner=owner, repo=repo
+        )
+    else:
+        post_url = 'http://{log_agent_host}:{log_agent_port}/agent/repos/{owner}/{repo}/collector/log'.format(
+            log_agent_host=NWPC_LOG_AGENT_HOST,
+            log_agent_port=NWPC_LOG_AGENT_PORT,
+            owner=owner, repo=repo
+        )
     post_data = {
         'content': message
     }
@@ -73,19 +76,7 @@ def post_collector_log(owner, repo, message):
 
 
 def post_collector_error_log(owner, repo, message):
-    # TODO: repeat is evil
-    print message
-
-    post_url = 'http://{log_agent_host}:{log_agent_port}/agent/repos/{owner}/{repo}/collector/log/error'.format(
-        log_agent_host=NWPC_LOG_AGENT_HOST,
-        log_agent_port=NWPC_LOG_AGENT_PORT,
-        owner=owner, repo=repo
-    )
-    post_data = {
-        'content': message
-    }
-    r = requests.post(post_url, data=post_data)
-    return
+    return post_collector_log(owner, repo, message, message_type='error')
 
 
 def post_sms_log_content(owner, repo, content, version, repo_id=None):
@@ -121,7 +112,7 @@ def agent_appender(owner, repo, limit_count=-1):
 
     # TODO: check whether web site is available.
     post_collector_log(owner, repo, "Getting sms log info from server...")
-    info_response = get_sms_log_collector_info(owner, repo)
+    info_response = login_sms_log_collector(owner, repo)
     post_collector_log(owner, repo, "Getting sms log info from server...Done")
     if 'error' in info_response:
         post_collector_log(owner, repo, "There is some error:")
