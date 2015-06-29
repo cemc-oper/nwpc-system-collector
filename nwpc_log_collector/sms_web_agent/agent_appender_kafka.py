@@ -52,6 +52,8 @@ def logout_sms_log_collector(owner, repo, status='complete'):
     return
 
 
+# 发送日志
+
 def post_collector_log(owner, repo, message, message_type=None):
     # show message in console, so as in a celery task's console output.
     print message
@@ -79,7 +81,26 @@ def post_collector_error_log(owner, repo, message):
     return post_collector_log(owner, repo, message, message_type='error')
 
 
-def post_sms_log_content(owner, repo, content, version, repo_id=None):
+# sms 日志内容
+
+def post_sms_log_content_to_mysql(owner, repo, content, version, repo_id=None):
+    post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/sms/file'.format(
+        owner=owner, repo=repo
+    )
+    post_data = {
+        'content': json.dumps(content),
+        'version_id': version
+    }
+    if repo_id is not None:
+        post_data['repo_id'] = repo_id
+
+    print "Posting log content to server...",
+    r = requests.post(post_url, data=post_data)
+    print "Done"
+    return
+
+
+def post_sms_log_content_to_kafka(owner, repo, content, version, repo_id=None):
     """
     上传 sms log 日志条目
     :param owner:
@@ -107,7 +128,9 @@ def post_sms_log_content(owner, repo, content, version, repo_id=None):
     return
 
 
-def agent_appender(owner, repo, limit_count=-1):
+# 收集日志的主程序
+
+def agent_appender(owner, repo, limit_count=-1, upload_type='kafka'):
     post_max_count = 1000
 
     # TODO: check whether web site is available.
@@ -221,7 +244,7 @@ def agent_appender(owner, repo, limit_count=-1):
                 'line': line
             })
             if len(content) >= post_max_count:
-                post_sms_log_content(owner, repo, content, version, repo_id)
+                post_sms_log_content_to_kafka(owner, repo, content, version, repo_id)
                 content = []
                 post_current_time = datetime.datetime.now()
                 post_current_time_delta = post_current_time - post_start_time
@@ -230,7 +253,16 @@ def agent_appender(owner, repo, limit_count=-1):
                 left_time_delta = datetime.timedelta(seconds= total_seconds - post_current_seconds)
                 post_collector_log(owner, repo, "left time: {left_time}".format(left_time=left_time_delta))
 
-        post_sms_log_content(owner, repo, content, version, repo_id)
+        # 上传日志内容
+        if upload_type == 'mysql':
+            post_sms_log_content_to_mysql(owner, repo, content, version, repo_id)
+        elif upload_type == 'kafka':
+            post_sms_log_content_to_kafka(owner, repo, content, version, repo_id)
+        else:
+            post_collector_log(owner, repo, "Please select a valid upload type, such as mysql and kafka.")
+            post_collector_error_log(owner, repo, "Upload type is not supported.")
+            logout_sms_log_collector(owner, repo, status='error')
+            return -3
         content = []
         post_collector_log(owner, repo, "Posted all lines.")
 

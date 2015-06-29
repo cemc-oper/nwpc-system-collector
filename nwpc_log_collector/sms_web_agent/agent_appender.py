@@ -23,7 +23,7 @@ def logout_sms_log(owner, repo):
     return
 
 
-def post_sms_log_content(owner, repo, content, version, repo_id=None):
+def post_sms_log_content_to_mysql(owner, repo, content, version, repo_id=None):
     post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/sms/file'.format(
         owner=owner, repo=repo
     )
@@ -141,9 +141,9 @@ def agent_appender(owner, repo):
                 'line': line
             })
             if len(content) >= post_max_count:
-                post_sms_log_content(owner, repo, content, version, repo_id)
+                post_sms_log_content_to_mysql(owner, repo, content, version, repo_id)
                 content = []
-        post_sms_log_content(owner, repo, content, version, repo_id)
+        post_sms_log_content_to_mysql(owner, repo, content, version, repo_id)
         content = []
         print "Posted all lines."
 
