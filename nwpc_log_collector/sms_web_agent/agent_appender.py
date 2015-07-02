@@ -161,7 +161,7 @@ if __name__ == "__main__":
 DESCRIPTION
     Append sms log.""")
 
-    parser.add_argument("-u", "--user", type=int, help="user NAME")
+    parser.add_argument("-u", "--user", help="user name")
     parser.add_argument("-r", "--repo", help="repo name")
 
     args = parser.parse_args()
