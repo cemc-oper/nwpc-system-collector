@@ -271,9 +271,7 @@ def agent_appender(owner, repo, limit_count=-1, upload_type='kafka'):
         post_collector_log(owner, repo, "Goodbye")
 
 
-if __name__ == "__main__":
-    start_time = datetime.datetime.now()
-
+def nwpc_log_collector_tool():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description="""\
@@ -307,6 +305,12 @@ DESCRIPTION
         print "The number of appended records is limited to {limit_count}".format(limit_count=limit_count_number)
 
     agent_appender(owner=user_name, repo=repo_name, limit_count=limit_count_number)
+
+
+if __name__ == "__main__":
+    start_time = datetime.datetime.now()
+
+    nwpc_log_collector_tool()
 
     end_time = datetime.datetime.now()
     print end_time - start_time
