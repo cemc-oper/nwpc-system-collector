@@ -3,11 +3,28 @@
 读取sms日志文件，发送到agent server，agent server将其发送给kafka消息队列。
 """
 import os
+import sys
 import json
 import datetime
 import argparse
 import requests
+import logging
+#
+# logging.basicConfig(format='%(message)s',
+#                     datefmt='%Y/%m/%d %H:%M:%S',
+#                     level=logging.DEBUG,
+#                     stream=sys.stdout)
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+ch = logging.StreamHandler()
+ch.setLevel(logging.INFO)
+
+formatter = logging.Formatter('%(message)s')
+ch.setFormatter(formatter)
+
+logger.addHandler(ch)
 
 NWPC_LOG_AGENT_HOST = "10.28.32.175"
 NWPC_LOG_AGENT_PORT = "5001"
@@ -56,7 +73,7 @@ def logout_sms_log_collector(owner, repo, status='complete'):
 
 def post_collector_log(owner, repo, message, message_type=None):
     # show message in console, so as in a celery task's console output.
-    print message
+    logger.info(message)
 
     if message_type == 'error':
         post_url = 'http://{log_agent_host}:{log_agent_port}/agent/repos/{owner}/{repo}/collector/log/error'.format(
@@ -94,9 +111,9 @@ def post_sms_log_content_to_mysql(owner, repo, content, version, repo_id=None):
     if repo_id is not None:
         post_data['repo_id'] = repo_id
 
-    print "Posting log content to server...",
+    post_collector_log(owner, repo, "Posting log content to server...")
     r = requests.post(post_url, data=post_data)
-    print "Done"
+    post_collector_log(owner, repo, "Posting log content to server...Done")
     return
 
 
