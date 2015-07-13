@@ -18,6 +18,19 @@ NWPC_LOG_AGENT_PORT = "5001"
 POST_MAX_COUNT = 1000   # 批量日志发送条目阈值
 
 
+def get_config(config_file_path):
+    global NWPC_LOG_AGENT_HOST, NWPC_LOG_AGENT_PORT, POST_MAX_COUNT
+    f = open(config_file_path, 'r')
+    config = json.load(f)
+    f.close()
+
+    NWPC_LOG_AGENT_HOST = config['nwpc_log_agent_host']
+    NWPC_LOG_AGENT_PORT = config['nwpc_log_agent_port']
+    POST_MAX_COUNT = config['nwpc_log_agent_port']
+
+    return config
+
+
 def get_logger():
     script_logger = logging.getLogger(__name__)
     script_logger.setLevel(logging.INFO)
@@ -373,6 +386,8 @@ def nwpc_log_collector_tool():
 DESCRIPTION
     Collect sms log to a web agent.""")
 
+    parser.add_argument("-c", "--config", help="config file path")
+
     sub_parsers = parser.add_subparsers(title="sub commands", dest="sub_command")
 
     collect_parser = sub_parsers.add_parser('collect',description="collect sms log from sms log file.")
@@ -386,6 +401,12 @@ DESCRIPTION
     show_parser.add_argument("-r", "--repo", help="repo name", required=True)
 
     args = parser.parse_args()
+
+    config_file_path = os.path.dirname(__file__) + "/config.json"
+
+    if args.config:
+        config_file_path = args.config
+    get_config(config_file_path)
 
     if args.sub_command == "collect":
         collect_handler(args)

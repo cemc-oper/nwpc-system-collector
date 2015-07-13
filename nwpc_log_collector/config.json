@@ -1,0 +1,6 @@
+{
+  "nwpc_log_agent_host": "10.28.32.175",
+  "nwpc_log_agent_port": "5001",
+
+  "post_max_count": 1000
+}
