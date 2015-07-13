@@ -11,19 +11,24 @@ import argparse
 import requests
 import logging
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-
-ch = logging.StreamHandler()
-ch.setLevel(logging.INFO)
-
-formatter = logging.Formatter('%(message)s')
-ch.setFormatter(formatter)
-
-logger.addHandler(ch)
-
 NWPC_LOG_AGENT_HOST = "10.28.32.175"
 NWPC_LOG_AGENT_PORT = "5001"
+
+
+def get_logger():
+    script_logger = logging.getLogger(__name__)
+    script_logger.setLevel(logging.INFO)
+
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+
+    formatter = logging.Formatter('%(message)s')
+    ch.setFormatter(formatter)
+
+    script_logger.addHandler(ch)
+    return script_logger
+
+logger = get_logger()
 
 
 def get_sms_log_collector_info(owner, repo):
