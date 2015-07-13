@@ -11,8 +11,11 @@ import argparse
 import requests
 import logging
 
+
 NWPC_LOG_AGENT_HOST = "10.28.32.175"
 NWPC_LOG_AGENT_PORT = "5001"
+
+POST_MAX_COUNT = 1000   # 批量日志发送条目阈值
 
 
 def get_logger():
@@ -166,7 +169,7 @@ def post_sms_log_content_to_kafka(owner, repo, content, version, repo_id=None):
 # 收集日志的主程序
 
 def agent_appender(owner, repo, limit_count=-1, upload_type='kafka'):
-    post_max_count = 1000
+    post_max_count = POST_MAX_COUNT
 
     # TODO: check whether web site is available.
     post_collector_log(owner, repo, "Getting sms log info from server...")
