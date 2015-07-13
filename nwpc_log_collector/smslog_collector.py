@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 """
-读取sms日志文件，发送到agent server，agent server将其发送给kafka消息队列。
+读取 sms 日志文件，发送到 agent server，agent server 将其发送给 kafka 消息队列或者直接保存到 MySQL 数据库。
 """
 import os
 import sys
@@ -10,11 +10,6 @@ import datetime
 import argparse
 import requests
 import logging
-#
-# logging.basicConfig(format='%(message)s',
-#                     datefmt='%Y/%m/%d %H:%M:%S',
-#                     level=logging.DEBUG,
-#                     stream=sys.stdout)
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -290,39 +285,48 @@ def agent_appender(owner, repo, limit_count=-1, upload_type='kafka'):
 
 
 def nwpc_log_collector_tool():
+    """
+    命令行主程序，解析命令行参数
+    :return:
+    """
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description="""\
 DESCRIPTION
-    Append sms log to a web agent.""")
+    Collect sms log to a web agent.""")
 
-    parser.add_argument("-u", "--user", help="user NAME")
-    parser.add_argument("-r", "--repo", help="repo name")
-    parser.add_argument("-l", "--limit", type=int, help="limit count")
+    sub_parsers = parser.add_subparsers(title="sub commands", dest="sub_command")
+
+    collect_parser = sub_parsers.add_parser('collect',description="collect sms log from sms log file.")
+    collect_parser.add_argument("-u", "--user", help="user NAME", required=True)
+    collect_parser.add_argument("-r", "--repo", help="repo name", required=True)
+    collect_parser.add_argument("-l", "--limit", type=int, help="limit count")
+    collect_parser.add_argument("-t", "--type", help="upload type")
 
     args = parser.parse_args()
 
-    user_name = 'nwp_xp'
-    repo_name = 'nwp_qu_cma20n03'
-    limit_count_number = -1
+    if args.sub_command == "collect":
+        user_name = 'nwp_xp'
+        repo_name = 'nwp_qu_cma20n03'
+        limit_count_number = -1
+        upload_type = 'kafka'
+        if args.user:
+            user_name = args.user
+            print 'User name: {user_name}'.format(user_name=user_name)
 
-    if args.user:
-        user_name = args.user
-        print 'user name: {user_name}'.format(user_name=user_name)
-    else:
-        print "Use default user: {user_name}".format(user_name=user_name)
+        if args.repo:
+            repo_name = args.repo
+            print 'Repo name: {repo_name}'.format(repo_name=repo_name)
 
-    if args.repo:
-        repo_name = args.repo
-        print 'repo name: {repo_name}'.format(repo_name=repo_name)
-    else:
-        print "Use default repo name: {repo_name}".format(repo_name=repo_name)
+        if args.limit:
+            limit_count_number = args.limit
+            print "The number of appended records is limited to {limit_count}".format(limit_count=limit_count_number)
 
-    if args.limit:
-        limit_count_number = args.limit
-        print "The number of appended records is limited to {limit_count}".format(limit_count=limit_count_number)
+        if args.type:
+            upload_type = args.type
+        print "Upload type: {upload_type}".format(upload_type=upload_type)
 
-    agent_appender(owner=user_name, repo=repo_name, limit_count=limit_count_number)
+        agent_appender(owner=user_name, repo=repo_name, limit_count=limit_count_number, upload_type=upload_type)
 
 
 if __name__ == "__main__":
