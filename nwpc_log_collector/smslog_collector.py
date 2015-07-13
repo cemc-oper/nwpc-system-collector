@@ -347,12 +347,11 @@ def show_handler(args):
     repo_id = info_data['repo_id']
     version = info_data['version']
 
-    post_collector_log(owner, repo, """Log info for {owner}/{repo}:
+    post_collector_log(owner, repo, """SMS log repo info for {owner}/{repo}:
     version: {version}
     path: {path}
     head_line: {head_line}
-    last_line_no: {last_line_no}
-""".format(owner=owner, repo=repo,
+    last_line_no: {last_line_no}""".format(owner=owner, repo=repo,
            version=version,
            path=sms_log_file_path,
            head_line=head_line,
