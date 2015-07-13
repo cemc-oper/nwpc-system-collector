@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # coding=utf-8
 """
 读取sms日志文件，发送到agent server，agent server将其发送给kafka消息队列。
