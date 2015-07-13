@@ -26,6 +26,23 @@ NWPC_LOG_AGENT_HOST = "10.28.32.175"
 NWPC_LOG_AGENT_PORT = "5001"
 
 
+def get_sms_log_collector_info(owner, repo):
+    """
+    获取 sms log 的信息
+    :param owner:
+    :param repo:
+    :return:
+    """
+    info_url = 'http://{log_agent_host}:{log_agent_port}/agent/repos/{owner}/{repo}/collector/sms/file/info'.format(
+        log_agent_host=NWPC_LOG_AGENT_HOST,
+        log_agent_port=NWPC_LOG_AGENT_PORT,
+        owner=owner, repo=repo
+    )
+    info_request = requests.get(info_url)
+    info_response = info_request.json()
+    return info_response
+
+
 def login_sms_log_collector(owner, repo):
     """
     获取 sms log 的信息，并注册一个新的 collector。相当于开始日期收集。
@@ -284,6 +301,60 @@ def agent_appender(owner, repo, limit_count=-1, upload_type='kafka'):
         post_collector_log(owner, repo, "Goodbye")
 
 
+def collect_handler(args):
+    user_name = 'nwp_xp'
+    repo_name = 'nwp_qu_cma20n03'
+    limit_count_number = -1
+    upload_type = 'kafka'
+    if args.user:
+        user_name = args.user
+        print 'User name: {user_name}'.format(user_name=user_name)
+    if args.repo:
+        repo_name = args.repo
+        print 'Repo name: {repo_name}'.format(repo_name=repo_name)
+    if args.limit:
+        limit_count_number = args.limit
+        print "The number of appended records is limited to {limit_count}".format(limit_count=limit_count_number)
+    if args.type:
+        upload_type = args.type
+    print "Upload type: {upload_type}".format(upload_type=upload_type)
+    agent_appender(owner=user_name, repo=repo_name, limit_count=limit_count_number, upload_type=upload_type)
+
+
+def show_handler(args):
+    owner = args.user
+    print 'User name: {user_name}'.format(user_name=owner)
+    repo = args.repo
+    print 'Repo name: {repo_name}'.format(repo_name=repo)
+
+    info_response = get_sms_log_collector_info(owner, repo)
+    if 'error' in info_response:
+        post_collector_log(owner, repo, "There is some error:")
+        post_collector_log(owner, repo, info_response['error_type'])
+        post_collector_log(owner, repo, "ERROR: Collector exist.")
+        post_collector_error_log(owner, repo, "Collector exist.")
+        return
+
+    info_data = info_response['data']
+    sms_log_file_path = info_data['path']
+    head_line = info_data['head_line']
+    last_line_no = info_data['last_line_no']
+    repo_id = info_data['repo_id']
+    version = info_data['version']
+
+    post_collector_log(owner, repo, """Log info for {owner}/{repo}:
+    version: {version}
+    path: {path}
+    head_line: {head_line}
+    last_line_no: {last_line_no}
+""".format(owner=owner, repo=repo,
+           version=version,
+           path=sms_log_file_path,
+           head_line=head_line,
+           last_line_no=last_line_no))
+    return
+
+
 def nwpc_log_collector_tool():
     """
     命令行主程序，解析命令行参数
@@ -303,30 +374,16 @@ DESCRIPTION
     collect_parser.add_argument("-l", "--limit", type=int, help="limit count")
     collect_parser.add_argument("-t", "--type", help="upload type")
 
+    show_parser = sub_parsers.add_parser('show', description="show sms log information.")
+    show_parser.add_argument("-u", "--user", help="user NAME", required=True)
+    show_parser.add_argument("-r", "--repo", help="repo name", required=True)
+
     args = parser.parse_args()
 
     if args.sub_command == "collect":
-        user_name = 'nwp_xp'
-        repo_name = 'nwp_qu_cma20n03'
-        limit_count_number = -1
-        upload_type = 'kafka'
-        if args.user:
-            user_name = args.user
-            print 'User name: {user_name}'.format(user_name=user_name)
-
-        if args.repo:
-            repo_name = args.repo
-            print 'Repo name: {repo_name}'.format(repo_name=repo_name)
-
-        if args.limit:
-            limit_count_number = args.limit
-            print "The number of appended records is limited to {limit_count}".format(limit_count=limit_count_number)
-
-        if args.type:
-            upload_type = args.type
-        print "Upload type: {upload_type}".format(upload_type=upload_type)
-
-        agent_appender(owner=user_name, repo=repo_name, limit_count=limit_count_number, upload_type=upload_type)
+        collect_handler(args)
+    elif args.sub_command == "show":
+        show_handler(args)
 
 
 if __name__ == "__main__":
