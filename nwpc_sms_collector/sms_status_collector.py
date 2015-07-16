@@ -8,19 +8,6 @@ import json
 import requests
 
 
-def json_default(obj):
-    if isinstance(obj, datetime):
-        return obj.isoformat(' ')  # obj.strftime('%Y-%m-%dT%H:%M:%S')
-    elif isinstance(obj, date):
-        return obj.strftime('%Y-%m-%d')
-    elif isinstance(obj, time):
-        return obj.strftime('%H:%M:%S')
-    elif isinstance(obj, timedelta):
-        return {'day': obj.days, 'seconds': obj.seconds}
-    else:
-        raise TypeError('%r is not JSON serializable' % obj)
-
-
 def get_sms_status(sms_name, sms_user, sms_password):
     command_string = "login {sms_name} {sms_user}  {sms_password};status;quit".format(
         sms_name=sms_name,
