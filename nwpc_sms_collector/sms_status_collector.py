@@ -2,6 +2,20 @@ import argparse
 import os
 import subprocess
 import re
+from datetime import datetime, time, timedelta
+
+
+def json_default(obj):
+    if isinstance(obj, datetime):
+        return obj.isoformat(' ')  # obj.strftime('%Y-%m-%dT%H:%M:%S')
+    elif isinstance(obj, date):
+        return obj.strftime('%Y-%m-%d')
+    elif isinstance(obj, time):
+        return obj.strftime('%H:%M:%S')
+    elif isinstance(obj, timedelta):
+        return {'day': obj.days, 'seconds': obj.seconds}
+    else:
+        raise TypeError('%r is not JSON serializable' % obj)
 
 
 def get_sms_status(sms_name, sms_user, sms_password):
@@ -18,14 +32,17 @@ def get_sms_status(sms_name, sms_user, sms_password):
     echo_pipe.stdout.close()
     (cdp_output, cdp_error) = cdp_pipe.communicate()
     return_code = cdp_pipe.returncode
-    #print 'return code:', return_code
     if return_code <> 0:
-        print "ERROR"
-        print cdp_error
-        return
-    #print cdp_output
+        result = {
+            'app': 'sms_status_collector',
+            'timestamp': datetime.now(),
+            'error': 'command_return_code_error',
+            'error-msg': cdp_error
+        }
+        return result
+
     cdp_output_lines = cdp_output.split('\n')
-    #print cdp_output_lines
+
     status_lines = []
     for line in cdp_output_lines:
         if line.startswith('Welcome') or line.startswith('#') or line=='' or line.startswith('Goodbye'):
@@ -35,12 +52,10 @@ def get_sms_status(sms_name, sms_user, sms_password):
             status_lines.append(line)
             #print "[x] ", line
 
-    #first_line = re.compile(r"^/\{[a-z]+\}( )*([! ])*\[([a-z])*\]( )*")
     first_line = re.compile(r"^/(\[|\{)([a-z]+)(\]|\}) *([a-zA-z0-9_]*) *(\[|\{)([a-z]+)(\]|\}) *")
-
     none_first_line = re.compile(r"^ *([a-zA-z0-9_]*) *(\[|\{)([a-z]+)(\]|\}) *")
 
-    #print status_lines
+    node_status_list = []
     for a_status_line in status_lines:
         m = first_line.match(a_status_line)
         if m is None:
@@ -54,8 +69,39 @@ def get_sms_status(sms_name, sms_user, sms_password):
         else:
             g = m.groups()
             print "/{sms_name}".format(sms_name=sms_name), g[1]
-            print "  |-",g[5], g[3]
+            node_name = sms_name
+            node_path = "/"
+            node_status = g[1]
+            node_status_list.append({
+                'name': node_name,
+                'path': node_path,
+                'status': node_status
+            })
 
+            print "  |-",g[5], g[3]
+            node_name = g[3]
+            node_path = "/{node_name}".format(sms_name=sms_name, node_name=node_name)
+            node_status = g[5]
+            node_status_list.append({
+                'name': node_name,
+                'path': node_path,
+                'status': node_status
+            })
+
+
+    current_time = datetime.now()
+
+    result = {
+        'app': 'sms_status_collector',
+        'type': 'sms_status',
+        'timestamp': current_time,
+        'data': {
+            'sms_name': sms_name,
+            'time': current_time,
+            'status': node_status_list
+        }
+    }
+    return result
 
 def sms_status_command_line_tool():
     parser = argparse.ArgumentParser(
@@ -75,7 +121,8 @@ DESCRIPTION
     sms_password = "1"
     if args.password:
         sms_password = args.password
-    get_sms_status(sms_name, sms_user, sms_password)
+    result = get_sms_status(sms_name, sms_user, sms_password)
+    print result
 
 
 if __name__ == "__main__":
