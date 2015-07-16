@@ -33,9 +33,10 @@ def get_sms_status(sms_name, sms_user, sms_password):
     (cdp_output, cdp_error) = cdp_pipe.communicate()
     return_code = cdp_pipe.returncode
     if return_code <> 0:
+        current_time = datetime.now().isoformat()
         result = {
             'app': 'sms_status_collector',
-            'timestamp': datetime.now(),
+            'timestamp': current_time,
             'error': 'command_return_code_error',
             'error-msg': cdp_error
         }
@@ -64,6 +65,14 @@ def get_sms_status(sms_name, sms_user, sms_password):
                 print "LINE: ",a_status_line.split()
             else:
                 g = m2.groups()
+                node_name = g[0]
+                node_path = "/{node_name}".format(sms_name=sms_name, node_name=node_name)
+                node_status = g[2]
+                node_status_list.append({
+                    'name': node_name,
+                    'path': node_path,
+                    'status': node_status
+                })
                 print "  |-",g[2], g[0]
 
         else:
@@ -88,9 +97,7 @@ def get_sms_status(sms_name, sms_user, sms_password):
                 'status': node_status
             })
 
-
-    current_time = datetime.now()
-
+    current_time = datetime.now().isoformat()
     result = {
         'app': 'sms_status_collector',
         'type': 'sms_status',
@@ -102,6 +109,7 @@ def get_sms_status(sms_name, sms_user, sms_password):
         }
     }
     return result
+
 
 def sms_status_command_line_tool():
     parser = argparse.ArgumentParser(
@@ -121,7 +129,9 @@ DESCRIPTION
     sms_password = "1"
     if args.password:
         sms_password = args.password
+
     result = get_sms_status(sms_name, sms_user, sms_password)
+
     print result
 
 
