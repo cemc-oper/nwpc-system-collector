@@ -3,6 +3,9 @@ import os
 import subprocess
 import re
 from datetime import datetime, time, timedelta
+import json
+
+import requests
 
 
 def json_default(obj):
@@ -104,6 +107,7 @@ def get_sms_status(sms_name, sms_user, sms_password):
         'timestamp': current_time,
         'data': {
             'sms_name': sms_name,
+            'sms_user': sms_user,
             'time': current_time,
             'status': node_status_list
         }
@@ -132,7 +136,16 @@ DESCRIPTION
 
     result = get_sms_status(sms_name, sms_user, sms_password)
 
+    post_data = {
+        'message': json.dumps(result)
+    }
+
     print result
+
+    host = "10.28.32.175"
+    port = 5101
+    url = "http://{host}:{port}/api/v1/hpc/sms/status".format(host=host, port=port)
+    requests.post(url, data=post_data)
 
 
 if __name__ == "__main__":
