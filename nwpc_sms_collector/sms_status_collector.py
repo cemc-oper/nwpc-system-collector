@@ -112,6 +112,7 @@ DESCRIPTION
     parser.add_argument("-n", "--name", help="sms server name", required=True)
     parser.add_argument("-u", "--user", help="sms server user name", required=True)
     parser.add_argument("-p", "--password", help="sms server password")
+    parser.add_argument("--disable-post", help="disable post to agent.", action='store_true')
 
     args = parser.parse_args()
 
@@ -129,10 +130,11 @@ DESCRIPTION
 
     print result
 
-    host = "10.28.32.175"
-    port = 5101
-    url = "http://{host}:{port}/api/v1/hpc/sms/status".format(host=host, port=port)
-    requests.post(url, data=post_data)
+    if not args.disable_post:
+        host = "10.28.32.175"
+        port = 5101
+        url = "http://{host}:{port}/api/v1/hpc/sms/status".format(host=host, port=port)
+        requests.post(url, data=post_data)
 
 
 if __name__ == "__main__":
