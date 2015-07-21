@@ -61,7 +61,8 @@ def get_sms_status(sms_name, sms_user, sms_password):
                 node_status_list.append({
                     'name': node_name,
                     'path': node_path,
-                    'status': node_status
+                    'status': node_status,
+                    'node_type': 'suite'
                 })
                 print "  |-",g[2], g[0]
 
@@ -74,7 +75,8 @@ def get_sms_status(sms_name, sms_user, sms_password):
             node_status_list.append({
                 'name': node_name,
                 'path': node_path,
-                'status': node_status
+                'status': node_status,
+                'node_type': 'server'
             })
 
             print "  |-",g[5], g[3]
@@ -84,7 +86,8 @@ def get_sms_status(sms_name, sms_user, sms_password):
             node_status_list.append({
                 'name': node_name,
                 'path': node_path,
-                'status': node_status
+                'status': node_status,
+                'node_type': 'suite'
             })
 
     current_time = datetime.now().isoformat()
