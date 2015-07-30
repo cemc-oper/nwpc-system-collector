@@ -12,14 +12,21 @@ import requests
 default_sms_variable_list = [
     {
         'variable_name': 'SMSDATE',
-        'variable_pattern': r"^.*SMSDATE '([0-9]+)'",
+        'variable_pattern': r"^.*SMSDATE '([0-9]+)'", # TODO: gen var or edit var
         'variable_value_group_index': 0
     }
 ]
 
 def get_sms_variable(sms_name, sms_user, sms_password, node_path, variable_list=default_sms_variable_list):
-    # TODO: gen var or edit var
-
+    """
+    获取 node_path 的变量
+    :param sms_name:
+    :param sms_user:
+    :param sms_password:
+    :param node_path: 节点路径，形如 /obs_reg
+    :param variable_list: 变量列表
+    :return:
+    """
     command_string = "login {sms_name} {sms_user}  {sms_password};status;show -f -K {node_path};quit".format(
         sms_name=sms_name,
         sms_user=sms_user,
@@ -45,7 +52,7 @@ def get_sms_variable(sms_name, sms_user, sms_password, node_path, variable_list=
         return result
     cdp_output_lines = cdp_output.split('\n')
 
-    result = {}
+    variable_map = {}
 
     for a_variable in variable_list:
         a_variable['re_line'] = re.compile(a_variable['variable_pattern'])
@@ -56,9 +63,8 @@ def get_sms_variable(sms_name, sms_user, sms_password, node_path, variable_list=
             if m is not None:
                 g = m.groups()
                 variable_value = g[a_variable['variable_value_group_index']]
-                result[a_variable['variable_name']] = variable_value
-    return result
-
+                variable_map[a_variable['variable_name']] = variable_value
+    return variable_map
 
 
 def get_sms_status(sms_name, sms_user, sms_password):
