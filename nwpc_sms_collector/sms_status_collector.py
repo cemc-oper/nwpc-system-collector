@@ -9,9 +9,16 @@ import json
 import requests
 
 
-def get_sms_variable(sms_name, sms_user, sms_password, node_path):
-    sms_variable_name = 'SMSDATE'
-    sms_variable_pattern = r"^ *# genvar {sms_variable_name} '([0-9]+)'".format(sms_variable_name=sms_variable_name)
+default_sms_variable_list = [
+    {
+        'variable_name': 'SMSDATE',
+        'variable_pattern': r"^.*SMSDATE '([0-9]+)'",
+        'variable_value_group_index': 0
+    }
+]
+
+def get_sms_variable(sms_name, sms_user, sms_password, node_path, variable_list=default_sms_variable_list):
+    # TODO: gen var or edit var
 
     command_string = "login {sms_name} {sms_user}  {sms_password};status;show -f -K {node_path};quit".format(
         sms_name=sms_name,
@@ -38,17 +45,19 @@ def get_sms_variable(sms_name, sms_user, sms_password, node_path):
         return result
     cdp_output_lines = cdp_output.split('\n')
 
-    variable_line = re.compile(sms_variable_pattern)
+    result = {}
+
+    for a_variable in variable_list:
+        a_variable['re_line'] = re.compile(a_variable['variable_pattern'])
 
     for line in cdp_output_lines:
-        m = variable_line.match(line)
-        if m is not None:
-            g = m.groups()
-            variable_value = g[0]
-            # print variable_value
-            return {
-                '{sms_variable_name}'.format(sms_variable_name=sms_variable_name): variable_value
-            }
+        for a_variable in variable_list:
+            m = a_variable['re_line'].match(line)
+            if m is not None:
+                g = m.groups()
+                variable_value = g[a_variable['variable_value_group_index']]
+                result[a_variable['variable_name']] = variable_value
+    return result
 
 
 
@@ -141,7 +150,7 @@ def get_sms_status(sms_name, sms_user, sms_password):
             if 'error' in variable_result:
                 continue
             else:
-                a_node_status['SMSDATE'] = variable_result['SMSDATE']
+                a_node_status['variable'] = variable_result
 
     current_time = datetime.now().isoformat()
     result = {
