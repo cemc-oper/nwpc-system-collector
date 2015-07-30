@@ -1,3 +1,4 @@
+# coding=utf-8
 import argparse
 import os
 import subprocess
@@ -6,6 +7,49 @@ from datetime import datetime, time, timedelta
 import json
 
 import requests
+
+
+def get_sms_variable(sms_name, sms_user, sms_password, node_path):
+    sms_variable_name = 'SMSDATE'
+    sms_variable_pattern = r"^ *# genvar {sms_variable_name} '([0-9]+)'".format(sms_variable_name=sms_variable_name)
+
+    command_string = "login {sms_name} {sms_user}  {sms_password};status;show -f -K {node_path};quit".format(
+        sms_name=sms_name,
+        sms_user=sms_user,
+        sms_password=sms_password,
+        node_path=node_path
+    )
+    echo_pipe = subprocess.Popen(['echo', command_string], stdout=subprocess.PIPE)
+    cdp_pipe = subprocess.Popen(['/cma/u/app/sms/bin/cdp'],
+                                stdin=echo_pipe.stdout,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
+    echo_pipe.stdout.close()
+    (cdp_output, cdp_error) = cdp_pipe.communicate()
+    return_code = cdp_pipe.returncode
+    if return_code <> 0:
+        current_time = datetime.now().isoformat()
+        result = {
+            'app': 'sms_status_collector',
+            'timestamp': current_time,
+            'error': 'command_return_code_error',
+            'error-msg': cdp_error
+        }
+        return result
+    cdp_output_lines = cdp_output.split('\n')
+
+    variable_line = re.compile(sms_variable_pattern)
+
+    for line in cdp_output_lines:
+        m = variable_line.match(line)
+        if m is not None:
+            g = m.groups()
+            variable_value = g[0]
+            # print variable_value
+            return {
+                '{sms_variable_name}'.format(sms_variable_name=sms_variable_name): variable_value
+            }
+
 
 
 def get_sms_status(sms_name, sms_user, sms_password):
@@ -89,6 +133,15 @@ def get_sms_status(sms_name, sms_user, sms_password):
                 'status': node_status,
                 'node_type': 'suite'
             })
+
+    for a_node_status in node_status_list:
+        if a_node_status['node_type'] == 'suite':
+            # print 'suite:',a_node_status['path']
+            variable_result = get_sms_variable(sms_name, sms_user, sms_password, a_node_status['path'])
+            if 'error' in variable_result:
+                continue
+            else:
+                a_node_status['SMSDATE'] = variable_result['SMSDATE']
 
     current_time = datetime.now().isoformat()
     result = {
