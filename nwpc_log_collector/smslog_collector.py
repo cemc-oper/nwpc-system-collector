@@ -183,6 +183,7 @@ def post_sms_log_content_to_kafka(owner, repo, content, version, repo_id=None):
 
 def agent_appender(owner, repo, limit_count=-1, upload_type='kafka'):
     post_max_count = POST_MAX_COUNT
+    post_collector_log(owner, repo, "post_max_count={post_max_count}".format(post_max_count=post_max_count))
 
     # TODO: check whether web site is available.
     post_collector_log(owner, repo, "Getting sms log info from server...")
