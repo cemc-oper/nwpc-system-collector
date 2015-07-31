@@ -162,7 +162,7 @@ def get_sms_status(sms_name, sms_user, sms_password, verbose=False):
             else:
                 a_node_status['variable'] = variable_result
 
-    current_time = datetime.now().isoformat()
+    current_time = (datetime.now() + timedelta(hours=8)).isoformat() # 北京时间
     result = {
         'app': 'sms_status_collector',
         'type': 'sms_status',
