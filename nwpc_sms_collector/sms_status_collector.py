@@ -67,7 +67,7 @@ def get_sms_variable(sms_name, sms_user, sms_password, node_path, variable_list=
     return variable_map
 
 
-def get_sms_status(sms_name, sms_user, sms_password):
+def get_sms_status(sms_name, sms_user, sms_password, verbose=False):
     command_string = "login {sms_name} {sms_user}  {sms_password};status;quit".format(
         sms_name=sms_name,
         sms_user=sms_user,
@@ -111,7 +111,8 @@ def get_sms_status(sms_name, sms_user, sms_password):
         if m is None:
             m2 = none_first_line.match(a_status_line)
             if m2 is None:
-                print "LINE: ",a_status_line.split()
+                if verbose:
+                    print "LINE: ",a_status_line.split()
             else:
                 g = m2.groups()
                 node_name = g[0]
@@ -123,11 +124,13 @@ def get_sms_status(sms_name, sms_user, sms_password):
                     'status': node_status,
                     'node_type': 'suite'
                 })
-                print "  |-",g[2], g[0]
+                if verbose:
+                    print "  |-",g[2], g[0]
 
         else:
             g = m.groups()
-            print "/{sms_name}".format(sms_name=sms_name), g[1]
+            if verbose:
+                print "/{sms_name}".format(sms_name=sms_name), g[1]
             node_name = sms_name
             node_path = "/"
             node_status = g[1]
@@ -138,7 +141,8 @@ def get_sms_status(sms_name, sms_user, sms_password):
                 'node_type': 'server'
             })
 
-            print "  |-",g[5], g[3]
+            if verbose:
+                print "  |-",g[5], g[3]
             node_name = g[3]
             node_path = "/{node_name}".format(sms_name=sms_name, node_name=node_name)
             node_status = g[5]
@@ -184,14 +188,18 @@ DESCRIPTION
     parser.add_argument("-u", "--user", help="sms server user name", required=True)
     parser.add_argument("-p", "--password", help="sms server password")
     parser.add_argument("--disable-post", help="disable post to agent.", action='store_true')
+    parser.add_argument("--verbose", help="show more outputs", action='store_true')
 
     args = parser.parse_args()
 
     sms_name = args.name
     sms_user = args.user
     sms_password = "1"
+    verbose = False
     if args.password:
         sms_password = args.password
+    if args.verbose:
+        verbose = True
 
     result = get_sms_status(sms_name, sms_user, sms_password)
 
@@ -199,7 +207,9 @@ DESCRIPTION
         'message': json.dumps(result)
     }
 
-    print result
+    if verbose:
+        print result
+    print 'Get sms status...Done'
 
     if not args.disable_post:
         host = "10.28.32.175"
