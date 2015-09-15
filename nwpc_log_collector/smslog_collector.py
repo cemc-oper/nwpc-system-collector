@@ -403,7 +403,7 @@ DESCRIPTION
 
     args = parser.parse_args()
 
-    config_file_path = os.path.dirname(__file__) + "/config.json"
+    config_file_path = os.path.dirname(__file__) + "/smslog_collector_config.json"
 
     if args.config:
         config_file_path = args.config
