@@ -435,7 +435,7 @@ DESCRIPTION
 
     args = parser.parse_args()
 
-    config_file_path = os.path.dirname(__file__) + "/smslog_collector_config.json"
+    config_file_path = os.path.dirname(__file__) + "/smslog_collector.config"
 
     if args.config:
         config_file_path = args.config
