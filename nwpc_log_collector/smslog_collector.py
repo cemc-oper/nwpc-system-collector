@@ -19,6 +19,11 @@ POST_MAX_COUNT = 1000   # 批量日志发送条目阈值
 
 
 def get_config(config_file_path):
+    """
+    读取配置文件信息，配置文件为 json 格式
+    :param config_file_path:
+    :return:
+    """
     global NWPC_LOG_AGENT_HOST, NWPC_LOG_AGENT_PORT, POST_MAX_COUNT
     f = open(config_file_path, 'r')
     config = json.load(f)
@@ -32,6 +37,10 @@ def get_config(config_file_path):
 
 
 def get_logger():
+    """
+    初始化日志格式
+    :return:
+    """
     script_logger = logging.getLogger(__name__)
     script_logger.setLevel(logging.INFO)
 
@@ -132,9 +141,16 @@ def post_collector_error_log(owner, repo, message):
     return post_collector_log(owner, repo, message, message_type='error')
 
 
-# sms 日志内容
-
 def post_sms_log_content_to_mysql(owner, repo, content, version, repo_id=None):
+    """
+    将 sms 日志内容发送到 mysql
+    :param owner:
+    :param repo:
+    :param content:
+    :param version:
+    :param repo_id:
+    :return:
+    """
     post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/sms/file'.format(
         owner=owner, repo=repo
     )
@@ -153,7 +169,7 @@ def post_sms_log_content_to_mysql(owner, repo, content, version, repo_id=None):
 
 def post_sms_log_content_to_kafka(owner, repo, content, version, repo_id=None):
     """
-    上传 sms log 日志条目
+    上传 sms log 日志条目到 kafka
     :param owner:
     :param repo:
     :param content:
@@ -179,9 +195,15 @@ def post_sms_log_content_to_kafka(owner, repo, content, version, repo_id=None):
     return
 
 
-# 收集日志的主程序
-
 def agent_appender(owner, repo, limit_count=-1, upload_type='kafka'):
+    """
+    收集日志的主程序
+    :param owner:
+    :param repo:
+    :param limit_count:
+    :param upload_type:
+    :return:
+    """
     post_max_count = POST_MAX_COUNT
     post_collector_log(owner, repo, "post_max_count={post_max_count}".format(post_max_count=post_max_count))
 
@@ -324,6 +346,11 @@ def agent_appender(owner, repo, limit_count=-1, upload_type='kafka'):
 
 
 def collect_handler(args):
+    """
+    处理 collect 命令，收集日志
+    :param args:
+    :return:
+    """
     user_name = 'nwp_xp'
     repo_name = 'nwp_qu_cma20n03'
     limit_count_number = -1
@@ -344,6 +371,11 @@ def collect_handler(args):
 
 
 def show_handler(args):
+    """
+    处理 show 命令，显示项目信息
+    :param args:
+    :return:
+    """
     owner = args.user
     print 'User name: {user_name}'.format(user_name=owner)
     repo = args.repo
