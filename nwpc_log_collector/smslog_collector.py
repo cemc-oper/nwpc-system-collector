@@ -143,7 +143,7 @@ def post_collector_error_log(owner, repo, message):
 
 def post_sms_log_content_to_mysql(owner, repo, content, version, repo_id=None):
     """
-    将 sms 日志内容发送到 mysql
+    将 sms 日志内容发送到 agent 的 mysql 接口
     :param owner:
     :param repo:
     :param content:
@@ -151,7 +151,9 @@ def post_sms_log_content_to_mysql(owner, repo, content, version, repo_id=None):
     :param repo_id:
     :return:
     """
-    post_url = 'http://10.28.32.175:5001/agent/repos/{owner}/{repo}/collector/sms/file'.format(
+    post_url = 'http://{log_agent_host}:{log_agent_port}/agent/repos/{owner}/{repo}/collector/sms/file'.format(
+        log_agent_host=NWPC_LOG_AGENT_HOST,
+        log_agent_port=NWPC_LOG_AGENT_PORT,
         owner=owner, repo=repo
     )
     post_data = {
@@ -161,15 +163,15 @@ def post_sms_log_content_to_mysql(owner, repo, content, version, repo_id=None):
     if repo_id is not None:
         post_data['repo_id'] = repo_id
 
-    post_collector_log(owner, repo, "Posting log content to server...")
+    post_collector_log(owner, repo, "Posting log content to agent/mysql...")
     r = requests.post(post_url, data=post_data)
-    post_collector_log(owner, repo, "Posting log content to server...Done")
+    post_collector_log(owner, repo, "Posting log content to agent/mysql...Done")
     return
 
 
 def post_sms_log_content_to_kafka(owner, repo, content, version, repo_id=None):
     """
-    上传 sms log 日志条目到 kafka
+    将 sms 日志发送到 agent 的 kafka 接口
     :param owner:
     :param repo:
     :param content:
@@ -189,9 +191,9 @@ def post_sms_log_content_to_kafka(owner, repo, content, version, repo_id=None):
     if repo_id is not None:
         post_data['repo_id'] = repo_id
 
-    post_collector_log(owner, repo, "Posting log content to server...")
+    post_collector_log(owner, repo, "Posting log content to agent/kafka...")
     r = requests.post(post_url, data=post_data)
-    post_collector_log(owner, repo, "Posting log content to server...Done")
+    post_collector_log(owner, repo, "Posting log content to agent/kafka...Done")
     return
 
 
@@ -204,6 +206,19 @@ def agent_appender(owner, repo, limit_count=-1, upload_type='kafka'):
     :param upload_type:
     :return:
     """
+
+    # 检查参数
+    if upload_type == 'mysql':
+        post_sms_log_function = post_sms_log_content_to_mysql
+    elif upload_type == 'kafka':
+        post_sms_log_function = post_sms_log_content_to_kafka
+    else:
+        post_collector_log(owner, repo, "Please select a valid upload type, such as mysql and kafka.")
+        post_collector_error_log(owner, repo, "Upload type is not supported.")
+        logout_sms_log_collector(owner, repo, status='error')
+        return -3
+
+    # 常数设置
     post_max_count = POST_MAX_COUNT
     post_collector_log(owner, repo, "post_max_count={post_max_count}".format(post_max_count=post_max_count))
 
@@ -328,15 +343,8 @@ def agent_appender(owner, repo, limit_count=-1, upload_type='kafka'):
                 post_collector_log(owner, repo, "left time: {left_time}".format(left_time=left_time_delta))
 
         # 上传日志内容
-        if upload_type == 'mysql':
-            post_sms_log_content_to_mysql(owner, repo, content, version, repo_id)
-        elif upload_type == 'kafka':
-            post_sms_log_content_to_kafka(owner, repo, content, version, repo_id)
-        else:
-            post_collector_log(owner, repo, "Please select a valid upload type, such as mysql and kafka.")
-            post_collector_error_log(owner, repo, "Upload type is not supported.")
-            logout_sms_log_collector(owner, repo, status='error')
-            return -3
+        post_sms_log_function(owner, repo, content, version, repo_id)
+
         content = []
         post_collector_log(owner, repo, "Posted all lines.")
 
@@ -365,7 +373,7 @@ def collect_handler(args):
         limit_count_number = args.limit
         print "The number of appended records is limited to {limit_count}".format(limit_count=limit_count_number)
     if args.type:
-        upload_type = args.type
+        upload_type = args.upload_type
     print "Upload type: {upload_type}".format(upload_type=upload_type)
     agent_appender(owner=user_name, repo=repo_name, limit_count=limit_count_number, upload_type=upload_type)
 
@@ -427,7 +435,7 @@ DESCRIPTION
     collect_parser.add_argument("-u", "--user", help="user NAME", required=True)
     collect_parser.add_argument("-r", "--repo", help="repo name", required=True)
     collect_parser.add_argument("-l", "--limit", type=int, help="limit count")
-    collect_parser.add_argument("-t", "--type", help="upload type")
+    collect_parser.add_argument("-t", "--upload_type", help="upload type")
 
     show_parser = sub_parsers.add_parser('show', description="show sms log information.")
     show_parser.add_argument("-u", "--user", help="user NAME", required=True)
