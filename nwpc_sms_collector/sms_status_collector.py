@@ -9,6 +9,11 @@ import json
 import requests
 
 
+DEFAULT_POST_HOST = "10.28.32.175"
+DEFAULT_POST_PORT = 5101
+DEFAULT_POST_URL = "http://{host}:{port}/api/v1/hpc/sms/status"
+
+
 default_sms_variable_list = [
     {
         'variable_name': 'SMSDATE',
@@ -19,7 +24,7 @@ default_sms_variable_list = [
 
 def get_sms_variable(sms_name, sms_user, sms_password, node_path, variable_list=default_sms_variable_list):
     """
-    获取 node_path 的变量
+    获取 node_path 节点的变量
     :param sms_name:
     :param sms_user:
     :param sms_password:
@@ -68,6 +73,14 @@ def get_sms_variable(sms_name, sms_user, sms_password, node_path, variable_list=
 
 
 def get_sms_status(sms_name, sms_user, sms_password, verbose=False):
+    """
+    获取 sms 服务器状态
+    :param sms_name:
+    :param sms_user:
+    :param sms_password:
+    :param verbose:
+    :return:
+    """
     command_string = "login {sms_name} {sms_user}  {sms_password};status;quit".format(
         sms_name=sms_name,
         sms_user=sms_user,
@@ -212,9 +225,9 @@ DESCRIPTION
     print 'Get sms status...Done'
 
     if not args.disable_post:
-        host = "10.28.32.175"
-        port = 5101
-        url = "http://{host}:{port}/api/v1/hpc/sms/status".format(host=host, port=port)
+        host = DEFAULT_POST_HOST
+        port = DEFAULT_POST_PORT
+        url = DEFAULT_POST_URL.format(host=host, port=port)
         requests.post(url, data=post_data)
 
 
