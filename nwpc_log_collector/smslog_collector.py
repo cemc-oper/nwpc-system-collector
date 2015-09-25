@@ -372,7 +372,7 @@ def collect_handler(args):
     if args.limit:
         limit_count_number = args.limit
         print "The number of appended records is limited to {limit_count}".format(limit_count=limit_count_number)
-    if args.type:
+    if args.upload_type:
         upload_type = args.upload_type
     print "Upload type: {upload_type}".format(upload_type=upload_type)
     agent_appender(owner=user_name, repo=repo_name, limit_count=limit_count_number, upload_type=upload_type)
