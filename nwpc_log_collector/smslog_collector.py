@@ -12,7 +12,7 @@ import requests
 import logging
 
 
-NWPC_LOG_AGENT_HOST = "10.28.32.175"
+NWPC_LOG_AGENT_HOST = "10.28.32.175";
 NWPC_LOG_AGENT_PORT = "5001"
 
 POST_MAX_COUNT = 1000   # 批量日志发送条目阈值
