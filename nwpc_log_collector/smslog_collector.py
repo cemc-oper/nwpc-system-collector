@@ -12,7 +12,7 @@ import requests
 import logging
 
 
-NWPC_LOG_AGENT_HOST = "10.28.32.175";
+NWPC_LOG_AGENT_HOST = "10.28.32.175"
 NWPC_LOG_AGENT_PORT = "5001"
 
 POST_MAX_COUNT = 1000   # 批量日志发送条目阈值
@@ -31,7 +31,7 @@ def get_config(config_file_path):
 
     NWPC_LOG_AGENT_HOST = config['nwpc_log_agent_host']
     NWPC_LOG_AGENT_PORT = config['nwpc_log_agent_port']
-    POST_MAX_COUNT = config['nwpc_log_agent_port']
+    POST_MAX_COUNT = config['post_max_count']
 
     return config
 
@@ -333,7 +333,7 @@ def agent_appender(owner, repo, limit_count=-1, upload_type='kafka'):
                 'line': line
             })
             if len(content) >= post_max_count:
-                post_sms_log_content_to_kafka(owner, repo, content, version, repo_id)
+                post_sms_log_function(owner, repo, content, version, repo_id)
                 content = []
                 post_current_time = datetime.datetime.now()
                 post_current_time_delta = post_current_time - post_start_time
