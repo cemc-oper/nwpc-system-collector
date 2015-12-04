@@ -12,6 +12,8 @@ import requests
 import logging
 
 
+config_file_name = "smslog_collector.config"
+
 NWPC_LOG_AGENT_HOST = "10.28.32.175"
 NWPC_LOG_AGENT_PORT = "5001"
 
@@ -427,7 +429,7 @@ def nwpc_log_collector_tool():
 DESCRIPTION
     Collect sms log to a web agent.""")
 
-    parser.add_argument("-c", "--config", help="config file path")
+    parser.add_argument("-c", "--config", help="config file path. default config file is smslog_collector.config.")
 
     sub_parsers = parser.add_subparsers(title="sub commands", dest="sub_command")
 
@@ -435,7 +437,7 @@ DESCRIPTION
     collect_parser.add_argument("-u", "--user", help="user NAME", required=True)
     collect_parser.add_argument("-r", "--repo", help="repo name", required=True)
     collect_parser.add_argument("-l", "--limit", type=int, help="limit count")
-    collect_parser.add_argument("-t", "--upload_type", help="upload type")
+    collect_parser.add_argument("-t", "--upload_type", help="upload type: mysql/kafka")
 
     show_parser = sub_parsers.add_parser('show', description="show sms log information.")
     show_parser.add_argument("-u", "--user", help="user NAME", required=True)
@@ -443,7 +445,7 @@ DESCRIPTION
 
     args = parser.parse_args()
 
-    config_file_path = os.path.dirname(__file__) + "/smslog_collector.config"
+    config_file_path = os.path.dirname(__file__) + "/" + config_file_name
 
     if args.config:
         config_file_path = args.config
