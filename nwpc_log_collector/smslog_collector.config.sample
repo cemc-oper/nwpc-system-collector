@@ -1,9 +1,9 @@
-// ÔÚ smslog_collector_config.json ÖÐÉèÖÃÅäÖÃÐÅÏ¢£¬¸²¸Ç±¾ÎÄ¼þÖÐ¸ø³öµÄÄ¬ÈÏÉèÖÃ
+ï»¿// åœ¨ smslog_collector_config.json ä¸­è®¾ç½®é…ç½®ä¿¡æ¯ï¼Œè¦†ç›–æœ¬æ–‡ä»¶ä¸­ç»™å‡ºçš„é»˜è®¤è®¾ç½®
 {
-    // nwpc_log_agent µÄÖ÷»úµØÖ·ºÍ¶Ë¿ÚºÅ
+    // nwpc_log_agent çš„ä¸»æœºåœ°å€å’Œç«¯å£å·
     "nwpc_log_agent_host": "10.28.32.175",
     "nwpc_log_agent_port": "5001",
 
-    // Ã¿´ÎÉÏ´«ÈÕÖ¾µÄ×î´óÌõÄ¿Êý
+    // æ¯æ¬¡ä¸Šä¼ æ—¥å¿—çš„æœ€å¤§æ¡ç›®æ•°
     "post_max_count": 1000
 }
