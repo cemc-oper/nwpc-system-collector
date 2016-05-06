@@ -1,0 +1,14 @@
+// SMS 状态收集程序配置文件
+// 格式：json
+
+{
+    // 上传状态数据的服务器设置
+    "post":{
+        // url模板，使用配置项 host 和 port 替换
+        "url":  "http://{host}:{port}/api/v1/hpc/sms/status",
+
+        "host": "10.28.32.175",
+
+        "port": 5101
+    }
+}

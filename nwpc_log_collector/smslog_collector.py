@@ -445,7 +445,9 @@ DESCRIPTION
 
     args = parser.parse_args()
 
-    config_file_path = os.path.dirname(__file__) + "/" + config_file_name
+    # BUG: There is a bug for os.path.dirname on the python compiled by me on AIX.
+    # config_file_path = os.path.dirname(__file__) + "/" + config_file_name
+    config_file_path = "./conf/" + config_file_name
 
     if args.config:
         config_file_path = args.config

@@ -9,9 +9,11 @@ import json
 import requests
 
 
-DEFAULT_POST_HOST = "10.28.32.175"
-DEFAULT_POST_PORT = 5101
-DEFAULT_POST_URL = "http://{host}:{port}/api/v1/hpc/sms/status"
+config_file_name = 'sms_status_collector.config'
+
+SMS_STATUS_POST_HOST = "10.28.32.175"
+SMS_STATUS_POST_PORT = 5101
+SMS_STATUS_POST_URL = "http://{host}:{port}/api/v1/hpc/sms/status"
 
 
 default_sms_variable_list = [
@@ -21,6 +23,25 @@ default_sms_variable_list = [
         'variable_value_group_index': 0
     }
 ]
+
+
+def get_config(config_file_path):
+    """
+    读取配置文件信息，配置文件为 json 格式
+    :param config_file_path:
+    :return:
+    """
+    global SMS_STATUS_POST_HOST, SMS_STATUS_POST_PORT, SMS_STATUS_POST_URL
+    f = open(config_file_path, 'r')
+    config = json.load(f)
+    f.close()
+
+    SMS_STATUS_POST_HOST = config['post']['host']
+    SMS_STATUS_POST_PORT = config['post']['port']
+    SMS_STATUS_POST_URL = config['post']['url']
+
+    return config
+
 
 def get_sms_variable(sms_name, sms_user, sms_password, node_path, variable_list=default_sms_variable_list):
     """
@@ -93,6 +114,7 @@ def get_sms_status(sms_name, sms_user, sms_password, verbose=False):
                                 stderr=subprocess.PIPE)
     echo_pipe.stdout.close()
     (cdp_output, cdp_error) = cdp_pipe.communicate()
+    # print cdp_output
     return_code = cdp_pipe.returncode
     if return_code <> 0:
         current_time = datetime.now().isoformat()
@@ -202,8 +224,19 @@ DESCRIPTION
     parser.add_argument("-p", "--password", help="sms server password")
     parser.add_argument("--disable-post", help="disable post to agent.", action='store_true')
     parser.add_argument("--verbose", help="show more outputs", action='store_true')
+    parser.add_argument("-c", "--config", help="config file, default config file is ./conf/{config_file_name}".format(
+        config_file_name=config_file_name
+    ))
 
     args = parser.parse_args()
+
+    # BUG: There is a bug for os.path.dirname on the python compiled by me on AIX.
+    # config_file_path = os.path.dirname(__file__) + "/" + config_file_name
+    config_file_path = "./conf/" + config_file_name
+
+    if args.config:
+        config_file_path = args.config
+    get_config(config_file_path)
 
     sms_name = args.name
     sms_user = args.user
@@ -225,9 +258,9 @@ DESCRIPTION
     print 'Get sms status...Done'
 
     if not args.disable_post:
-        host = DEFAULT_POST_HOST
-        port = DEFAULT_POST_PORT
-        url = DEFAULT_POST_URL.format(host=host, port=port)
+        host = SMS_STATUS_POST_HOST
+        port = SMS_STATUS_POST_PORT
+        url = SMS_STATUS_POST_URL.format(host=host, port=port)
         requests.post(url, data=post_data)
 
 
