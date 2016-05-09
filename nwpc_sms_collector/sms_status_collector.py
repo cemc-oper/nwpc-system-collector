@@ -8,6 +8,7 @@ import json
 
 import requests
 
+# default settings
 
 config_file_name = 'sms_status_collector.config'
 
@@ -230,7 +231,7 @@ DESCRIPTION
 
     args = parser.parse_args()
 
-    # BUG: There is a bug for os.path.dirname on the python compiled by me on AIX.
+    # BUG: There is a bug for os.path.dirname on the python 2.7 compiled by me on AIX.
     # config_file_path = os.path.dirname(__file__) + "/" + config_file_name
     config_file_path = "./conf/" + config_file_name
 
@@ -262,6 +263,8 @@ DESCRIPTION
         port = SMS_STATUS_POST_PORT
         url = SMS_STATUS_POST_URL.format(host=host, port=port)
         requests.post(url, data=post_data)
+
+    return 0
 
 
 if __name__ == "__main__":
