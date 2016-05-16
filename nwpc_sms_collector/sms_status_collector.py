@@ -408,6 +408,7 @@ def get_sms_whole_status(sms_name, sms_user, sms_password, verbose=False):
     for a_status in node_status_list:
         bunch.add_node_status(a_status)
     bunch_dict = bunch.to_dict()
+    bunch_dict['name'] = sms_name
 
     current_time = (datetime.now() + timedelta(hours=8)).isoformat() # 北京时间
     result = {
