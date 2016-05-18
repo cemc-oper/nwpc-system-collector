@@ -377,7 +377,7 @@ class SmsStatusAnalyzer(object):
         return self.node_status_list
 
 
-def get_sms_whole_status(sms_name, sms_user, sms_password, verbose=False):
+def get_sms_whole_status(owner, repo, sms_name, sms_user, sms_password, verbose=False):
     command_string = "login {sms_name} {sms_user}  {sms_password};status -f;exit".format(
         sms_name=sms_name,
         sms_user=sms_user,
@@ -416,6 +416,8 @@ def get_sms_whole_status(sms_name, sms_user, sms_password, verbose=False):
         'type': 'sms_status',
         'timestamp': current_time,
         'data': {
+            'owner': owner,
+            'repo': repo,
             'sms_name': sms_name,
             'sms_user': sms_user,
             'time': current_time,
@@ -426,15 +428,23 @@ def get_sms_whole_status(sms_name, sms_user, sms_password, verbose=False):
 
 
 def sms_status_command_line_tool():
+    default_sms_password = "1"
+
+
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description="""\
 DESCRIPTION
     Get sms suites' status.""")
-
+    parser.add_argument("-o","--owner", help="owner name, default is same as sms server user name")
+    parser.add_argument("-r","--repo", help="repo name, default is same as sms server name")
     parser.add_argument("-n", "--name", help="sms server name", required=True)
     parser.add_argument("-u", "--user", help="sms server user name", required=True)
-    parser.add_argument("-p", "--password", help="sms server password")
+    parser.add_argument(
+        "-p", "--password",
+        help="sms server password, default is {default_sms_password}".format(
+            default_sms_password=default_sms_password)
+    )
     parser.add_argument("--disable-post", help="disable post to agent.", action='store_true')
     parser.add_argument("--verbose", help="show more outputs", action='store_true')
     parser.add_argument("-c", "--config", help="config file, default config file is ./conf/{config_file_name}".format(
@@ -454,13 +464,26 @@ DESCRIPTION
     sms_name = args.name
     sms_user = args.user
     sms_password = "1"
-    verbose = False
     if args.password:
         sms_password = args.password
+
+    if args.owner:
+        owner = args.owner
+    else:
+        owner = sms_user
+
+    if args.repo:
+        repo = args.repo
+    else:
+        repo = sms_name
+
+    verbose = False
     if args.verbose:
         verbose = True
 
-    result = get_sms_whole_status(sms_name, sms_user, sms_password, verbose)
+    print 'Getting sms status'
+    result = get_sms_whole_status(owner, repo, sms_name, sms_user, sms_password, verbose)
+    print 'Getting sms status...Done'
 
     post_data = {
         'message': json.dumps(result)
@@ -479,13 +502,15 @@ DESCRIPTION
            type=result['type'],
            timestamp=result['timestamp'])
 
-    print 'Get sms status...Done'
-
     if not args.disable_post:
+        if verbose:
+            print "Posting sms status..."
         host = SMS_STATUS_POST_HOST
         port = SMS_STATUS_POST_PORT
         url = SMS_STATUS_POST_URL.format(host=host, port=port)
         requests.post(url, data=post_data)
+        if verbose:
+            print "Posting sms status...done"
 
     return 0
 
