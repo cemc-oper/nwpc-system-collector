@@ -136,6 +136,8 @@ def post_collector_log(owner, repo, message, message_type=None):
         'content': message
     }
     r = requests.post(post_url, data=post_data)
+    if r.status_code != 200:
+        sys.exit()
     return
 
 
@@ -167,6 +169,8 @@ def post_sms_log_content_to_mysql(owner, repo, content, version, repo_id=None):
 
     post_collector_log(owner, repo, "Posting log content to agent/mysql...")
     r = requests.post(post_url, data=post_data)
+    if r.status_code != 200:
+        sys.exit()
     post_collector_log(owner, repo, "Posting log content to agent/mysql...Done")
     return
 
@@ -195,6 +199,8 @@ def post_sms_log_content_to_kafka(owner, repo, content, version, repo_id=None):
 
     post_collector_log(owner, repo, "Posting log content to agent/kafka...")
     r = requests.post(post_url, data=post_data)
+    if r.status_code != 200:
+        sys.exit()
     post_collector_log(owner, repo, "Posting log content to agent/kafka...Done")
     return
 
