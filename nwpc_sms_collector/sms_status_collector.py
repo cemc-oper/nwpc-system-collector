@@ -346,9 +346,15 @@ class SmsStatusAnalyzer(object):
 
     def analyse_node_status(self, contents):
         lines = contents.split('\n')
+        lines_length = len(lines)
         cur_line_no = 0
-        while lines[cur_line_no][0] != '/':
+        while cur_line_no < lines_length and not lines[cur_line_no].startswith('/'):
             cur_line_no += 1
+
+        if cur_line_no == lines_length:
+            # 没有获取的数据
+            return None
+
         # 分析第一行，示例
         # /{act}   obs_reg         [que]   aob       [que]   00E      [com]   getgmf              {com}
         cur_line = lines[cur_line_no].rstrip(' ')
@@ -390,20 +396,34 @@ def get_sms_whole_status(owner, repo, sms_name, sms_user, sms_password, verbose=
                                 stderr=subprocess.PIPE)
     echo_pipe.stdout.close()
     (cdp_output, cdp_error) = cdp_pipe.communicate()
-    # print cdp_output
+    #print cdp_output
+    # TODO: not login error
     return_code = cdp_pipe.returncode
-    if return_code <> 0:
+    if return_code != 0:
         current_time = datetime.now().isoformat()
         result = {
             'app': 'sms_status_collector',
             'timestamp': current_time,
             'error': 'command_return_code_error',
-            'error-msg': cdp_error
+            'data':{
+                'message': cdp_error
+            }
         }
         return result
 
     tool = SmsStatusAnalyzer()
     node_status_list = tool.analyse_node_status(cdp_output)
+    if node_status_list is None:
+        current_time = datetime.now().isoformat()
+        result = {
+            'app': 'sms_status_collector',
+            'timestamp': current_time,
+            'error': 'cdp_cannot_get_satus',
+            'data': {
+                'message': cdp_error
+            }
+        }
+        return result
     bunch = Bunch()
     for a_status in node_status_list:
         bunch.add_node_status(a_status)
@@ -427,32 +447,7 @@ def get_sms_whole_status(owner, repo, sms_name, sms_user, sms_password, verbose=
     return result
 
 
-def sms_status_command_line_tool():
-    default_sms_password = "1"
-
-
-    parser = argparse.ArgumentParser(
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        description="""\
-DESCRIPTION
-    Get sms suites' status.""")
-    parser.add_argument("-o","--owner", help="owner name, default is same as sms server user name")
-    parser.add_argument("-r","--repo", help="repo name, default is same as sms server name")
-    parser.add_argument("-n", "--name", help="sms server name", required=True)
-    parser.add_argument("-u", "--user", help="sms server user name", required=True)
-    parser.add_argument(
-        "-p", "--password",
-        help="sms server password, default is {default_sms_password}".format(
-            default_sms_password=default_sms_password)
-    )
-    parser.add_argument("--disable-post", help="disable post to agent.", action='store_true')
-    parser.add_argument("--verbose", help="show more outputs", action='store_true')
-    parser.add_argument("-c", "--config", help="config file, default config file is ./conf/{config_file_name}".format(
-        config_file_name=config_file_name
-    ))
-
-    args = parser.parse_args()
-
+def collect_handler(args):
     # BUG: There is a bug for os.path.dirname on the python 2.7 compiled by me on AIX.
     # config_file_path = os.path.dirname(__file__) + "/" + config_file_name
     config_file_path = "./conf/" + config_file_name
@@ -498,9 +493,10 @@ DESCRIPTION
     type: {type},
     timestamp: {timestamp},
     data: ...
-""".format(app=result['app'],
-           type=result['type'],
-           timestamp=result['timestamp'])
+""".format(
+                app=result['app'],
+                type=result['type'],
+                timestamp=result['timestamp'])
 
     if not args.disable_post:
         if verbose:
@@ -511,6 +507,84 @@ DESCRIPTION
         requests.post(url, data=post_data)
         if verbose:
             print "Posting sms status...done"
+
+
+def show_handler(args):
+    # BUG: There is a bug for os.path.dirname on the python 2.7 compiled by me on AIX.
+    # config_file_path = os.path.dirname(__file__) + "/" + config_file_name
+    config_file_path = "./conf/" + config_file_name
+
+    if args.config:
+        config_file_path = args.config
+    get_config(config_file_path)
+
+    sms_name = args.name
+    sms_user = args.user
+    sms_password = "1"
+    if args.password:
+        sms_password = args.password
+
+    if args.owner:
+        owner = args.owner
+    else:
+        owner = sms_user
+
+    if args.repo:
+        repo = args.repo
+    else:
+        repo = sms_name
+
+    result = get_sms_whole_status(owner, repo, sms_name, sms_user, sms_password, verbose=False)
+    print json.dumps(result)
+    return 0
+
+
+def sms_status_command_line_tool():
+    default_sms_password = "1"
+
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description="""\
+DESCRIPTION
+    Get sms suites' status.""")
+
+    parser.add_argument("-c", "--config", help="config file, default config file is ./conf/{config_file_name}".format(
+        config_file_name=config_file_name
+    ))
+
+    sub_parsers = parser.add_subparsers(title="sub commands", dest="sub_command")
+
+    collect_parser = sub_parsers.add_parser('collect',description="collect sms status from sms server.")
+    collect_parser.add_argument("-o","--owner", help="owner name, default is same as sms server user name")
+    collect_parser.add_argument("-r","--repo", help="repo name, default is same as sms server name")
+    collect_parser.add_argument("-n", "--name", help="sms server name", required=True)
+    collect_parser.add_argument("-u", "--user", help="sms server user name", required=True)
+    collect_parser.add_argument(
+        "-p", "--password",
+        help="sms server password, default is {default_sms_password}".format(
+            default_sms_password=default_sms_password)
+    )
+    collect_parser.add_argument("--disable-post", help="disable post to agent.", action='store_true')
+    collect_parser.add_argument("--verbose", help="show more outputs", action='store_true')
+
+    show_parser = sub_parsers.add_parser('show', description="show sms status information.")
+    show_parser.add_argument("-o","--owner", help="owner name, default is same as sms server user name")
+    show_parser.add_argument("-r","--repo", help="repo name, default is same as sms server name")
+    show_parser.add_argument("-n", "--name", help="sms server name", required=True)
+    show_parser.add_argument("-u", "--user", help="sms server user name", required=True)
+    show_parser.add_argument(
+        "-p", "--password",
+        help="sms server password, default is {default_sms_password}".format(
+            default_sms_password=default_sms_password)
+    )
+    show_parser.add_argument("--verbose", help="show more outputs", action='store_true')
+
+    args = parser.parse_args()
+
+    if args.sub_command == "collect":
+        collect_handler(args)
+    elif args.sub_command == "show":
+        show_handler(args)
 
     return 0
 
