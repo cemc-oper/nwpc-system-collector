@@ -414,6 +414,10 @@ def get_sms_whole_status(owner, repo, sms_name, sms_user, sms_password, verbose=
     tool = SmsStatusAnalyzer()
     node_status_list = tool.analyse_node_status(cdp_output)
     if node_status_list is None:
+        """
+        SMS没有启动时，返回错误消息
+            /-CDP> # ERR:RPC:nwpc_wangdp: RPC: 1832-016 Unknown host\n\n# ERR:SMS-CLIENT-LOGIN:Client creation failed for host nwpc_wangdp.\n
+        """
         current_time = datetime.now().isoformat()
         result = {
             'app': 'sms_status_collector',
