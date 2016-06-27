@@ -552,9 +552,7 @@ def sms_status_command_line_tool():
 DESCRIPTION
     Get sms suites' status.""")
 
-    parser.add_argument("-c", "--config", help="config file, default config file is ./conf/{config_file_name}".format(
-        config_file_name=config_file_name
-    ))
+
 
     sub_parsers = parser.add_subparsers(title="sub commands", dest="sub_command")
 
@@ -570,6 +568,9 @@ DESCRIPTION
     )
     collect_parser.add_argument("--disable-post", help="disable post to agent.", action='store_true')
     collect_parser.add_argument("--verbose", help="show more outputs", action='store_true')
+    collect_parser.add_argument("-c", "--config", help="config file, default config file is ./conf/{config_file_name}".format(
+        config_file_name=config_file_name
+    ))
 
     show_parser = sub_parsers.add_parser('show', description="show sms status information.")
     show_parser.add_argument("-o","--owner", help="owner name, default is same as sms server user name")
@@ -582,6 +583,9 @@ DESCRIPTION
             default_sms_password=default_sms_password)
     )
     show_parser.add_argument("--verbose", help="show more outputs", action='store_true')
+    show_parser.add_argument("-c", "--config", help="config file, default config file is ./conf/{config_file_name}".format(
+        config_file_name=config_file_name
+    ))
 
     args = parser.parse_args()
 
