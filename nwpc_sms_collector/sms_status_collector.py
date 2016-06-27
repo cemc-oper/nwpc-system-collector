@@ -20,7 +20,7 @@ SMS_STATUS_POST_URL = "http://{host}:{port}/api/v1/hpc/sms/status"
 default_sms_variable_list = [
     {
         'variable_name': 'SMSDATE',
-        'variable_pattern': r"^.*SMSDATE '([0-9]+)'", # TODO: gen var or edit var
+        'variable_pattern': r"^.*SMSDATE '([0-9]+)'",  # TODO: gen var or edit var
         'variable_value_group_index': 0
     }
 ]
@@ -213,9 +213,9 @@ def get_sms_status(sms_name, sms_user, sms_password, verbose=False):
     return result
 
 
-#==============================
+##############################
 # get whole status
-#=============================
+##############################
 
 class Node(object):
     def __int__(self):
@@ -552,13 +552,11 @@ def sms_status_command_line_tool():
 DESCRIPTION
     Get sms suites' status.""")
 
-
-
     sub_parsers = parser.add_subparsers(title="sub commands", dest="sub_command")
 
     collect_parser = sub_parsers.add_parser('collect',description="collect sms status from sms server.")
-    collect_parser.add_argument("-o","--owner", help="owner name, default is same as sms server user name")
-    collect_parser.add_argument("-r","--repo", help="repo name, default is same as sms server name")
+    collect_parser.add_argument("-o", "--owner", help="owner name, default is same as sms server user name")
+    collect_parser.add_argument("-r", "--repo", help="repo name, default is same as sms server name")
     collect_parser.add_argument("-n", "--name", help="sms server name", required=True)
     collect_parser.add_argument("-u", "--user", help="sms server user name", required=True)
     collect_parser.add_argument(
@@ -573,8 +571,8 @@ DESCRIPTION
     ))
 
     show_parser = sub_parsers.add_parser('show', description="show sms status information.")
-    show_parser.add_argument("-o","--owner", help="owner name, default is same as sms server user name")
-    show_parser.add_argument("-r","--repo", help="repo name, default is same as sms server name")
+    show_parser.add_argument("-o", "--owner", help="owner name, default is same as sms server user name")
+    show_parser.add_argument("-r", "--repo", help="repo name, default is same as sms server name")
     show_parser.add_argument("-n", "--name", help="sms server name", required=True)
     show_parser.add_argument("-u", "--user", help="sms server user name", required=True)
     show_parser.add_argument(
