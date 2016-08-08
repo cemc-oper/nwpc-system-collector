@@ -197,11 +197,15 @@ def post_sms_log_content_to_kafka(owner, repo, content, version, repo_id=None):
     if repo_id is not None:
         post_data['repo_id'] = repo_id
 
-    post_collector_log(owner, repo, "Posting log content to agent/kafka...")
+    post_collector_log(owner, repo, "{owner}/{repo} Posting log content to agent/kafka...".format(
+        owner=owner,repo=repo
+    ))
     r = requests.post(post_url, data=post_data)
     if r.status_code != 200:
         sys.exit()
-    post_collector_log(owner, repo, "Posting log content to agent/kafka...Done")
+    post_collector_log(owner, repo, "{owner}/{repo} Posting log content to agent/kafka...Done".format(
+        owner=owner,repo=repo
+    ))
     return
 
 
@@ -348,7 +352,8 @@ def agent_appender(owner, repo, limit_count=-1, upload_type='kafka'):
                 post_current_seconds = post_current_time_delta.days * 86400 + post_current_time_delta.seconds
                 total_seconds = int(post_current_seconds / (i*0.1/total_count))
                 left_time_delta = datetime.timedelta(seconds= total_seconds - post_current_seconds)
-                post_collector_log(owner, repo, "left time: {left_time}".format(left_time=left_time_delta))
+                post_collector_log(owner, repo, "[{percent}%] left time: {left_time}".format(percent=percent,
+                                                                                             left_time=left_time_delta))
 
         # 上传日志内容
         post_sms_log_function(owner, repo, content, version, repo_id)
