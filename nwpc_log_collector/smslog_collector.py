@@ -15,7 +15,7 @@ import logging
 config_file_name = "smslog_collector.config"
 
 NWPC_LOG_AGENT_HOST = "10.28.32.175"
-NWPC_LOG_AGENT_PORT = "5001"
+NWPC_LOG_AGENT_PORT = "6501"
 
 POST_MAX_COUNT = 1000   # 批量日志发送条目阈值
 
@@ -135,6 +135,7 @@ def post_collector_log(owner, repo, message, message_type=None):
     post_data = {
         'content': message
     }
+
     r = requests.post(post_url, data=post_data)
     if r.status_code != 200:
         sys.exit()
