@@ -13,7 +13,7 @@ def get_user_name() -> str:
     else:
         cmquota_command = "whoami"
         pipe = subprocess.Popen([cmquota_command], stdout=subprocess.PIPE, shell=True)
-        return pipe.communicate()[0].rstrip()
+        return pipe.communicate()[0].decode().rstrip()
 
 
 def run_cmquota_command() -> str:
