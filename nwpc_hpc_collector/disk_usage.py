@@ -5,6 +5,7 @@ import locale
 import argparse
 import json
 import datetime
+import requests
 
 
 def get_user_name() -> str:
@@ -105,32 +106,131 @@ def get_cmquota() -> dict:
     return quota_result
 
 
+config_file_name = "disk_usage.develop.config"
+default_config_file_path = os.path.join(os.path.dirname(__file__), "conf", config_file_name)
+
+
+def get_config(config_file_path: str) -> dict:
+    """
+    读取配置文件信息，配置文件为 json 格式
+    :param config_file_path:
+    :return:
+    """
+    config = None
+    with open(config_file_path, 'r') as f:
+        config = json.load(f)
+    return config
+
+
+def disk_usage_command_show_handler(args):
+    if args.config:
+        config_file_path = args.config
+    else:
+        config_file_path = default_config_file_path
+    config = get_config(config_file_path)
+
+    cmquota_result = get_cmquota()
+    result = {
+        'app': 'nwpc_hpc_collector.disk_usage',
+        'type': 'command',
+        'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'data': {
+            'request': {
+                'sub_command': args.sub_command,
+            },
+            'response': cmquota_result
+        }
+    }
+    print(json.dumps(result, indent=4))
+
+
+def disk_usage_command_collect_handler(args):
+    """
+    通过 POST 发送 disk usage 到 agent:
+        POST
+            message: json string
+
+    message 说明：
+        {
+            'app': 'nwpc_hpc_collector.disk_usage',
+            'type': 'command',
+            'time': '%Y-%m-%d %H:%M:%S',
+            'data': {
+            'request': {
+                'sub_command': 'collect',
+            },
+            'response': cmquota_result
+        }
+
+
+    :param args:
+    :return:
+    """
+    if args.config:
+        config_file_path = args.config
+    else:
+        config_file_path = default_config_file_path
+    config = get_config(config_file_path)
+
+    cmquota_result = get_cmquota()
+    result = {
+        'app': 'nwpc_hpc_collector.disk_usage',
+        'type': 'command',
+        'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'data': {
+            'request': {
+                'sub_command': args.sub_command,
+            },
+            'response': cmquota_result
+        }
+    }
+
+    post_data = {
+        'message': json.dumps(result)
+    }
+
+    if not args.disable_post:
+        print("Posting sms status...")
+        host = config['post']['host']
+        port = config['post']['port']
+        url = config['post']['url'].format(host=host, port=port)
+        response = requests.post(url, data=post_data)
+        print(response)
+        print("Posting sms status...done")
+
+
 def disk_usage_command_line_tool():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description="""\
     DESCRIPTION
-        Get disk usage.""")
+        Get disk usage using cmquota command.""")
 
     sub_parsers = parser.add_subparsers(title="sub commands", dest="sub_command")
 
-    cmquota_parser = sub_parsers.add_parser('cmquota', description="run cmquota command.")
+    show_parser = sub_parsers.add_parser('show', description="print cmquota command result.")
+    show_parser.add_argument(
+        "-c", "--config",
+        help="config file, default config file is ./conf/{config_file_name}".format(
+            config_file_name=config_file_name
+        )
+    )
+
+    collect_parser = sub_parsers.add_parser('collect', description="collect cmquota command result.")
+    collect_parser.add_argument("--disable-post", help="disable post to agent.", action='store_true')
+    collect_parser.add_argument(
+        "-c", "--config",
+        help="config file, default config file is ./conf/{config_file_name}".format(
+            config_file_name=config_file_name
+        )
+    )
 
     args = parser.parse_args()
-    if args.sub_command == "cmquota":
-        cmquota_result = get_cmquota()
-        result = {
-            'app': 'nwpc_hpc_collector.disk_usage',
-            'type': 'command',
-            'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            'data': {
-                'request': {
-                    'sub_command': args.sub_command,
-                },
-                'response': cmquota_result
-            }
-        }
-        print(json.dumps(result, indent=4))
+    if args.sub_command == "show":
+        disk_usage_command_show_handler(args)
+
+    elif args.sub_command == "collect":
+        disk_usage_command_collect_handler(args)
 
 
 if __name__ == "__main__":
