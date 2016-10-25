@@ -1,6 +1,7 @@
 import unittest
 from unittest import mock
 import os
+import importlib
 
 from nwpc_hpc_collector import disk_usage
 
@@ -115,13 +116,27 @@ wangdp_file_systems = [
 ]
 
 
-class TestGetCmquota(unittest.TestCase):
+class TestDiskUsage(unittest.TestCase):
 
     def setUp(self):
-        pass
+        importlib.reload(disk_usage)
 
     def tearDown(self):
         pass
+
+    def test_get_user_name(self):
+        nwp_user = "nwp_qu"
+        os.environ['USER'] = nwp_user
+        user = disk_usage.get_user_name()
+        self.assertEqual(user, 'nwp_qu')
+
+        del os.environ['USER']
+        whoami_user = disk_usage.get_user_name()
+        self.assertEqual(whoami_user, 'wangdp')
+
+    def test_run_cmquota_command(self):
+        output = disk_usage.run_cmquota_command()
+        self.assertFalse(len(output) == 0)
 
     def test_get_cmquota(self):
         nwp_cmquota_command = mock.Mock(return_value=nwp_cmquota_output)
