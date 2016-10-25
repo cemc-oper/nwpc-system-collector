@@ -4,6 +4,7 @@ import re
 import locale
 import argparse
 import json
+import datetime
 
 
 def get_user_name() -> str:
@@ -118,7 +119,18 @@ def disk_usage_command_line_tool():
     args = parser.parse_args()
     if args.sub_command == "cmquota":
         cmquota_result = get_cmquota()
-        print(json.dumps(cmquota_result))
+        result = {
+            'app': 'nwpc_hpc_collector.disk_usage',
+            'type': 'command',
+            'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            'data': {
+                'request': {
+                    'sub_command': args.sub_command,
+                },
+                'response': cmquota_result
+            }
+        }
+        print(json.dumps(result, indent=4))
 
 
 if __name__ == "__main__":
