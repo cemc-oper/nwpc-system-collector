@@ -2,6 +2,8 @@ import subprocess
 import os
 import re
 import locale
+import argparse
+import json
 
 
 def get_user_name() -> str:
@@ -17,7 +19,8 @@ def run_cmquota_command() -> str:
     cmquota_command = "/cma/u/app/sys_bin/cmquota ${USER}"
     pipe = subprocess.Popen([cmquota_command], stdout=subprocess.PIPE, shell=True)
     output = pipe.communicate()[0]
-    return output
+    output_string = output.decode()
+    return output_string
 
 
 def get_cmquota() -> dict:
@@ -101,6 +104,22 @@ def get_cmquota() -> dict:
     return quota_result
 
 
+def disk_usage_command_line_tool():
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description="""\
+    DESCRIPTION
+        Get disk usage.""")
+
+    sub_parsers = parser.add_subparsers(title="sub commands", dest="sub_command")
+
+    cmquota_parser = sub_parsers.add_parser('cmquota', description="run cmquota command.")
+
+    args = parser.parse_args()
+    if args.sub_command == "cmquota":
+        cmquota_result = get_cmquota()
+        print(json.dumps(cmquota_result))
+
+
 if __name__ == "__main__":
-    print(get_user_name())
-    print(run_cmquota_command())
+    disk_usage_command_line_tool()
