@@ -184,6 +184,7 @@ def disk_usage_command_collect_handler(args):
             'response': cmquota_result
         }
     }
+    user = cmquota_result['user']
 
     post_data = {
         'message': json.dumps(result)
@@ -193,7 +194,7 @@ def disk_usage_command_collect_handler(args):
         print("Posting sms status...")
         host = config['post']['host']
         port = config['post']['port']
-        url = config['post']['url'].format(host=host, port=port)
+        url = config['post']['url'].format(host=host, port=port, user=user)
         response = requests.post(url, data=post_data)
         print(response)
         print("Posting sms status...done")
