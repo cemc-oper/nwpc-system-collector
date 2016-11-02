@@ -191,13 +191,13 @@ def disk_usage_command_collect_handler(args):
     }
 
     if not args.disable_post:
-        print("Posting sms status...")
+        print("Posting disk usage...")
         host = config['post']['host']
         port = config['post']['port']
         url = config['post']['url'].format(host=host, port=port, user=user)
         response = requests.post(url, data=post_data)
         print(response)
-        print("Posting sms status...done")
+        print("Posting disk usage...done")
 
 
 def disk_usage_command_line_tool():
