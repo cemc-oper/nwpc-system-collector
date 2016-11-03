@@ -37,3 +37,41 @@ class QueryCategory(object):
 
         new_object.value_saver = self.value_saver
         return new_object
+
+
+class QueryCategoryList(list):
+    def contains_id(self, category_id):
+        for a_category in self:
+            if a_category.id == category_id:
+                return True
+        return False
+
+    def index_from_id(self, category_id):
+        for i in range(0, len(self)):
+            if self[i].id == category_id:
+                return i
+        return -1
+
+    def category_from_id(self, category_id):
+        for a_category in self:
+            if a_category.id == category_id:
+                return a_category
+        return None
+
+    def contains_label(self, label):
+        for a_category in self:
+            if a_category.label == label:
+                return True
+        return False
+
+    def index_from_label(self, label):
+        for i in range(0, len(self)):
+            if self[i].label == label:
+                return i
+        return -1
+
+    def category_from_label(self, label):
+        for a_category in self:
+            if a_category.label == label:
+                return a_category
+        return None

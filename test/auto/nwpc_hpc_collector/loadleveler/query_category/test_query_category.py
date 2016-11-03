@@ -46,3 +46,37 @@ class TestQueryCategory(unittest.TestCase):
         self.assertIsInstance(id_category.record_parser, record_parser.DetailLabelParser)
         self.assertEqual(id_category.record_parser.label, "Job Step Id")
         self.assertIsInstance(id_category.value_saver, value_saver.StringSaver)
+
+    def test_llq_detail_category_list(self):
+        category_list = query_category.QueryCategoryList()
+
+        category_list.extend([
+            query_category.QueryCategory("llq.id",          "Id",           "Job Step Id",
+                                         record_parser.DetailLabelParser, ("Job Step Id",),
+                                         value_saver.StringSaver,    ()),
+            query_category.QueryCategory("llq.owner",       "Owner",        "Owner",
+                                         record_parser.DetailLabelParser, ("Owner",),
+                                         value_saver.StringSaver,    ()),
+            query_category.QueryCategory("llq.class",       "Class",        "Class",
+                                         record_parser.DetailLabelParser, ("Class",),
+                                         value_saver.StringSaver,    ()),
+            query_category.QueryCategory("llq.job_script",  "Job Script",   "Cmd",
+                                         record_parser.DetailLabelParser, ("Cmd",),
+                                         value_saver.StringSaver,    ()),
+            query_category.QueryCategory("llq.status",      "Status",       "Status",
+                                         record_parser.DetailLabelParser, ("Status",),
+                                         value_saver.JobStateSaver,  ())
+        ])
+
+        self.assertEqual(len(category_list), 5)
+
+        self.assertEqual(category_list.index_from_id("llq.id"), 0)
+        self.assertEqual(category_list.index_from_id("llclass.id"), -1)
+        self.assertTrue(category_list.contains_id("llq.id"))
+        self.assertFalse(category_list.contains_id("llclass.id"))
+        self.assertEqual(category_list.category_from_id("llq.id").id, "llq.id")
+        self.assertIsNone(category_list.category_from_id("llclass.id"))
+
+        self.assertEqual(category_list.index_from_label("Class"), 2)
+        self.assertTrue(category_list.contains_label("Class"))
+        self.assertEqual(category_list.category_from_label("Class").id, "llq.class")
