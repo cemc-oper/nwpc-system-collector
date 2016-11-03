@@ -26,7 +26,7 @@ class DetailLabelParser(RecordParser):
             label = line[0:index].strip()
             if label != self.label:
                 continue
-            value = line[index+2: -1].strip()
+            value = line[index+2:].strip()
             return value
         return ""
 
