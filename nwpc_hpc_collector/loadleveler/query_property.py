@@ -8,6 +8,5 @@ class QueryProperty(dict):
 
         item['category'] = category
         value = category.record_parser.parse(record)
-        print(value)
         category.value_saver.set_item_value(item, value)
         return item
