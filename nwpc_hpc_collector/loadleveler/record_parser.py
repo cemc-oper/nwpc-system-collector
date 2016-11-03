@@ -16,6 +16,9 @@ class DetailLabelParser(RecordParser):
 
         self.label = label
 
+    def __deepcopy__(self, memodict={}):
+        return DetailLabelParser(self.label)
+
     def parse(self, record):
         for line in record:
             index = line.find(': ')

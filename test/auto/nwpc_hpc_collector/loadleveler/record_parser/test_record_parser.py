@@ -3,6 +3,7 @@ import unittest
 from unittest import mock
 import os
 import importlib
+import copy
 
 from nwpc_hpc_collector.loadleveler import record_parser
 
@@ -13,6 +14,12 @@ class TestRecordParser(unittest.TestCase):
 
     def tearDown(self):
         pass
+
+    def test_deep_copy(self):
+        parser_one = record_parser.DetailLabelParser("label-1")
+        parser_two = copy.deepcopy(parser_one)
+        parser_two.label = "label-2"
+        self.assertNotEqual(parser_one.label, parser_two.label)
 
     def check_llq_detail_query_record_parser(self, test_case):
         lines = test_case["lines"]
