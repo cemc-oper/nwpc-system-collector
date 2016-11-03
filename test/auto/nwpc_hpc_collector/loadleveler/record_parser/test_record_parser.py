@@ -75,3 +75,47 @@ class TestRecordParser(unittest.TestCase):
 
         for a_test_case in test_case_list:
             self.check_llq_detail_query_record_parser(a_test_case)
+
+    def check_llq_script_record_parser(self, test_case):
+        lines = test_case["lines"]
+        value = test_case["value"]
+        name = test_case["name"]
+
+        parser = record_parser.LlqJobScriptParser()
+        parser_value = parser.parse(lines)
+        self.assertEqual(parser_value, value)
+        print("Test passed:", name)
+
+    def test_llq_script_record_parser(self):
+        check_method = self.check_llq_script_record_parser
+        serial_job_running_file_path = os.path.join(
+            os.path.dirname(__file__),
+            "../data/detail_query/llq/serial_job_running.txt"
+        )
+        test_case_list = []
+        with open(serial_job_running_file_path) as serial_job_running_file:
+            lines = serial_job_running_file.readlines()
+            test_case_list.extend([
+                {
+                    "name": "llq.serial_job.running.job_script",
+                    "lines": lines,
+                    "value": "/cma/g1/nwp/SMSOUT/gmf_grapes_gfs_v2_0/grapes_global/12/post/postp_240.job1"
+                }
+            ])
+
+        parallel_job_running_file_path = os.path.join(
+            os.path.dirname(__file__),
+            "../data/detail_query/llq/parallel_job_running.txt"
+        )
+        with open(parallel_job_running_file_path) as parallel_job_running_file:
+            lines = parallel_job_running_file.readlines()
+            test_case_list.extend([
+                {
+                    "name": "llq.parallel_job.running.job_script",
+                    "lines": lines,
+                    "value": "/cma/g1/nwp_qu/SMSOUT/rafs/cold/00/model/fcst.job1"
+                }
+            ])
+
+        for a_test_case in test_case_list:
+            check_method(a_test_case)
