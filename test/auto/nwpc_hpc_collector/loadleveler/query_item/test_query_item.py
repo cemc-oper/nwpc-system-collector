@@ -5,7 +5,7 @@ import os
 import importlib
 import datetime
 
-from nwpc_hpc_collector.loadleveler import query_item, query_category, record_parser, value_saver
+from nwpc_hpc_collector.loadleveler import query_item, query_property, query_category, record_parser, value_saver
 
 
 class TestQueryItem(unittest.TestCase):
@@ -15,25 +15,29 @@ class TestQueryItem(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def check_query_item(self, test_case):
-        record = test_case["record"]
-        category = test_case["category"]
-        value = test_case["value"]
-        text = test_case["text"]
-        data = test_case["data"]
+    def check_build_from_category(self, test_case):
+        record = test_case['record']
+        category_list = test_case['category_list']
+        properties = test_case['properties']
 
-        item = query_item.QueryItem.build_from_record(
-            record=record,
-            category=category
-        )
-        self.assertIsInstance(item, query_item.QueryItem)
-        self.assertEqual(item['value'], value)
-        self.assertEqual(item['text'], text)
-        self.assertEqual(item['data'], data)
-        self.assertEqual(item['category'], category)
+        item = query_item.QueryItem.build_from_category_list(record, category_list)
 
-    def test_create_query_item(self):
-        check_method = self.check_query_item
+        for a_property in properties:
+            category_id = a_property['category_id']
+            value = a_property['value']
+            text = a_property['text']
+            data = a_property['data']
+
+            index = category_list.index_from_id(category_id)
+            if index == -1:
+                self.fail("can't find category with id: "+category_id)
+            p = item[index]
+            self.assertEqual(p['value'], value)
+            self.assertEqual(p['text'], text)
+            self.assertEqual(p['data'], data)
+
+    def test_build_from_category_list(self):
+        check_method = self.check_build_from_category
         category_list = query_category.QueryCategoryList()
 
         category_list.extend([
@@ -63,32 +67,31 @@ class TestQueryItem(unittest.TestCase):
         with open(serial_job_running_file_path) as serial_job_running_file:
             lines = serial_job_running_file.readlines()
 
-            test_case_list.extend([
-                {
-                    'record': lines,
-                    'category': category_list.category_from_id("llq.id"),
+            test_case_list.append({
+                'record': lines,
+                'category_list': category_list,
+                'properties': [
+                    {
+                        'category_id': 'llq.id',
+                        'value': 'cma20n04.2882680.0',
+                        'text': 'cma20n04.2882680.0',
+                        'data': 'cma20n04.2882680.0'
+                    },
+                    {
+                        'category_id': "llq.queue_full_date",
+                        'value': 'Thu Sep  8 00:09:02 2016',
+                        'text': '09/08 00:09',
+                        'data': datetime.datetime.strptime("2016/09/08 00:09:02", "%Y/%m/%d %H:%M:%S")
+                    },
+                    {
+                        'category_id': "llq.status",
+                        'value': 'Running',
+                        'text': 'R',
+                        'data': 'R'
+                    },
+                ]
 
-                    'value': 'cma20n04.2882680.0',
-                    'text': 'cma20n04.2882680.0',
-                    'data': 'cma20n04.2882680.0'
-                },
-                {
-                    'record': lines,
-                    'category': category_list.category_from_id("llq.queue_full_date"),
-
-                    'value': 'Thu Sep  8 00:09:02 2016',
-                    'text': '09/08 00:09',
-                    'data': datetime.datetime.strptime("2016/09/08 00:09:02", "%Y/%m/%d %H:%M:%S")
-                },
-                {
-                    'record': lines,
-                    'category': category_list.category_from_id("llq.status"),
-
-                    'value': 'Running',
-                    'text': 'R',
-                    'data': 'R'
-                },
-            ])
+            })
 
         for a_test_case in test_case_list:
             check_method(a_test_case)
