@@ -35,7 +35,7 @@ class TestRecordParser(unittest.TestCase):
     def test_llq_detail_query_record_parser(self):
         serial_job_running_file_path = os.path.join(
             os.path.dirname(__file__),
-            "data/detail_query/llq/serial_job_running.txt"
+            "../data/detail_query/llq/serial_job_running.txt"
         )
         test_case_list = []
         with open(serial_job_running_file_path) as serial_job_running_file:
