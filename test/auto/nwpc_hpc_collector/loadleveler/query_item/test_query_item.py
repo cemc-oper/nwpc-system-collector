@@ -56,9 +56,9 @@ class TestQueryItem(unittest.TestCase):
             if index == -1:
                 self.fail("can't find category with id: "+category_id)
             p = item.props[index]
-            self.assertEqual(p['value'], value)
-            self.assertEqual(p['text'], text)
-            self.assertEqual(p['data'], data)
+            self.assertEqual(p.map['value'], value)
+            self.assertEqual(p.map['text'], text)
+            self.assertEqual(p.map['data'], data)
 
     def test_build_from_category_list(self):
         check_method = self.check_build_from_category

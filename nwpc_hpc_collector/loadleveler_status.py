@@ -13,6 +13,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../"))
 from nwpc_hpc_collector.loadleveler import QueryCategory, QueryCategoryList, QueryModel, QueryProperty, QueryItem
 from nwpc_hpc_collector.loadleveler import record_parser
 from nwpc_hpc_collector.loadleveler import value_saver
+from nwpc_hpc_collector.util import json_default
 
 config_file_name = "loadleveler_status.develop.config"
 default_config_file_path = os.path.join(os.path.dirname(__file__), "conf", config_file_name)
@@ -47,7 +48,8 @@ def get_llq_detail_query_response(config):
     category_list = build_category_list(config['category_list'])
 
     model = QueryModel.build_from_category_list(output_lines, category_list)
-    print(model.items)
+    model_dict = model.to_dict()
+    return model_dict
 
 
 def get_config(config_file_path):
@@ -84,8 +86,9 @@ def collect_handler(args):
     }
 
     post_data = {
-        'message': json.dumps(result)
+        'message': json.dumps(result, default=json_default)
     }
+    print(json.dumps(result, default=json_default, indent=4))
 
     # if not args.disable_post:
     #     print("Posting disk usage...")

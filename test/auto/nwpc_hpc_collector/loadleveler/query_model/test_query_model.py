@@ -65,7 +65,7 @@ class TestQueryModel(unittest.TestCase):
                 category_index = category_list.index_from_id(category_id)
                 p = item.props[category_index]
 
-                self.assertEqual(p['text'], text)
+                self.assertEqual(p.map['text'], text)
 
     def test_build_model(self):
         check_method = self.check_build_model

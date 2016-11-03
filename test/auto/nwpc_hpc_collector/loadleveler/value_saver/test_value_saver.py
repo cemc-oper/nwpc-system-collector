@@ -5,6 +5,7 @@ import importlib
 import datetime
 
 from nwpc_hpc_collector.loadleveler import value_saver
+from nwpc_hpc_collector.loadleveler import QueryProperty
 
 
 class TestValueSaver(unittest.TestCase):
@@ -21,12 +22,12 @@ class TestValueSaver(unittest.TestCase):
         data = test_case['data']
 
         saver = value_saver.StringSaver()
-        item = dict()
+        item = QueryProperty()
 
         saver.set_item_value(item, value)
 
-        self.assertEqual(item['text'], text)
-        self.assertEqual(item['data'], data)
+        self.assertEqual(item.map['text'], text)
+        self.assertEqual(item.map['data'], data)
         print("Test passed:", name)
 
     def test_string(self):
@@ -62,12 +63,12 @@ class TestValueSaver(unittest.TestCase):
         data = test_case['data']
 
         saver = value_saver.NumberSaver()
-        item = dict()
+        item = QueryProperty()
 
         saver.set_item_value(item, value)
 
-        self.assertEqual(item['text'], text)
-        self.assertEqual(item['data'], data)
+        self.assertEqual(item.map['text'], text)
+        self.assertEqual(item.map['data'], data)
         print("Test passed:", name)
 
     def test_number(self):
@@ -91,12 +92,12 @@ class TestValueSaver(unittest.TestCase):
         data = test_case['data']
 
         saver = value_saver.FullDateSaver()
-        item = dict()
+        item = QueryProperty()
 
         saver.set_item_value(item, value)
 
-        self.assertEqual(item['text'], text)
-        self.assertEqual(item['data'], data)
+        self.assertEqual(item.map['text'], text)
+        self.assertEqual(item.map['data'], data)
         print("Test passed:", name)
 
     def test_full_date(self):
@@ -126,13 +127,13 @@ class TestValueSaver(unittest.TestCase):
         data = test_case['data']
 
         saver = value_saver.JobStateSaver()
-        item = dict()
+        item = QueryProperty()
 
         saver.set_item_value(item, value)
 
-        self.assertEqual(item['value'], value)
-        self.assertEqual(item['text'], text)
-        self.assertEqual(item['data'], data)
+        self.assertEqual(item.map['value'], value)
+        self.assertEqual(item.map['text'], text)
+        self.assertEqual(item.map['data'], data)
         print("Test passed:", name)
 
     def test_job_state(self):

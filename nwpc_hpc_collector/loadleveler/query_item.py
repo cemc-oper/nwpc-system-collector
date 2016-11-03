@@ -8,7 +8,9 @@ class QueryItem(object):
 
     def to_dict(self):
         result = dict()
-        result['props'] = self.props
+        result['props'] = list()
+        for prop in self.props:
+            result['props'].append(prop.to_dict())
         return result
 
     @staticmethod

@@ -8,11 +8,15 @@ import datetime
 from nwpc_hpc_collector.loadleveler import query_property, query_category, record_parser, value_saver
 
 
-class TestQueryItem(unittest.TestCase):
+class TestQueryProperty(unittest.TestCase):
     def setUp(self):
         pass
 
     def tearDown(self):
+        pass
+
+    def test_to_dict(self):
+        # TODO: test_to_dict
         pass
 
     def check_query_item(self, test_case):
@@ -27,10 +31,10 @@ class TestQueryItem(unittest.TestCase):
             category=category
         )
         self.assertIsInstance(item, query_property.QueryProperty)
-        self.assertEqual(item['value'], value)
-        self.assertEqual(item['text'], text)
-        self.assertEqual(item['data'], data)
-        self.assertEqual(item['category'], category)
+        self.assertEqual(item.map['value'], value)
+        self.assertEqual(item.map['text'], text)
+        self.assertEqual(item.map['data'], data)
+        self.assertEqual(item.category, category)
 
     def test_create_query_property(self):
         check_method = self.check_query_item

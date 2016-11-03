@@ -15,9 +15,9 @@ class StringSaver(ValueSaver):
         ValueSaver.__init__(self)
 
     def set_item_value(self, item, value):
-        item['text'] = value
-        item['value'] = value
-        item['data'] = value
+        item.map['text'] = value
+        item.map['value'] = value
+        item.map['data'] = value
 
 
 class NumberSaver(ValueSaver):
@@ -26,9 +26,9 @@ class NumberSaver(ValueSaver):
 
     def set_item_value(self, item, value):
         data = float(value)
-        item['text'] = value
-        item['value'] = value
-        item['data'] = data
+        item.map['text'] = value
+        item.map['value'] = value
+        item.map['data'] = data
 
 
 class FullDateSaver(ValueSaver):
@@ -38,9 +38,9 @@ class FullDateSaver(ValueSaver):
     def set_item_value(self, item, value):
         data = datetime.datetime.strptime(value, "%c")
 
-        item['text'] = data.strftime("%m/%d %H:%M")
-        item['value'] = value
-        item['data'] = data
+        item.map['text'] = data.strftime("%m/%d %H:%M")
+        item.map['value'] = value
+        item.map['data'] = data
 
 job_state_list = [
     { "name": "Canceled",           "abbreviation":"CA"    },
@@ -77,19 +77,19 @@ class JobStateSaver(ValueSaver):
     def set_item_value(self, item, value):
         value_length = len(value)
         if value_length == 1 or value_length == 2:
-            item['text'] = value
-            item['value'] = value
-            item['data'] = value
+            item.map['text'] = value
+            item.map['value'] = value
+            item.map['data'] = value
             return
 
         for a_job_state in job_state_list:
             if a_job_state['name'] == value:
-                item['text'] = a_job_state['abbreviation']
-                item['value'] = value
-                item['data'] = a_job_state['abbreviation']
+                item.map['text'] = a_job_state['abbreviation']
+                item.map['value'] = value
+                item.map['data'] = a_job_state['abbreviation']
                 return
 
-        item['text'] = value
-        item['value'] = value
-        item['data'] = value
+        item.map['text'] = value
+        item.map['value'] = value
+        item.map['data'] = value
         return
