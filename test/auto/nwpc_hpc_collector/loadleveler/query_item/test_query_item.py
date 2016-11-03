@@ -31,7 +31,7 @@ class TestQueryItem(unittest.TestCase):
             index = category_list.index_from_id(category_id)
             if index == -1:
                 self.fail("can't find category with id: "+category_id)
-            p = item[index]
+            p = item.props[index]
             self.assertEqual(p['value'], value)
             self.assertEqual(p['text'], text)
             self.assertEqual(p['data'], data)

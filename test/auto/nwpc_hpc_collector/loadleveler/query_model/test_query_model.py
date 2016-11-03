@@ -31,7 +31,7 @@ class TestQueryModel(unittest.TestCase):
                 category_id = a_prop['category_id']
                 text = a_prop['text']
                 category_index = category_list.index_from_id(category_id)
-                p = item[category_index]
+                p = item.props[category_index]
 
                 self.assertEqual(p['text'], text)
 
