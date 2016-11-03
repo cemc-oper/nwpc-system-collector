@@ -130,6 +130,7 @@ class TestValueSaver(unittest.TestCase):
 
         saver.set_item_value(item, value)
 
+        self.assertEqual(item['value'], value)
         self.assertEqual(item['text'], text)
         self.assertEqual(item['data'], data)
         print("Test passed:", name)

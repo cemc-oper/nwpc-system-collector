@@ -85,7 +85,7 @@ class JobStateSaver(ValueSaver):
         for a_job_state in job_state_list:
             if a_job_state['name'] == value:
                 item['text'] = a_job_state['abbreviation']
-                item['value'] = a_job_state['abbreviation']
+                item['value'] = value
                 item['data'] = a_job_state['abbreviation']
                 return
 
