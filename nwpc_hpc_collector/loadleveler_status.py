@@ -88,16 +88,15 @@ def collect_handler(args):
     post_data = {
         'message': json.dumps(result, default=json_default)
     }
-    print(json.dumps(result, default=json_default, indent=4))
+    # print(json.dumps(result, default=json_default, indent=4))
 
-    # if not args.disable_post:
-    #     print("Posting disk usage...")
-    #     host = config['post']['host']
-    #     port = config['post']['port']
-    #     url = config['post']['url'].format(host=host, port=port, user=user)
-    #     response = requests.post(url, data=post_data)
-    #     print(response)
-    #     print("Posting disk usage...done")
+    if not args.disable_post:
+        print("Posting loadleveler status...")
+        host = config['post']['host']
+        port = config['post']['port']
+        url = config['post']['url'].format(host=host, port=port)
+        response = requests.post(url, data=post_data)
+        print("Posting loadleveler status...done ", response)
 
 
 def loadleveler_status_command_line_tool():
