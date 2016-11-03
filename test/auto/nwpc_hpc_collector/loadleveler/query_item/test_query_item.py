@@ -15,6 +15,30 @@ class TestQueryItem(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def test_to_dict(self):
+        category_list = query_category.QueryCategoryList()
+
+        category_list.extend([
+            query_category.QueryCategory("llq.id", "Id", "Job Step Id",
+                                         record_parser.DetailLabelParser, ("Job Step Id",),
+                                         value_saver.StringSaver, ()),
+            query_category.QueryCategory("llq.owner", "Owner", "Owner",
+                                         record_parser.DetailLabelParser, ("Owner",),
+                                         value_saver.StringSaver, ()),
+        ])
+
+        serial_job_running_file_path = os.path.join(
+            os.path.dirname(__file__),
+            "../data/detail_query/llq/serial_job_running.txt"
+        )
+        with open(serial_job_running_file_path) as serial_job_running_file:
+            record = serial_job_running_file.readlines()
+            item = query_item.QueryItem.build_from_category_list(record, category_list)
+            item_dict = item.to_dict()
+            self.assertTrue('props' in item_dict)
+            self.assertIsInstance(item_dict['props'], list)
+            self.assertEqual(len(item_dict['props']), 2)
+
     def check_build_from_category(self, test_case):
         record = test_case['record']
         category_list = test_case['category_list']

@@ -6,6 +6,11 @@ class QueryItem(object):
     def __init__(self):
         self.props = list()
 
+    def to_dict(self):
+        result = dict()
+        result['props'] = self.props
+        return result
+
     @staticmethod
     def build_from_category_list(record, category_list):
         item = QueryItem()

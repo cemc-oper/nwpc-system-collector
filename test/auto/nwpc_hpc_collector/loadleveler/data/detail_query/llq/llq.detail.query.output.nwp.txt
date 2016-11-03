@@ -926,4 +926,4 @@ Topology Requirement: none
 Stripe Min Networks: False
     Monitor Program: 
 
-5 job step(s) in query, 0 waiting, 0 pending, 5 running, 0 held, 0 preempted
+3 job step(s) in query, 0 waiting, 0 pending, 3 running, 0 held, 0 preempted
