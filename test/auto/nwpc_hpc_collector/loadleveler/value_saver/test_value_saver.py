@@ -126,7 +126,7 @@ class TestValueSaver(unittest.TestCase):
         text = test_case['text']
         data = test_case['data']
 
-        saver = value_saver.JobStateSaver()
+        saver = value_saver.JobStatusSaver()
         item = QueryProperty()
 
         saver.set_item_value(item, value)

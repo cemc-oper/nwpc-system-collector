@@ -79,7 +79,7 @@ class TestQueryItem(unittest.TestCase):
                                          value_saver.StringSaver, ()),
             query_category.QueryCategory("llq.status", "Status", "Status",
                                          record_parser.DetailLabelParser, ("Status",),
-                                         value_saver.JobStateSaver, ())
+                                         value_saver.JobStatusSaver, ())
         ])
 
         test_case_list = list()

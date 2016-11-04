@@ -70,7 +70,7 @@ job_state_list = [
 ]
 
 
-class JobStateSaver(ValueSaver):
+class JobStatusSaver(ValueSaver):
     def __init__(self):
         ValueSaver.__init__(self)
 
