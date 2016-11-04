@@ -65,6 +65,29 @@ def get_config(config_file_path):
 
 
 def collect_handler(args):
+    """
+    collect loadleveler status and post to agent.
+    :param args:
+    :return:
+
+    post data: {
+        message: json_string
+    }
+
+    message: {
+        'app': 'nwpc_hpc_collector.loadleveler_status',
+        'type': 'command',
+        'time': "%Y-%m-%d %H:%M:%S",
+        'data': {
+            'request': {
+                'sub_command': 'collect',
+            },
+            'response': model_dict
+        }
+    }
+
+    model_dict: see QueryModel
+    """
     if args.config:
         config_file_path = args.config
     else:
