@@ -5,7 +5,7 @@ import os
 import importlib
 import copy
 
-from nwpc_hpc_collector.loadleveler import record_parser
+from nwpc_hpc_model.loadleveler import record_parser
 
 
 class TestRecordParser(unittest.TestCase):

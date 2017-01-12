@@ -5,7 +5,7 @@ import os
 import importlib
 import datetime
 
-from nwpc_hpc_collector.loadleveler import query_property, query_category, record_parser, value_saver
+from nwpc_hpc_model.loadleveler import query_property, query_category, record_parser, value_saver
 
 
 class TestQueryProperty(unittest.TestCase):

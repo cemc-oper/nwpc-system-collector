@@ -1,5 +1,5 @@
 # coding=utf-8
-from nwpc_hpc_collector.loadleveler.query_property import QueryProperty
+from .query_property import QueryProperty
 
 
 class QueryItem(object):

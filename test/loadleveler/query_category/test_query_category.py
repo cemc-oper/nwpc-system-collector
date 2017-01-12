@@ -4,9 +4,9 @@ import os
 import importlib
 import copy
 
-from nwpc_hpc_collector.loadleveler import query_category
-from nwpc_hpc_collector.loadleveler import record_parser
-from nwpc_hpc_collector.loadleveler import value_saver
+from nwpc_hpc_model.loadleveler import query_category
+from nwpc_hpc_model.loadleveler import record_parser
+from nwpc_hpc_model.loadleveler import value_saver
 
 
 class TestQueryCategory(unittest.TestCase):

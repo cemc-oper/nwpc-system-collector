@@ -4,8 +4,8 @@ import os
 import importlib
 import datetime
 
-from nwpc_hpc_collector.loadleveler import value_saver
-from nwpc_hpc_collector.loadleveler import QueryProperty
+from nwpc_hpc_model.loadleveler import value_saver
+from nwpc_hpc_model.loadleveler import QueryProperty
 
 
 class TestValueSaver(unittest.TestCase):

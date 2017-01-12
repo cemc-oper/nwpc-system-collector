@@ -1,7 +1,7 @@
 import sys
 import os
 
-from nwpc_hpc_collector.loadleveler.query_item import QueryItem
+from nwpc_hpc_model.loadleveler.query_item import QueryItem
 
 
 class QueryModel(object):
