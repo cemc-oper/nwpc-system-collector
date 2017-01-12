@@ -1,0 +1,127 @@
+===== Job Step cma20n04.2882680.0 =====
+        Job Step Id: cma20n04.2882680.0
+           Job Name: cma20n04.2882680
+          Step Name: 0
+  Structure Version: 10
+              Owner: nwp
+         Queue Date: Thu Sep  8 00:09:02 2016
+             Status: Running
+     Reservation ID:  
+  Requested Res. ID:  
+   Flexible Res. ID:  
+          Recurring: False
+ Scheduling Cluster: 
+ Submitting Cluster: 
+    Sending Cluster: 
+  Requested Cluster: 
+     Schedd History: 
+   Outbound Schedds: 
+    Submitting User: 
+   Eligibility Time: Thu Sep  8 00:09:03 2016
+      Dispatch Time: Thu Sep  8 00:09:03 2016
+    Completion Date: 
+    Completion Code: 
+        Favored Job: No
+      User Priority: 100
+       user_sysprio: 0
+      class_sysprio: 0
+      group_sysprio: 0
+    System Priority: 100000
+          q_sysprio: 100000
+ Previous q_sysprio: 0
+      Notifications: Error
+ Virtual Image Size: 11 kb
+         Large Page: N
+              Trace: no
+         Coschedule: no
+       SMT required: as_is
+    MetaCluster Job: no
+     Checkpointable: no
+    Ckpt Start Time: 
+Good Ckpt Time/Date: 
+   Ckpt Elapse Time: 0 seconds
+Fail Ckpt Time/Date: 
+    Ckpt Accum Time: 0 seconds
+    Checkpoint File: 
+   Ckpt Execute Dir: 
+  Restart From Ckpt: no
+ Restart Same Nodes: no
+            Restart: no
+        Preemptable: yes
+ Preempt Wait Count: 0
+     Hold Job Until: 
+     User Hold Time: 00:00:00 (0 seconds)
+               RSet: RSET_NONE
+Mcm Affinity Option:   
+      Task Affinity: 
+      Cpus Per Core:  0
+   Parallel Threads:  0
+                Cmd: /cma/g1/nwp/SMSOUT/gmf_grapes_gfs_v2_0/grapes_global/12/post/postp_240.job1
+               Args: 
+                Env: 
+                 In: /dev/null
+                Out: /cma/g1/nwp/SMSOUT/gmf_grapes_gfs_v2_0/grapes_global/12/post/postp_240.1
+                Err: /cma/g1/nwp/SMSOUT/gmf_grapes_gfs_v2_0/grapes_global/12/post/postp_240.1.err
+Initial Working Dir: /cma/u/nwp/smsworks/sms
+         Dependency: 
+Data Stg Dependency: 
+          Resources: 
+     Node Resources: 
+     Step Resources: 
+       Requirements: 
+        Preferences: 
+          Step Type: Serial
+     Min Processors: 
+     Max Processors: 
+     Allocated Host: cma18n06
+         Node Usage: shared
+    Submitting Host: cma20n03
+        Schedd Host: cma20n04
+      Job Queue Key: 
+        Notify User: nwp@cma20n03
+              Shell: /usr/bin/ksh
+  LoadLeveler Group: No_Group
+              Class: serial_op
+    Ckpt Hard Limit: undefined
+    Ckpt Soft Limit: undefined
+     Cpu Hard Limit: undefined
+     Cpu Soft Limit: undefined
+    Data Hard Limit: undefined
+    Data Soft Limit: undefined
+      As Hard Limit: undefined
+      As Soft Limit: undefined
+   Nproc Hard Limit: undefined
+   Nproc Soft Limit: undefined
+ Memlock Hard Limit: undefined
+ Memlock Soft Limit: undefined
+   Locks Hard Limit: undefined
+   Locks Soft Limit: undefined
+  Nofile Hard Limit: undefined
+  Nofile Soft Limit: undefined
+    Core Hard Limit: undefined
+    Core Soft Limit: undefined
+    File Hard Limit: undefined
+    File Soft Limit: undefined
+   Stack Hard Limit: undefined
+   Stack Soft Limit: undefined
+     Rss Hard Limit: undefined
+     Rss Soft Limit: undefined
+Step Cpu Hard Limit: undefined
+Step Cpu Soft Limit: undefined
+Wall Clk Hard Limit: 100+00:00:10 (8640010 seconds)
+Wall Clk Soft Limit: 100+00:00:00 (8640000 seconds)
+            Comment: GRAPES
+            Account: 
+         Unix Group: nwpop
+Negotiator Messages: 
+      Bulk Transfer: No
+Adapter Requirement: 
+          Step Cpus: 0
+Step Virtual Memory: 0.000 mb
+   Step Real Memory: 0.000 mb
+Step Large Page Mem: 0.000 mb
+     Cluster Option: none
+Topology Requirement: none
+     Network Usages: 
+Stripe Min Networks: False
+    Monitor Program: 
