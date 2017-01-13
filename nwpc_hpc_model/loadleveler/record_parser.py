@@ -61,3 +61,13 @@ class LlqJobScriptParser(RecordParser):
             value = line[index+2: -1].strip()
             return value
         return ""
+
+
+class TableRecordParser(RecordParser):
+    def __init__(self, begin_pos, end_pos):
+        RecordParser.__init__(self)
+        self.begin_pos = int(begin_pos)
+        self.end_pos = int(end_pos)
+
+    def parse(self, record):
+        return record[self.begin_pos:self.end_pos].strip()

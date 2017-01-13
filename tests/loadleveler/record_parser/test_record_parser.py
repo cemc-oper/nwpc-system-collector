@@ -119,3 +119,107 @@ class TestRecordParser(unittest.TestCase):
 
         for a_test_case in test_case_list:
             check_method(a_test_case)
+
+    def check_table_record_parser(self, test_case):
+        line = test_case["line"]
+        value = test_case["value"]
+        name = test_case["name"]
+        begin_pos = test_case["record_parser"]["args"]["begin_pos"]
+        end_pos = test_case["record_parser"]["args"]["end_pos"]
+
+        parser = record_parser.TableRecordParser(begin_pos, end_pos)
+        parser_value = parser.parse(line)
+        self.assertEqual(parser_value, value)
+        print("Test passed:", name)
+
+    def test_table_record_parser(self):
+        check_method = self.check_table_record_parser
+        simple_default_query_file_path = os.path.join(
+            os.path.dirname(__file__),
+            "../data/default_query/llq/simple.default.query.txt"
+        )
+
+        test_case_list = []
+        with open(simple_default_query_file_path) as simple_default_query_file:
+            lines = simple_default_query_file.readlines()
+            test_case_list.extend([
+                {
+                    "name": "llq.default_query.simple.1",
+                    "line": lines[2].strip(),
+                    "record_parser": {
+                        "args": {
+                            "begin_pos": 0,
+                            "end_pos": 24
+                        }
+                    },
+                    "value": "cma19n04.4192420.0"
+                },
+                {
+                    "name": "llq.default_query.simple.1",
+                    "line": lines[2].strip(),
+                    "record_parser": {
+                        "args": {
+                            "begin_pos": 25,
+                            "end_pos": 35
+                        }
+                    },
+                    "value": "nwp"
+                },
+                {
+                    "name": "llq.default_query.simple.1",
+                    "line": lines[2].strip(),
+                    "record_parser": {
+                        "args": {
+                            "begin_pos": 36,
+                            "end_pos": 47
+                        }
+                    },
+                    "value": "1/13 03:38"
+                },
+                {
+                    "name": "llq.default_query.simple.1",
+                    "line": lines[2].strip(),
+                    "record_parser": {
+                        "args": {
+                            "begin_pos": 48,
+                            "end_pos": 50
+                        }
+                    },
+                    "value": "R"
+                },
+                {
+                    "name": "llq.default_query.simple.1",
+                    "line": lines[2].strip(),
+                    "record_parser": {
+                        "args": {
+                            "begin_pos": 51,
+                            "end_pos": 54
+                        }
+                    },
+                    "value": "100"
+                },
+                {
+                    "name": "llq.default_query.simple.1",
+                    "line": lines[2].strip(),
+                    "record_parser": {
+                        "args": {
+                            "begin_pos": 55,
+                            "end_pos": 67
+                        }
+                    },
+                    "value": "operation"
+                },
+                {
+                    "name": "llq.default_query.simple.1",
+                    "line": lines[2].strip(),
+                    "record_parser": {
+                        "args": {
+                            "begin_pos": 68,
+                            "end_pos": 79
+                        }
+                    },
+                    "value": "cma02n05"
+                }
+            ])
+        for a_test_case in test_case_list:
+            check_method(a_test_case)
