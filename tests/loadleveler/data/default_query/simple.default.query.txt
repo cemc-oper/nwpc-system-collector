@@ -1,0 +1,9 @@
+Id                       Owner      Submitted   ST PRI Class        Running On 
+------------------------ ---------- ----------- -- --- ------------ -----------
+cma19n04.4192420.0       nwp         1/13 03:38 R  100 operation    cma02n05
+cma19n04.4193400.0       nwp_pd     12/13 05:06 ST 100 serial_op    cma18n05
+cma20n02.4192069.0       nwp_hb     10/1  05:05 I  100 normal       cma04n04
+cma20n04.4192851.0       nwp_hb      1/3  12:05 I  100 normal
+cma20n02.4191731.0       wangrch     1/13 04:38 I  50  minijob                 
+
+5 job step(s) in queue, 2 waiting, 0 pending, 3 running, 0 held, 0 preempted
