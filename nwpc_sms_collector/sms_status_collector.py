@@ -5,6 +5,8 @@ import string
 import re
 from datetime import datetime, time, timedelta
 import json
+import gzip
+import StringIO
 
 import requests
 
@@ -508,7 +510,15 @@ def collect_handler(args):
         host = SMS_STATUS_POST_HOST
         port = SMS_STATUS_POST_PORT
         url = SMS_STATUS_POST_URL.format(host=host, port=port)
-        requests.post(url, data=post_data)
+
+        s = StringIO.StringIO()
+        g = gzip.GzipFile(fileobj=s, mode='w')
+        g.write(json.dumps(post_data))
+        g.close()
+
+        requests.post(url, data=s.getvalue(), headers={
+            'content-encoding': 'gzip'
+        })
         if verbose:
             print "Posting sms status...done"
 
