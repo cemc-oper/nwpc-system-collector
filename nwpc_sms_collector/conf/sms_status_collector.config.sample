@@ -9,6 +9,10 @@
 
         "host": "10.28.32.175",
 
-        "port": 5101
+        "port": 5101,
+
+        "header": {
+            "content-encoding": "gzip"
+        }
     }
 }

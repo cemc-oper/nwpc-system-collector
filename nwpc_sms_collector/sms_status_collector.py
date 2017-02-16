@@ -17,6 +17,7 @@ config_file_name = 'sms_status_collector.config'
 SMS_STATUS_POST_HOST = "10.28.32.175"
 SMS_STATUS_POST_PORT = 5101
 SMS_STATUS_POST_URL = "http://{host}:{port}/api/v1/hpc/sms/status"
+POST_HEADERS = {}
 
 
 default_sms_variable_list = [
@@ -34,7 +35,7 @@ def get_config(config_file_path):
     :param config_file_path:
     :return:
     """
-    global SMS_STATUS_POST_HOST, SMS_STATUS_POST_PORT, SMS_STATUS_POST_URL
+    global SMS_STATUS_POST_HOST, SMS_STATUS_POST_PORT, SMS_STATUS_POST_URL, POST_HEADERS
     f = open(config_file_path, 'r')
     config = json.load(f)
     f.close()
@@ -42,6 +43,8 @@ def get_config(config_file_path):
     SMS_STATUS_POST_HOST = config['post']['host']
     SMS_STATUS_POST_PORT = config['post']['port']
     SMS_STATUS_POST_URL = config['post']['url']
+    if 'headers' in config['post']:
+        POST_HEADERS = config['post']['headers']
 
     return config
 
@@ -133,12 +136,12 @@ def get_sms_status(sms_name, sms_user, sms_password, verbose=False):
 
     status_lines = []
     for line in cdp_output_lines:
-        if line.startswith('Welcome') or line.startswith('#') or line=='' or line.startswith('Goodbye'):
-            #print "[ ] ", line
+        if line.startswith('Welcome') or line.startswith('#') or line == '' or line.startswith('Goodbye'):
+            # print "[ ] ", line
             pass
         else:
             status_lines.append(line)
-            #print "[x] ", line
+            # print "[x] ", line
 
     first_line = re.compile(r"^/(\[|\{)([a-z]+)(\]|\}) *([a-zA-z0-9_]*) *(\[|\{)([a-z]+)(\]|\}) *")
     none_first_line = re.compile(r"^ *([a-zA-z0-9_]*) *(\[|\{)([a-z]+)(\]|\}) *")
@@ -200,7 +203,7 @@ def get_sms_status(sms_name, sms_user, sms_password, verbose=False):
             else:
                 a_node_status['variable'] = variable_result
 
-    current_time = (datetime.now() + timedelta(hours=8)).isoformat() # 北京时间
+    current_time = (datetime.now() + timedelta(hours=8)).isoformat()  # 北京时间
     result = {
         'app': 'sms_status_collector',
         'type': 'sms_status',
@@ -398,7 +401,7 @@ def get_sms_whole_status(owner, repo, sms_name, sms_user, sms_password, verbose=
                                 stderr=subprocess.PIPE)
     echo_pipe.stdout.close()
     (cdp_output, cdp_error) = cdp_pipe.communicate()
-    #print cdp_output
+    # print cdp_output
     # TODO: not login error
     return_code = cdp_pipe.returncode
     if return_code != 0:
@@ -511,14 +514,23 @@ def collect_handler(args):
         port = SMS_STATUS_POST_PORT
         url = SMS_STATUS_POST_URL.format(host=host, port=port)
 
-        s = StringIO.StringIO()
-        g = gzip.GzipFile(fileobj=s, mode='w')
-        g.write(json.dumps(post_data))
-        g.close()
+        if 'content-encoding' in POST_HEADERS:
+            content_encoding = POST_HEADERS['content-encoding']
+        else:
+            content_encoding = ''
 
-        requests.post(url, data=s.getvalue(), headers={
-            'content-encoding': 'gzip'
-        })
+        if content_encoding == 'gzip':
+            s = StringIO.StringIO()
+            g = gzip.GzipFile(fileobj=s, mode='w')
+            g.write(json.dumps(post_data))
+            g.close()
+
+            requests.post(url, data=s.getvalue(), headers={
+                'content-encoding': 'gzip'
+            })
+        else:
+            requests.post(url, data=post_data)
+
         if verbose:
             print "Posting sms status...done"
 
