@@ -5,6 +5,7 @@ import locale
 import argparse
 import json
 import datetime
+import gzip
 import requests
 
 
@@ -195,7 +196,21 @@ def disk_usage_command_collect_handler(args):
         host = config['post']['host']
         port = config['post']['port']
         url = config['post']['url'].format(host=host, port=port, user=user)
-        response = requests.post(url, data=post_data)
+
+        content_encoding = ''
+        if 'headers' in config['post']:
+            headers = config['post']['headers']
+            if 'content-encoding' in headers:
+                content_encoding = headers['content-encoding']
+
+        if content_encoding == 'gzip':
+            gzipped_post_data = gzip.compress(bytes(json.dumps(post_data), 'utf-8'))
+            response = requests.post(url, data=gzipped_post_data, headers={
+                'content-encoding': 'gzip'
+            })
+        else:
+            response = requests.post(url, data=post_data)
+
         print(response)
         print("Posting disk usage...done")
 
