@@ -35,27 +35,31 @@ def get_disk_space() -> dict:
         if detail_re_result:
             file_system = detail_re_result.group(1)
 
-            blocks = detail_re_result.group(2)
-            if blocks.isdigit():
-                blocks = locale.atoi(blocks)
+            gb_blocks = detail_re_result.group(2)
+            if gb_blocks.isdigit():
+                gb_blocks = locale.atoi(gb_blocks)
 
             free_disk_space = detail_re_result.group(3)
             if free_disk_space.isdigit():
                 free_disk_space = locale.atoi(free_disk_space)
 
             space_used_percent = detail_re_result.group(4)
+            if space_used_percent[-1] == '%':
+                space_used_percent = space_used_percent[:-1]
 
             inode_used = detail_re_result.group(5)
             if inode_used.isdigit():
                 inode_used = locale.atoi(inode_used)
 
             inode_used_percent = detail_re_result.group(6)
+            if inode_used_percent[-1] == '%':
+                inode_used_percent = inode_used_percent[:-1]
 
             mounted_on = detail_re_result.group(7)
 
             current_file_system = {
                 'file_system': file_system,
-                'blocks': blocks,
+                'gb_blocks': gb_blocks,
                 'free_space': free_disk_space,
                 'space_used_percent': space_used_percent,
                 'inode_used': inode_used,
