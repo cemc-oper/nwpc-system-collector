@@ -23,7 +23,6 @@ def run_df_command() -> str:
 
 def get_disk_space() -> dict:
     result_lines = run_df_command().split("\n")
-    print(result_lines)
 
     detail_pattern = r'^(\S+) +(\S+) +(\S+) +(\S+) +(\S+) +(\S+) +(\S+)'
     detail_prog = re.compile(detail_pattern)
@@ -147,17 +146,16 @@ def disk_space_command_collect_handler(args):
             'response': cmquota_result
         }
     }
-    user = cmquota_result['user']
 
     post_data = {
         'message': json.dumps(result)
     }
 
     if not args.disable_post:
-        print("Posting disk usage...")
+        print("Posting disk space...")
         host = config['post']['host']
         port = config['post']['port']
-        url = config['post']['url'].format(host=host, port=port, user=user)
+        url = config['post']['url'].format(host=host, port=port)
 
         content_encoding = ''
         if 'headers' in config['post']:
@@ -174,7 +172,7 @@ def disk_space_command_collect_handler(args):
             response = requests.post(url, data=post_data)
 
         print(response)
-        print("Posting disk usage...done")
+        print("Posting disk space...done")
 
 
 def disk_space_command_line_tool():
