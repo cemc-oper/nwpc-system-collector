@@ -15,3 +15,8 @@ class SmsNodeVariable(object):
             'variable_type': self.variable_type,
             'value': self.value
         }
+
+    @staticmethod
+    def create_from_dict(var_dict):
+        var = SmsNodeVariable(var_dict['variable_type'], var_dict['name'], var_dict['value'])
+        return var

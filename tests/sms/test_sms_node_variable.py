@@ -1,45 +1,38 @@
 import os
-from nwpc_work_flow_model.sms.sms_node import SmsNode
+from nwpc_work_flow_model.sms.node_variable import SmsNodeVariable, SmsNodeVariableType
 
 
-class TestSmsNode(object):
-    def test_normal_suite_cdp_output(self):
-        with open(os.path.dirname(__file__) + "/data/cdp/normal_suite_cdp.txt") as f:
-            cdp_output = f.readlines()
-            node = SmsNode.create_from_cdp_output(cdp_output)
-            assert node.get_variable_value('SUITE') == 'grapes_meso_v4_1'
-            assert node.get_variable_value('DATE') == '15.01.2017'
-            assert node.get_variable_value('DAY') == 'sunday'
-            assert node.get_variable_value('DD') == '15'
+class TestSmsNodeVariable(object):
+    def test_create(self):
+        var_name = 'var_name'
+        var_type = SmsNodeVariableType.Variable
+        var_value = 'var value'
+        var = SmsNodeVariable(var_type, var_name, var_value)
+        assert var.name == var_name
+        assert var.variable_type == var_type
+        assert var.value == var_value
 
-            assert node.get_variable_value('SMSOUT') == '/cma/g1/nwp/SMSOUT'
-            assert node.get_variable_value('SMSHOME') == '/cma/g1/nwp/SMSOUT'
-            assert node.get_variable_value('VERSION') == '_v4_1'
+    def test_to_dict(self):
+        var_name = 'var_name'
+        var_type = SmsNodeVariableType.Variable
+        var_value = 'var value'
+        var = SmsNodeVariable(var_type, var_name, var_value)
+        var_dict = var.to_dict()
+        assert var_dict['name'] == var_name
+        assert var_dict['variable_type'] == var_type
+        assert var_dict['value'] == var_value
 
-    def test_normal_family_cdp_output(self):
-        with open(os.path.dirname(__file__) + "/data/cdp/normal_family_cdp.txt") as f:
-            cdp_output = f.readlines()
-            node = SmsNode.create_from_cdp_output(cdp_output)
-            assert node.get_variable_value('FAMILY') == 'cold'
-            assert node.get_variable_value('FAMILY1') == 'cold'
+    def test_create_from_dict(self):
+        var_name = 'var_name'
+        var_type = SmsNodeVariableType.Variable
+        var_value = 'var value'
+        var_dict = {
+            'name': var_name,
+            'variable_type': var_type,
+            'value': var_value
+        }
+        var = SmsNodeVariable.create_from_dict(var_dict)
 
-            assert node.get_variable_value('SMSINCLUDE') == '/cma/u/nwp/smsworks/def/grapes_meso/include'
-            assert node.get_variable_value('SMSFILES') == '/cma/u/nwp/smsworks/def/grapes_meso/smsfiles'
-
-    def test_error_login_cdp(self):
-        with open(os.path.dirname(__file__) + "/data/cdp/error_login_cdp.txt") as f:
-            cdp_output = f.readlines()
-            node = SmsNode.create_from_cdp_output(cdp_output)
-            assert node is None
-
-    def test_error_node_path_cdp(self):
-        with open(os.path.dirname(__file__) + "/data/cdp/error_node_path_cdp.txt") as f:
-            cdp_output = f.readlines()
-            node = SmsNode.create_from_cdp_output(cdp_output)
-            assert node is None
-
-    def test_error_sms_server_cdp(self):
-        with open(os.path.dirname(__file__) + "/data/cdp/error_sms_server_cdp.txt") as f:
-            cdp_output = f.readlines()
-            node = SmsNode.create_from_cdp_output(cdp_output)
-            assert node is None
+        assert var.name == var_name
+        assert var.variable_type == var_type
+        assert var.value == var_value
