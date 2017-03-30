@@ -5,18 +5,9 @@ import subprocess
 from nwpc_work_flow_model.sms.sms_node import SmsNode
 
 
-def variable_handler(args):
-    request_date_time = datetime.datetime.now()
-    request_time_string = request_date_time.strftime("%Y-%m-%d %H:%M:%S")
-
-    command_string = "login {sms_server} {sms_user} {sms_password}; status; show -f -K {node_path};exit".format(
-        sms_server=args.sms_server,
-        sms_user=args.sms_user,
-        sms_password=args.sms_password,
-        node_path=args.node_path
-    )
+def get_cdp_output(cdp_command_string):
     echo_pipe = subprocess.Popen(
-        ['echo', command_string],
+        ['echo', cdp_command_string],
         stdout=subprocess.PIPE,
         encoding='utf-8'
     )
@@ -29,6 +20,20 @@ def variable_handler(args):
     )
     echo_pipe.stdout.close()
     (cdp_output, cdp_error) = cdp_pipe.communicate()
+    return cdp_output, cdp_error
+
+
+def variable_handler(args):
+    request_date_time = datetime.datetime.now()
+    request_time_string = request_date_time.strftime("%Y-%m-%d %H:%M:%S")
+
+    command_string = "login {sms_server} {sms_user} {sms_password}; status; show -f -K {node_path};exit".format(
+        sms_server=args.sms_server,
+        sms_user=args.sms_user,
+        sms_password=args.sms_password,
+        node_path=args.node_path
+    )
+    (cdp_output, cdp_error) = get_cdp_output(command_string)
 
     cdp_output = cdp_output.splitlines(keepends=True)
     node = SmsNode.create_from_cdp_output(cdp_output)
@@ -70,7 +75,7 @@ def variable_handler(args):
             }
         }
         print(json.dumps(result, indent=2))
-    return
+    return result
 
 
 def main():

@@ -1,0 +1,38 @@
+Welcome to cdp version 4.4.5 compiled on Tue Oct  8 09:23:20 GMT 2013
+# MSG:IOI-ACTION-C-BREAK:Interrupt handler loaded
+# MSG:IOI-FILE-LOG:Closing logfile /cma/u/wangdp/cdplog/ioi.log (append).
+# MSG:SMS-CLIENT-LOGIN:wangdp logged into nwpc_wangdp with password [277159]
+/{abo}   windroc_info             {sus}
+         windroc_cdp              {sus}
+         grapes_meso_3km_post_full{sus}
+         grapes_tym_post          {sus}
+         grapes_meso_3km_post     {sus}
+         rafs_post                {sus}
+         grapes_meso_post         {sus}
+
+suite windroc_info # currently suspended (Thu Mar 30 03:26:51 2017)
+  clock hybrid 0 # 06.09.2016 03:26
+  # genvar SUITE 'windroc_info'
+  # genvar DATE '06.09.2016'
+  # genvar DAY 'tuesday'
+  # genvar DD '06'
+  # genvar DOW '2'
+  # genvar DOY '250'
+  # genvar MM '09'
+  # genvar MONTH 'september'
+  # genvar YYYY '2016'
+  # genvar SMSDATE '20160906'
+  # genvar SMSTIME '03:26'
+  # genvar SMSCLOCK 'tuesday:september:2:250'
+  edit COMMON 'This is a common file'
+  edit SMSFILES '/cma/u/wangdp/smsworks/windroc_info/sms/smsfiles'
+  edit SMSINCLUDE '/cma/u/wangdp/smsworks/windroc_info/sms/include'
+  edit SMSOUT '/cma/g3/wangdp/sms/windroc_info/smsout'
+  edit SMSHOME '/cma/g3/wangdp/sms/windroc_info/smsout'
+  edit SMSCMD 'llsubmit4 $SMSJOB$ $SMSNAME$ $SMSTRIES$ $SMSTRYNO$'
+  edit SMSKILL 'llcancel2 $SMSRID$ $SMSNAME$'
+  edit PROJECT_HOME '/cma/u/wangdp/smsworks/windroc_info'
+endsuite
+# MSG:SMS-CLIENT-LOGOUT:logout from nwpc_wangdp
+Goodbye wangdp
+# MSG:IOI-FILE-LOG:Closing logfile /cma/u/wangdp/cdplog/cdp.log (append).
