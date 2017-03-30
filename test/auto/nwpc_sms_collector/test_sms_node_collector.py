@@ -1,7 +1,7 @@
 import os
-import sys
-import io
 from nwpc_sms_collector import sms_node_collector
+from nwpc_work_flow_model.sms.sms_node import SmsNode
+from nwpc_work_flow_model.sms.node_type import NodeType
 
 
 class ArgObject(object):
@@ -38,5 +38,9 @@ def test_variable_handler(monkeypatch):
     result = sms_node_collector.variable_handler(args)
 
     node_dict = result['data']['response']['node']
-    assert len(node_dict['variable_list']) == 8
-    assert len(node_dict['generated_variable_list']) == 12
+    node = SmsNode.create_from_dict(node_dict)
+
+    assert node.name == 'windroc_info'
+    assert node.node_type == 'suite'
+    assert len(node.variable_list) == 8
+    assert len(node.generated_variable_list) == 12
