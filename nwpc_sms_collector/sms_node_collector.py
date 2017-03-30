@@ -1,35 +1,37 @@
 import argparse
 import datetime
-from paramiko import SSHClient, AutoAddPolicy
 import json
-import os
-import sys
+import subprocess
+from nwpc_work_flow_model.sms.sms_node import SmsNode
 
 
 def variable_handler(args):
     request_date_time = datetime.datetime.now()
     request_time_string = request_date_time.strftime("%Y-%m-%d %H:%M:%S")
 
-    client = SSHClient()
-    client.set_missing_host_key_policy(AutoAddPolicy())
-    client.connect(args.host, args.port, args.user, args.password)
+    command_string = "login {sms_server} {sms_user} {sms_password}; status; show -f -K {node_path};exit".format(
+        sms_server=args.sms_server,
+        sms_user=args.sms_user,
+        sms_password=args.sms_password,
+        node_path=args.node_path
+    )
+    echo_pipe = subprocess.Popen(
+        ['echo', command_string],
+        stdout=subprocess.PIPE,
+        encoding='utf-8'
+    )
+    cdp_pipe = subprocess.Popen(
+        ['/cma/u/app/sms/bin/cdp'],
+        stdin=echo_pipe.stdout,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        encoding='utf-8'
+    )
+    echo_pipe.stdout.close()
+    (cdp_output, cdp_error) = cdp_pipe.communicate()
 
-    command = 'echo "login {sms_server} {sms_user} {sms_password}; status; show -f -K {node_path};exit" |' \
-              ' /cma/u/app/sms/bin/cdp'\
-        .format(
-            sms_server=args.sms_server,
-            sms_user=args.sms_user,
-            sms_password=args.sms_password,
-            node_path=args.node_path
-        )
-
-    stdin, stdout, stderr = client.exec_command(command)
-    std_out_string = stdout.read().decode('UTF-8')
-    std_error_out_string = stderr.read().decode('UTF-8')
-    client.close()
-
-    cdp_output = std_out_string.splitlines(True)
-    node = get_sms_node_from_cdp_output(cdp_output)
+    cdp_output = cdp_output.splitlines(keepends=True)
+    node = SmsNode.create_from_cdp_output(cdp_output)
     if node is None:
         result = {
             'app': 'nwpc-sms-collector',
@@ -43,8 +45,8 @@ def variable_handler(args):
                 },
                 'response': {
                     'message': {
-                        'output': std_out_string,
-                        'error_output': std_error_out_string
+                        'output': cdp_output,
+                        'error_output': cdp_error
                     },
                     'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 }
@@ -74,15 +76,9 @@ def variable_handler(args):
 def main():
     parser = argparse.ArgumentParser(prog="sms_collector")
 
-    login_parser = argparse.ArgumentParser(add_help=False)
-    login_parser.add_argument('-H', '--host', type=str, help='remote host', required=True)
-    login_parser.add_argument('-P', '--port', type=int, help='remote host\'s port', default=22)
-    login_parser.add_argument('-u', '--user', type=str, help='user', required=True)
-    login_parser.add_argument('-p', '--password', type=str, help='password', required=True)
-
     subparsers = parser.add_subparsers(help="sub command help")
 
-    parser_variable = subparsers.add_parser('variable', help='get variable from sms server', parents=[login_parser])
+    parser_variable = subparsers.add_parser('variable', help='get variable from sms server')
     parser_variable.add_argument('--sms-server', type=str, help='sms server', required=True)
     parser_variable.add_argument('--sms-user', type=str, help='sms user', required=True)
     parser_variable.add_argument('--sms-password', type=str, help='sms password')
