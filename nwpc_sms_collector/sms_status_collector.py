@@ -6,7 +6,6 @@ import re
 from datetime import datetime, time, timedelta
 import json
 import gzip
-import StringIO
 
 import requests
 
@@ -65,15 +64,22 @@ def get_sms_variable(sms_name, sms_user, sms_password, node_path, variable_list=
         sms_password=sms_password,
         node_path=node_path
     )
-    echo_pipe = subprocess.Popen(['echo', command_string], stdout=subprocess.PIPE)
-    cdp_pipe = subprocess.Popen(['/cma/u/app/sms/bin/cdp'],
-                                stdin=echo_pipe.stdout,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+    echo_pipe = subprocess.Popen(
+        ['echo', command_string],
+        stdout=subprocess.PIPE,
+        encoding='utf-8'
+    )
+    cdp_pipe = subprocess.Popen(
+        ['/cma/u/app/sms/bin/cdp'],
+        stdin=echo_pipe.stdout,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        encoding='utf-8'
+    )
     echo_pipe.stdout.close()
     (cdp_output, cdp_error) = cdp_pipe.communicate()
     return_code = cdp_pipe.returncode
-    if return_code <> 0:
+    if return_code != 0:
         current_time = datetime.now().isoformat()
         result = {
             'app': 'sms_status_collector',
@@ -113,16 +119,21 @@ def get_sms_status(sms_name, sms_user, sms_password, verbose=False):
         sms_user=sms_user,
         sms_password=sms_password
     )
-    echo_pipe = subprocess.Popen(['echo', command_string], stdout=subprocess.PIPE)
-    cdp_pipe = subprocess.Popen(['/cma/u/app/sms/bin/cdp'],
-                                stdin=echo_pipe.stdout,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+    echo_pipe = subprocess.Popen(
+        ['echo', command_string],
+        stdout=subprocess.PIPE,
+        encoding='utf-8')
+    cdp_pipe = subprocess.Popen(
+        ['/cma/u/app/sms/bin/cdp'],
+        stdin=echo_pipe.stdout,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        encoding='utf-8')
     echo_pipe.stdout.close()
     (cdp_output, cdp_error) = cdp_pipe.communicate()
     # print cdp_output
     return_code = cdp_pipe.returncode
-    if return_code <> 0:
+    if return_code != 0:
         current_time = datetime.now().isoformat()
         result = {
             'app': 'sms_status_collector',
@@ -153,7 +164,7 @@ def get_sms_status(sms_name, sms_user, sms_password, verbose=False):
             m2 = none_first_line.match(a_status_line)
             if m2 is None:
                 if verbose:
-                    print "LINE: ",a_status_line.split()
+                    print("LINE: ",a_status_line.split())
             else:
                 g = m2.groups()
                 node_name = g[0]
@@ -166,12 +177,12 @@ def get_sms_status(sms_name, sms_user, sms_password, verbose=False):
                     'node_type': 'suite'
                 })
                 if verbose:
-                    print "  |-",g[2], g[0]
+                    print("  |-",g[2], g[0])
 
         else:
             g = m.groups()
             if verbose:
-                print "/{sms_name}".format(sms_name=sms_name), g[1]
+                print("/{sms_name}".format(sms_name=sms_name), g[1])
             node_name = sms_name
             node_path = "/"
             node_status = g[1]
@@ -183,7 +194,7 @@ def get_sms_status(sms_name, sms_user, sms_password, verbose=False):
             })
 
             if verbose:
-                print "  |-",g[5], g[3]
+                print("  |-",g[5], g[3])
             node_name = g[3]
             node_path = "/{node_name}".format(sms_name=sms_name, node_name=node_name)
             node_status = g[5]
@@ -328,7 +339,7 @@ class SmsStatusAnalyzer(object):
                 self.cur_level = level_no
                 cur_node_path_tokens = self.cur_node_path.split('/')
                 new_node_path_tokens = cur_node_path_tokens[0: level_no+1]
-                self.cur_node_path = string.join(new_node_path_tokens, '/')
+                self.cur_node_path = '/'.join(new_node_path_tokens)
             self.cur_level += 1
             node_path = self.cur_node_path + '/' + node_name_part
             if self.cur_level == 1:
@@ -394,11 +405,16 @@ def get_sms_whole_status(owner, repo, sms_name, sms_user, sms_password, verbose=
         sms_user=sms_user,
         sms_password=sms_password
     )
-    echo_pipe = subprocess.Popen(['echo', command_string], stdout=subprocess.PIPE)
-    cdp_pipe = subprocess.Popen(['/cma/u/app/sms/bin/cdp'],
-                                stdin=echo_pipe.stdout,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+    echo_pipe = subprocess.Popen(
+        ['echo', command_string],
+        stdout=subprocess.PIPE,
+        encoding='utf-8')
+    cdp_pipe = subprocess.Popen(
+        ['/cma/u/app/sms/bin/cdp'],
+        stdin=echo_pipe.stdout,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        encoding='utf-8')
     echo_pipe.stdout.close()
     (cdp_output, cdp_error) = cdp_pipe.communicate()
     # print cdp_output
@@ -485,9 +501,9 @@ def collect_handler(args):
     if args.verbose:
         verbose = True
 
-    print 'Getting sms status'
+    print('Getting sms status')
     result = get_sms_whole_status(owner, repo, sms_name, sms_user, sms_password, verbose)
-    print 'Getting sms status...Done'
+    print('Getting sms status...Done')
 
     post_data = {
         'message': json.dumps(result)
@@ -495,9 +511,9 @@ def collect_handler(args):
 
     if verbose:
         if 'error' in result:
-            print result
+            print(result)
         else:
-            print """result:
+            print("""result:
     app: {app},
     type: {type},
     timestamp: {timestamp},
@@ -505,11 +521,11 @@ def collect_handler(args):
 """.format(
                 app=result['app'],
                 type=result['type'],
-                timestamp=result['timestamp'])
+                timestamp=result['timestamp']))
 
     if not args.disable_post:
         if verbose:
-            print "Posting sms status..."
+            print("Posting sms status...")
         host = SMS_STATUS_POST_HOST
         port = SMS_STATUS_POST_PORT
         url = SMS_STATUS_POST_URL.format(host=host, port=port)
@@ -520,19 +536,16 @@ def collect_handler(args):
             content_encoding = ''
 
         if content_encoding == 'gzip':
-            s = StringIO.StringIO()
-            g = gzip.GzipFile(fileobj=s, mode='w')
-            g.write(json.dumps(post_data))
-            g.close()
+            gzipped_data = gzip.compress(bytes(json.dumps(post_data)), 'utf-8')
 
-            requests.post(url, data=s.getvalue(), headers={
+            requests.post(url, data=gzipped_data, headers={
                 'content-encoding': 'gzip'
             })
         else:
             requests.post(url, data=post_data)
 
         if verbose:
-            print "Posting sms status...done"
+            print("Posting sms status...done")
 
 
 def show_handler(args):
@@ -561,7 +574,7 @@ def show_handler(args):
         repo = sms_name
 
     result = get_sms_whole_status(owner, repo, sms_name, sms_user, sms_password, verbose=False)
-    print json.dumps(result)
+    print(json.dumps(result))
     return 0
 
 
