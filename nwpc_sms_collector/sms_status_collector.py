@@ -536,7 +536,7 @@ def collect_handler(args):
             content_encoding = ''
 
         if content_encoding == 'gzip':
-            gzipped_data = gzip.compress(bytes(json.dumps(post_data)), 'utf-8')
+            gzipped_data = gzip.compress(bytes(json.dumps(post_data), 'utf-8'))
 
             requests.post(url, data=gzipped_data, headers={
                 'content-encoding': 'gzip'
