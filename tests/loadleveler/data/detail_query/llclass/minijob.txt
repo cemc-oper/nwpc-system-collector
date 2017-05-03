@@ -1,0 +1,47 @@
+=============== Class minijob ===============
+                    Name: minijob
+                Priority: 0
+           Exclude_Users: 
+           Include_Users: 
+          Exclude_Groups: 
+          Include_Groups: 
+              Exclude_Bg: 
+              Include_Bg: 
+                   Admin: 
+                Max_node: -1
+                 Maxjobs: -1
+    Resource_requirement: 
+       Node Resource Req: 
+           Max Resources: ConsumableMemory(100.000 gb) 
+      Max Node Resources: ConsumableMemory(100.000 gb) 
+           Class_comment: 
+          Class_ckpt_dir: 
+              Ckpt_limit: undefined, undefined
+        Wall_clock_limit: 01:00:10, 01:00:00 (3610 seconds, 3600 seconds)
+Default_wall_clock_limit: 01:00:10, 01:00:00 (3610 seconds, 3600 seconds)
+           Job_cpu_limit: undefined, undefined
+               Cpu_limit: undefined, undefined
+              Data_limit: undefined, undefined
+                As_limit: undefined, undefined
+             Nproc_limit: undefined, undefined
+           Memlock_limit: undefined, undefined
+             Locks_limit: undefined, undefined
+            Nofile_limit: undefined, undefined
+              Core_limit: undefined, undefined
+              File_limit: undefined, undefined
+             Stack_limit: undefined, undefined
+               Rss_limit: undefined, undefined
+                    Nice: 0
+              Free_slots: 384
+           Maximum_slots: 2560
+         Max_total_tasks: -1
+     Max_proto_instances: 2
+     Stripe_min_networks: False
+           Preempt_class: 
+             Start_class: 
+            User default: maxidle(-1) maxqueued(-1) maxjobs(-1) max_total_tasks(-1)
+        Imm_send_buffers: 1
+       Collective_groups: 0
+                 Restart: yes
+               Endpoints: 1
+           Sub_Block_Job: False
