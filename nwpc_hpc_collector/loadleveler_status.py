@@ -9,11 +9,13 @@ import gzip
 
 import requests
 
+from nwpc_hpc_model.loadleveler import QueryCategory, QueryCategoryList, QueryModel, QueryProperty, QueryItem
+from nwpc_hpc_model.loadleveler import record_parser
+from nwpc_hpc_model.loadleveler import value_saver
+
 sys.path.append(os.path.join(os.path.dirname(__file__), "../"))
 
-from nwpc_hpc_collector.loadleveler import QueryCategory, QueryCategoryList, QueryModel, QueryProperty, QueryItem
-from nwpc_hpc_collector.loadleveler import record_parser
-from nwpc_hpc_collector.loadleveler import value_saver
+
 from nwpc_hpc_collector.util import json_default
 
 config_file_name = "loadleveler_status.develop.config"
@@ -76,7 +78,7 @@ def collect_handler(args):
     }
 
     message: {
-        'app': 'nwpc_hpc_collector.loadleveler_status',
+        'app': 'nwpc_hpc_model.loadleveler_status',
         'type': 'command',
         'time': "%Y-%m-%d %H:%M:%S",
         'data': {
