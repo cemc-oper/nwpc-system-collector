@@ -15,8 +15,8 @@ from nwpc_hpc_model.loadleveler import value_saver
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "../"))
 
-
 from nwpc_hpc_collector.util import json_default
+
 
 config_file_name = "loadleveler_status.develop.config"
 default_config_file_path = os.path.join(os.path.dirname(__file__), "conf", config_file_name)
@@ -38,8 +38,7 @@ def build_category_list(category_list_config):
     return category_list
 
 
-def run_llq_detail_command() -> str:
-    command = "/usr/bin/llq -l"
+def run_llq_detail_command(command="/usr/bin/llq -l") -> str:
     pipe = subprocess.Popen([command], stdout=subprocess.PIPE, shell=True)
     output = pipe.communicate()[0]
     output_string = output.decode()
@@ -57,9 +56,9 @@ def get_llq_detail_query_response(config):
 
 def get_config(config_file_path):
     """
-    读取配置文件信息，配置文件为 json 格式
-    :param config_file_path:
-    :return:
+    :param config_file_path: path of config file, which should be a YAML file.
+    
+    :return: config dict loading from config file.
     """
     config = None
     with open(config_file_path, 'r') as f:
@@ -71,7 +70,7 @@ def collect_handler(args):
     """
     collect loadleveler status and post to agent.
     :param args:
-    :return:
+    :return: None
 
     post data: {
         message: json_string
@@ -89,7 +88,7 @@ def collect_handler(args):
         }
     }
 
-    model_dict: see QueryModel
+    model_dict: see nwpc_hpc_model.loadleveler.QueryModel.to_dict()
     """
     if args.config:
         config_file_path = args.config
