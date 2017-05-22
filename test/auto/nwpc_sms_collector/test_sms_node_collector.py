@@ -20,8 +20,8 @@ def generate_get_cdp_output_mock(output_file, output_error_file):
 
 
 def test_variable_handler(monkeypatch):
-    output_file = os.path.join(os.path.dirname(__file__), 'data/normal_suite_cdp_output.txt')
-    output_error_file = os.path.join(os.path.dirname(__file__), 'data/normal_suite_cdp_output_error.txt')
+    output_file = os.path.join(os.path.dirname(__file__), 'data/normal_suite_show_output.txt')
+    output_error_file = os.path.join(os.path.dirname(__file__), 'data/normal_suite_show_output_error.txt')
 
     args = ArgObject()
     args.sms_server = "nwpc_wangdp"
