@@ -27,7 +27,7 @@ def variable_handler(args):
     request_date_time = datetime.datetime.now()
     request_time_string = request_date_time.strftime("%Y-%m-%d %H:%M:%S")
 
-    command_string = "login {sms_server} {sms_user} {sms_password}; status; show -f -K {node_path};exit".format(
+    command_string = "login {sms_server} {sms_user} {sms_password}; info -v {node_path};exit".format(
         sms_server=args.sms_server,
         sms_user=args.sms_user,
         sms_password=args.sms_password,
@@ -36,7 +36,7 @@ def variable_handler(args):
     (cdp_output, cdp_error) = get_cdp_output(command_string)
 
     cdp_output = cdp_output.splitlines(keepends=True)
-    node = SmsNode.create_from_cdp_output(cdp_output)
+    node = SmsNode.create_from_cdp_info_output(cdp_output)
     if node is None:
         result = {
             'app': 'nwpc-sms-collector',

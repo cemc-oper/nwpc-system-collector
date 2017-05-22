@@ -20,14 +20,14 @@ def generate_get_cdp_output_mock(output_file, output_error_file):
 
 
 def test_variable_handler(monkeypatch):
-    output_file = os.path.join(os.path.dirname(__file__), 'data/normal_suite_show_output.txt')
-    output_error_file = os.path.join(os.path.dirname(__file__), 'data/normal_suite_show_output_error.txt')
+    output_file = os.path.join(os.path.dirname(__file__), 'data/normal_suite_info_output.txt')
+    output_error_file = os.path.join(os.path.dirname(__file__), 'data/normal_suite_info_output.txt')
 
     args = ArgObject()
-    args.sms_server = "nwpc_wangdp"
-    args.sms_user = "wangdp"
+    args.sms_server = "nwpc_op"
+    args.sms_user = "nwp"
     args.sms_password = "1"
-    args.node_path = "/windroc_info"
+    args.node_path = "/grapes_meso_v4_1"
 
     monkeypatch.setattr(
         sms_node_collector,
@@ -40,7 +40,7 @@ def test_variable_handler(monkeypatch):
     node_dict = result['data']['response']['node']
     node = SmsNode.create_from_dict(node_dict)
 
-    assert node.name == 'windroc_info'
+    assert node.name == 'grapes_meso_v4_1'
     assert node.node_type == 'suite'
-    assert len(node.variable_list) == 8
+    assert len(node.variable_list) == 3
     assert len(node.generated_variable_list) == 12
