@@ -188,6 +188,9 @@ class TestSmsNode(object):
             assert node.node_type == 'suite'
             assert node.status == 'active'
 
+            assert len(node.variable_list) == 3
+            assert len(node.generated_variable_list) == 12
+
             assert node.get_variable_value('SUITE') == 'grapes_meso_v4_1'
             assert node.get_variable_value('DATE') == '21.05.2017'
             assert node.get_variable_value('DAY') == 'sunday'
