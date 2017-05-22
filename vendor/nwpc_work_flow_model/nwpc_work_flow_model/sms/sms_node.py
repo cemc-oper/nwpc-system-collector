@@ -172,7 +172,7 @@ class SmsNode(object):
             a_variable_line = a_variable_line.strip()
             path_start = a_variable_line.rindex('[')
             node_path = a_variable_line[path_start+1:-1]
-            if len(node_path):
+            if len(node_path) == 0:
                 variable = get_variable_from_variable_line(a_variable_line, path_start)
                 if variable.variable_type == SmsNodeVariableType.Variable:
                     node.variable_list.append(variable)
