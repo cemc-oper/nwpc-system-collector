@@ -30,7 +30,7 @@ def get_cmquota() -> dict:
     user = get_user_name()
     result_lines = run_cmquota_command().split("\n")
 
-    detail_pattern = r'^(\w+) +(\w+) +(\d+) +(\d+) +(\d+) +(\d+) +(\w+) \| +(\d+) +(\d+) +(\d+) +(\d+) +(\w+) +(\w+)'
+    detail_pattern = r'^(\w+) +(\w+) +(\d+) +(\d+) +(\d+) +(\d+) +(.+) \| +(\d+) +(\d+) +(\d+) +(\d+) +(\w+) +(.+)'
     detail_prog = re.compile(detail_pattern)
     quota_result = dict()
     file_system_list = list()
@@ -57,7 +57,7 @@ def get_cmquota() -> dict:
             if block_in_doubt.isdigit():
                 block_in_doubt = locale.atoi(block_in_doubt)
 
-            block_grace = detail_re_result.group(7)
+            block_grace = detail_re_result.group(7).strip()
 
             file_files = detail_re_result.group(8)
             if file_files.isdigit():
@@ -75,7 +75,7 @@ def get_cmquota() -> dict:
             if file_in_doubt.isdigit():
                 file_in_doubt = locale.atoi(file_in_doubt)
 
-            file_grace = detail_re_result.group(12)
+            file_grace = detail_re_result.group(12).strip()
             file_remarks = detail_re_result.group(13)
 
             current_file_system = dict()
