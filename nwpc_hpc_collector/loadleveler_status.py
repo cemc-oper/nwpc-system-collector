@@ -39,6 +39,12 @@ def build_category_list(category_list_config):
 
 
 def run_llq_detail_command(command="/usr/bin/llq -l") -> str:
+    """
+    run llq detail command, default is llq -l.
+    
+    :param command: 
+    :return: command result string
+    """
     pipe = subprocess.Popen([command], stdout=subprocess.PIPE, shell=True)
     output = pipe.communicate()[0]
     output_string = output.decode()
@@ -46,6 +52,36 @@ def run_llq_detail_command(command="/usr/bin/llq -l") -> str:
 
 
 def get_llq_detail_query_response(config):
+    """
+    get response of llq detail query.
+    
+    :param config: config dict
+        {
+            post: post url
+                {
+                    host: host
+                    port: port
+                    url: url
+                    headers: array, headers
+                }
+            category_list: a list of categories
+                [
+                    {  
+                        id: "llq.id",
+                        display_name: "Id",
+                        label: "Job Step Id",
+                        record_parser_class: "DetailLabelParser",
+                        record_parser_arguments: ["Job Step Id"],
+                        value_saver_class: "StringSaver",
+                        value_saver_arguments: []
+                    }
+                ]
+    :return: model dict, see nwpc_hpc_model_loadleveler.query_model.QueryModel.to_dict()
+        {
+            items: job info items, see nwpc_hpc_model_loadleveler.query_item.QueryItem.to_dict()
+        }
+    
+    """
     output_lines = run_llq_detail_command().split("\n")
     category_list = build_category_list(config['category_list'])
 
@@ -77,7 +113,7 @@ def collect_handler(args):
     }
 
     message: {
-        'app': 'nwpc_hpc_model.loadleveler_status',
+        'app': 'nwpc_hpc_collector.loadleveler_status',
         'type': 'command',
         'time': "%Y-%m-%d %H:%M:%S",
         'data': {
