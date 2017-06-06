@@ -1,0 +1,146 @@
+===== Job Step cma19n04.2876749.0 =====
+        Job Step Id: cma19n04.2876749.0
+           Job Name: haze
+          Step Name: 0
+  Structure Version: 10
+              Owner: haze_xp
+         Queue Date: Wed Sep  7 10:00:00 2016
+             Status: Idle
+     Reservation ID:  
+  Requested Res. ID:  
+   Flexible Res. ID:  
+          Recurring: False
+ Scheduling Cluster: 
+ Submitting Cluster: 
+    Sending Cluster: 
+  Requested Cluster: 
+     Schedd History: 
+   Outbound Schedds: 
+    Submitting User: 
+   Eligibility Time: Wed Sep  7 10:00:01 2016
+      Dispatch Time: 
+    Completion Date: 
+    Completion Code: 
+        Favored Job: No
+      User Priority: 50
+       user_sysprio: 0
+      class_sysprio: 0
+      group_sysprio: 0
+    System Priority: 50000
+          q_sysprio: 50000
+ Previous q_sysprio: 0
+      Notifications: Error
+ Virtual Image Size: 1 kb
+         Large Page: N
+              Trace: no
+         Coschedule: no
+       SMT required: as_is
+    MetaCluster Job: no
+     Checkpointable: no
+    Ckpt Start Time: 
+Good Ckpt Time/Date: 
+   Ckpt Elapse Time: 0 seconds
+Fail Ckpt Time/Date: 
+    Ckpt Accum Time: 0 seconds
+    Checkpoint File: 
+   Ckpt Execute Dir: 
+  Restart From Ckpt: no
+ Restart Same Nodes: no
+            Restart: no
+        Preemptable: yes
+ Preempt Wait Count: 0
+     Hold Job Until: 
+     User Hold Time: 00:00:00 (0 seconds)
+               RSet: RSET_NONE
+Mcm Affinity Option:   
+      Task Affinity: 
+      Cpus Per Core:  0
+   Parallel Threads:  0
+                Env: 
+                 In: /dev/null
+                Out: ./out/haze.2876749.out
+                Err: ./out/haze.2876749.err
+Initial Working Dir: /cma/u/haze_xp
+         Dependency: 
+Data Stg Dependency: 
+          Resources: 
+     Node Resources: 
+     Step Resources: 
+          Step Type: General Parallel
+         Node Usage: not_shared
+    Submitting Host: cma18n01
+        Schedd Host: cma19n04
+      Job Queue Key: 
+        Notify User: haze_xp@cma18n01
+              Shell: /usr/bin/ksh
+  LoadLeveler Group: No_Group
+              Class: normal
+    Ckpt Hard Limit: undefined
+    Ckpt Soft Limit: undefined
+     Cpu Hard Limit: undefined
+     Cpu Soft Limit: undefined
+    Data Hard Limit: undefined
+    Data Soft Limit: undefined
+      As Hard Limit: undefined
+      As Soft Limit: undefined
+   Nproc Hard Limit: undefined
+   Nproc Soft Limit: undefined
+ Memlock Hard Limit: undefined
+ Memlock Soft Limit: undefined
+   Locks Hard Limit: undefined
+   Locks Soft Limit: undefined
+  Nofile Hard Limit: undefined
+  Nofile Soft Limit: undefined
+    Core Hard Limit: undefined
+    Core Soft Limit: undefined
+    File Hard Limit: undefined
+    File Soft Limit: undefined
+   Stack Hard Limit: undefined
+   Stack Soft Limit: undefined
+     Rss Hard Limit: undefined
+     Rss Soft Limit: undefined
+Step Cpu Hard Limit: undefined
+Step Cpu Soft Limit: undefined
+Wall Clk Hard Limit: 21:00:00 (75600 seconds)
+Wall Clk Soft Limit: 21:00:00 (75600 seconds)
+            Comment: CUACE
+            Account: 
+         Unix Group: nop
+Negotiator Messages: 
+      Bulk Transfer: No
+Adapter Requirement: (sn_all,mpi,US,shared,AVERAGE,instances=1,imm_send_buffers=1,collective_groups=0,endpoints=1)
+          Step Cpus: 0
+Step Virtual Memory: 0.000 mb
+   Step Real Memory: 0.000 mb
+Step Large Page Mem: 0.000 mb
+     Cluster Option: none
+Topology Requirement: none
+     Network Usages: 
+Stripe Min Networks: False
+    Monitor Program: 
+--------------------------------------------------------------------------------
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 16
+   Node maximum    : 16
+   Node actual     : 0
+   Allocated Hosts :
+
+   Master Task
+   -----------
+
+      Executable   : /cma/u/haze_xp/NWPC/CUACE_hb/RUN_CUACE_9km/RUN_CUACE.cmd
+      Exec Args    : 
+      Num Task Inst: 0
+      Task Instance: 
+
+   Task
+   ----
+
+      Num Task Inst: 0
+      Task Instance: 
+--------------------------------------------------------------------------------

@@ -1,0 +1,293 @@
+===== Job Step cma19n02.2879965.0 =====
+        Job Step Id: cma19n02.2879965.0
+           Job Name: LAF_fcst
+          Step Name: 0
+  Structure Version: 10
+              Owner: bcccsm
+         Queue Date: Wed Sep  7 17:38:31 2016
+             Status: Idle
+     Reservation ID:  
+  Requested Res. ID:  
+   Flexible Res. ID:  
+          Recurring: False
+ Scheduling Cluster: 
+ Submitting Cluster: 
+    Sending Cluster: 
+  Requested Cluster: 
+     Schedd History: 
+   Outbound Schedds: 
+    Submitting User: 
+   Eligibility Time: Wed Sep  7 17:38:32 2016
+      Dispatch Time: 
+    Completion Date: 
+    Completion Code: 
+        Favored Job: No
+      User Priority: 50
+       user_sysprio: 0
+      class_sysprio: 0
+      group_sysprio: 0
+    System Priority: 50000
+          q_sysprio: 50000
+ Previous q_sysprio: 0
+      Notifications: Complete
+ Virtual Image Size: 19 kb
+         Large Page: N
+              Trace: no
+         Coschedule: no
+       SMT required: as_is
+    MetaCluster Job: no
+     Checkpointable: no
+    Ckpt Start Time: 
+Good Ckpt Time/Date: 
+   Ckpt Elapse Time: 0 seconds
+Fail Ckpt Time/Date: 
+    Ckpt Accum Time: 0 seconds
+    Checkpoint File: 
+   Ckpt Execute Dir: 
+  Restart From Ckpt: no
+ Restart Same Nodes: no
+            Restart: yes
+        Preemptable: yes
+ Preempt Wait Count: 0
+     Hold Job Until: 
+     User Hold Time: 00:00:00 (0 seconds)
+               RSet: RSET_NONE
+Mcm Affinity Option:   
+      Task Affinity: 
+      Cpus Per Core:  0
+   Parallel Threads:  0
+                Env: 
+                 In: /dev/null
+                Out: /cma/g1/bcccsm/smsout/CSM_20160901/model/a160830_o160901/LAF_fcst.1
+                Err: /cma/g1/bcccsm/smsout/CSM_20160901/model/a160830_o160901/LAF_fcst.1.err
+Initial Working Dir: /cma/u/bcccsm/smsworks/sms
+         Dependency: 
+Data Stg Dependency: 
+      Task_geometry: {(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)(32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63)(64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95)(96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127)(128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159)(160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175)(176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191)(192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223)(224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255)(256)}
+          Resources: 
+     Node Resources: 
+     Step Resources: 
+          Step Type: General Parallel
+         Node Usage: shared
+    Submitting Host: cma18n01
+        Schedd Host: cma19n02
+      Job Queue Key: 
+        Notify User: bcccsm@cma18n01
+              Shell: /usr/bin/ksh
+  LoadLeveler Group: No_Group
+              Class: normal
+    Ckpt Hard Limit: undefined
+    Ckpt Soft Limit: undefined
+     Cpu Hard Limit: undefined
+     Cpu Soft Limit: undefined
+    Data Hard Limit: undefined
+    Data Soft Limit: undefined
+      As Hard Limit: undefined
+      As Soft Limit: undefined
+   Nproc Hard Limit: undefined
+   Nproc Soft Limit: undefined
+ Memlock Hard Limit: undefined
+ Memlock Soft Limit: undefined
+   Locks Hard Limit: undefined
+   Locks Soft Limit: undefined
+  Nofile Hard Limit: undefined
+  Nofile Soft Limit: undefined
+    Core Hard Limit: undefined
+    Core Soft Limit: undefined
+    File Hard Limit: undefined
+    File Soft Limit: undefined
+   Stack Hard Limit: undefined
+   Stack Soft Limit: undefined
+     Rss Hard Limit: undefined
+     Rss Soft Limit: undefined
+Step Cpu Hard Limit: undefined
+Step Cpu Soft Limit: undefined
+Wall Clk Hard Limit: 07:59:00 (28740 seconds)
+Wall Clk Soft Limit: 07:59:00 (28740 seconds)
+            Comment: T106csm
+            Account: 
+         Unix Group: csmdop
+Negotiator Messages: 
+      Bulk Transfer: No
+Adapter Requirement: (sn_all,mpi,US,shared,AVERAGE,instances=1,imm_send_buffers=1,collective_groups=0,endpoints=1)
+          Step Cpus: 0
+Step Virtual Memory: 0.000 mb
+   Step Real Memory: 0.000 mb
+Step Large Page Mem: 0.000 mb
+     Cluster Option: none
+Topology Requirement: none
+     Network Usages: 
+Stripe Min Networks: False
+    Monitor Program: 
+--------------------------------------------------------------------------------
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 0
+   Allocated Hosts :
+
+   Master Task
+   -----------
+
+      Executable   : /cma/g1/bcccsm/smsout/CSM_20160901/model/a160830_o160901/LAF_fcst.job1
+      Exec Args    : 
+      Num Task Inst: 0
+      Task Instance: 
+
+   Task
+   ----
+
+      Num Task Inst: 0
+      Task Instance: 
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 0
+   Allocated Hosts :
+
+   Task
+   ----
+
+      Num Task Inst: 0
+      Task Instance: 
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 0
+   Allocated Hosts :
+
+   Task
+   ----
+
+      Num Task Inst: 0
+      Task Instance: 
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 0
+   Allocated Hosts :
+
+   Task
+   ----
+
+      Num Task Inst: 0
+      Task Instance: 
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 0
+   Allocated Hosts :
+
+   Task
+   ----
+
+      Num Task Inst: 0
+      Task Instance: 
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 0
+   Allocated Hosts :
+
+   Task
+   ----
+
+      Num Task Inst: 0
+      Task Instance: 
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 0
+   Allocated Hosts :
+
+   Task
+   ----
+
+      Num Task Inst: 0
+      Task Instance: 
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 0
+   Allocated Hosts :
+
+   Task
+   ----
+
+      Num Task Inst: 0
+      Task Instance: 
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 0
+   Allocated Hosts :
+
+   Task
+   ----
+
+      Num Task Inst: 0
+      Task Instance: 
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 0
+   Allocated Hosts :
+
+   Task
+   ----
+
+      Num Task Inst: 0
+      Task Instance: 
+--------------------------------------------------------------------------------
+
+1 job step(s) in query, 1 waiting, 0 pending, 0 running, 0 held, 0 preempted
