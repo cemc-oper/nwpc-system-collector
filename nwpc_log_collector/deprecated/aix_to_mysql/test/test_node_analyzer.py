@@ -6,7 +6,7 @@ from nwpc_log_collector import node_analyser
 
 class NodeAnalyserTestCase(unittest.TestCase):
     def setUp(self):
-        self.start_time = datetime.now()
+        self.start_time = datetime.utcnow()
         print "begin at ", self.start_time
         self.database = 'smslog'
         self.user_name = 'nwp'
@@ -27,7 +27,7 @@ class NodeAnalyserTestCase(unittest.TestCase):
     def tearDown(self):
         self.engine.close_cursor()
         self.engine.close_connect()
-        self.end_time = datetime.now()
+        self.end_time = datetime.utcnow()
         print "end at ", self.end_time
         print self.end_time - self.start_time
 

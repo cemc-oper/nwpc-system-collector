@@ -12,7 +12,7 @@ def create_job(
         job_id="id_no",
         owner="owner",
         job_class="job_class",
-        queue_date=datetime.datetime.now(),
+        queue_date=datetime.datetime.utcnow(),
         status="R",
         priority=100
 ):
@@ -71,7 +71,7 @@ def test_condition():
 
 
 def test_equal_value_checker():
-    job_item = create_job(job_id="id", owner="nwp_xp", job_class="serial", queue_date=datetime.datetime.now())
+    job_item = create_job(job_id="id", owner="nwp_xp", job_class="serial", queue_date=datetime.datetime.utcnow())
 
     condition = PropertyFilterCondition(
         property_id="llq.owner",
@@ -91,7 +91,7 @@ def test_greater_value_checker():
         job_id="id",
         owner="nwp_xp",
         job_class="serial",
-        queue_date=datetime.datetime.now(),
+        queue_date=datetime.datetime.utcnow(),
         priority=100
     )
     condition = PropertyFilterCondition(
@@ -112,7 +112,7 @@ def test_less_value_checker():
         job_id="id",
         owner="nwp_xp",
         job_class="serial",
-        queue_date=datetime.datetime.now(),
+        queue_date=datetime.datetime.utcnow(),
         priority=50
     )
     condition = PropertyFilterCondition(
@@ -133,7 +133,7 @@ def test_in_value_checker():
         job_id="id",
         owner="nwp_xp",
         job_class="serial",
-        queue_date=datetime.datetime.now(),
+        queue_date=datetime.datetime.utcnow(),
         priority=50
     )
     condition = PropertyFilterCondition(

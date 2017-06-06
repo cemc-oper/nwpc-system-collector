@@ -7,7 +7,7 @@ from nwpc_log_collector.database_engine import DatabaseEngine
 
 
 def main():
-    print datetime.now()
+    print datetime.utcnow()
 
     database = 'smslog'
     user_name = 'nwp'
@@ -78,7 +78,7 @@ def main():
     update_engine.close_connect()
     print "Count of updated messages...",update_count
 
-    print datetime.now()
+    print datetime.utcnow()
 
 
 if __name__ == "__main__":

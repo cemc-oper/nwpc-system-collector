@@ -24,7 +24,7 @@ def get_cdp_output(cdp_command_string):
 
 
 def variable_handler(args):
-    request_date_time = datetime.datetime.now()
+    request_date_time = datetime.datetime.utcnow()
     request_time_string = request_date_time.strftime("%Y-%m-%d %H:%M:%S")
 
     command_string = "login {sms_server} {sms_user} {sms_password}; info -v {node_path};exit".format(
@@ -53,7 +53,7 @@ def variable_handler(args):
                         'output': cdp_output,
                         'error_output': cdp_error
                     },
-                    'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    'time': datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
                 }
             }
         }
@@ -70,7 +70,7 @@ def variable_handler(args):
                 },
                 'response': {
                     'node': node.to_dict(),
-                    'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    'time': datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
                 }
             }
         }

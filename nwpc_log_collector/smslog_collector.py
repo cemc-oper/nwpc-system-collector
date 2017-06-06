@@ -325,7 +325,7 @@ def agent_appender(owner, repo, limit_count=-1, upload_type='kafka'):
         content = []
         percent = 0
         i = 0
-        post_start_time = datetime.datetime.now()
+        post_start_time = datetime.datetime.utcnow()
         cur_line_no = line_no
         for line in submit_lines:
             cur_line_no += 1
@@ -333,7 +333,7 @@ def agent_appender(owner, repo, limit_count=-1, upload_type='kafka'):
             cur_percent = i*100/total_count
             if cur_percent > percent:
                 percent = int(cur_percent)
-                post_current_time = datetime.datetime.now()
+                post_current_time = datetime.datetime.utcnow()
                 post_current_time_delta = post_current_time - post_start_time
                 post_current_seconds = post_current_time_delta.days * 86400 + post_current_time_delta.seconds
                 total_seconds = int(post_current_seconds / (percent/100.0))
@@ -348,7 +348,7 @@ def agent_appender(owner, repo, limit_count=-1, upload_type='kafka'):
             if len(content) >= post_max_count:
                 post_sms_log_function(owner, repo, content, version, repo_id)
                 content = []
-                post_current_time = datetime.datetime.now()
+                post_current_time = datetime.datetime.utcnow()
                 post_current_time_delta = post_current_time - post_start_time
                 post_current_seconds = post_current_time_delta.days * 86400 + post_current_time_delta.seconds
                 total_seconds = int(post_current_seconds / (i*0.1/total_count))
@@ -472,9 +472,9 @@ DESCRIPTION
 
 
 if __name__ == "__main__":
-    start_time = datetime.datetime.now()
+    start_time = datetime.datetime.utcnow()
 
     nwpc_log_collector_tool()
 
-    end_time = datetime.datetime.now()
+    end_time = datetime.datetime.utcnow()
     print end_time - start_time

@@ -153,7 +153,7 @@ def agent_appender(owner, repo):
 
 
 if __name__ == "__main__":
-    start_time = datetime.datetime.now()
+    start_time = datetime.datetime.utcnow()
 
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -183,5 +183,5 @@ DESCRIPTION
 
     agent_appender(user_name, repo_name)
 
-    end_time = datetime.datetime.now()
+    end_time = datetime.datetime.utcnow()
     print end_time - start_time

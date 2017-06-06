@@ -8,7 +8,7 @@ from nwpc_log_collector.database_engine import DatabaseEngine
 
 
 def main():
-    print datetime.now()
+    print datetime.utcnow()
 
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -154,13 +154,13 @@ DESCRIPTION
     engine.close_cursor()
     engine.close_connect()
 
-    print datetime.now()
+    print datetime.utcnow()
 
     return
 
 
 if __name__ == "__main__":
-    start_time = datetime.now()
+    start_time = datetime.utcnow()
     main()
-    end_time = datetime.now()
+    end_time = datetime.utcnow()
     print end_time - start_time

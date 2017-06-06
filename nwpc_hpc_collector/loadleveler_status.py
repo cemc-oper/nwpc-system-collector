@@ -115,7 +115,7 @@ def collect_handler(args):
     message: {
         'app': 'nwpc_hpc_collector.loadleveler_status',
         'type': 'command',
-        'time': "%Y-%m-%d %H:%M:%S",
+        'time': "%Y-%m-%dT%H:%M:%S",
         'data': {
             'request': {
                 'sub_command': 'collect',
@@ -137,7 +137,7 @@ def collect_handler(args):
     result = {
         'app': 'nwpc_hpc_collector.loadleveler_status',
         'type': 'command',
-        'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'time': datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S"),
         'data': {
             'request': {
                 'sub_command': args.sub_command,

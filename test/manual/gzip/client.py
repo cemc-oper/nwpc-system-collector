@@ -20,11 +20,11 @@ def send_normal(data_file_path):
         json_content = json.loads(content)
         message_content = json.dumps(json_content)
 
-        start_time = datetime.datetime.now()
+        start_time = datetime.datetime.utcnow()
         result = requests.post(normal_url, data={
             'message': message_content
         })
-        end_time = datetime.datetime.now()
+        end_time = datetime.datetime.utcnow()
         print(result)
         print(len(message_content))
         return end_time - start_time
@@ -38,7 +38,7 @@ def send_gzip(data_file_path):
         json_content = json.loads(content)
         message_content = json.dumps(json_content)
 
-        start_time = datetime.datetime.now()
+        start_time = datetime.datetime.utcnow()
         message_gzip_content = gzip.compress(bytes(json.dumps({
             'message': message_content
         }), 'utf-8'))
@@ -46,7 +46,7 @@ def send_gzip(data_file_path):
         result = requests.post(gzip_url, data=message_gzip_content, headers={
             'content-encoding': 'gzip'
         })
-        end_time = datetime.datetime.now()
+        end_time = datetime.datetime.utcnow()
         print(result)
 
         print(len(message_gzip_content))

@@ -80,7 +80,7 @@ def get_sms_variable(sms_name, sms_user, sms_password, node_path, variable_list=
     (cdp_output, cdp_error) = cdp_pipe.communicate()
     return_code = cdp_pipe.returncode
     if return_code != 0:
-        current_time = datetime.now().isoformat()
+        current_time = datetime.utcnow().isoformat()
         result = {
             'app': 'sms_status_collector',
             'timestamp': current_time,
@@ -134,7 +134,7 @@ def get_sms_status(sms_name, sms_user, sms_password, verbose=False):
     # print cdp_output
     return_code = cdp_pipe.returncode
     if return_code != 0:
-        current_time = datetime.now().isoformat()
+        current_time = datetime.utcnow().isoformat()
         result = {
             'app': 'sms_status_collector',
             'timestamp': current_time,
@@ -214,7 +214,7 @@ def get_sms_status(sms_name, sms_user, sms_password, verbose=False):
             else:
                 a_node_status['variable'] = variable_result
 
-    current_time = (datetime.now() + timedelta(hours=8)).isoformat()  # 北京时间
+    current_time = (datetime.utcnow() + timedelta(hours=8)).isoformat()  # 北京时间
     result = {
         'app': 'sms_status_collector',
         'type': 'sms_status',
@@ -421,7 +421,7 @@ def get_sms_whole_status(owner, repo, sms_name, sms_user, sms_password, verbose=
     # TODO: not login error
     return_code = cdp_pipe.returncode
     if return_code != 0:
-        current_time = datetime.now().isoformat()
+        current_time = datetime.utcnow().isoformat()
         result = {
             'app': 'sms_status_collector',
             'timestamp': current_time,
@@ -439,7 +439,7 @@ def get_sms_whole_status(owner, repo, sms_name, sms_user, sms_password, verbose=
         SMS没有启动时，返回错误消息
             /-CDP> # ERR:RPC:nwpc_wangdp: RPC: 1832-016 Unknown host\n\n# ERR:SMS-CLIENT-LOGIN:Client creation failed for host nwpc_wangdp.\n
         """
-        current_time = datetime.now().isoformat()
+        current_time = datetime.utcnow().isoformat()
         result = {
             'app': 'sms_status_collector',
             'timestamp': current_time,
@@ -455,7 +455,7 @@ def get_sms_whole_status(owner, repo, sms_name, sms_user, sms_password, verbose=
     bunch_dict = bunch.to_dict()
     bunch_dict['name'] = sms_name
 
-    current_time = (datetime.now() + timedelta(hours=8)).isoformat() # 北京时间
+    current_time = (datetime.utcnow() + timedelta(hours=8)).isoformat() # 北京时间
     result = {
         'app': 'sms_status_collector',
         'type': 'sms_status',

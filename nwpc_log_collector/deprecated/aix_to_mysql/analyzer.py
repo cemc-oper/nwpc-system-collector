@@ -7,7 +7,7 @@ from nwpc_log_collector.database_engine import DatabaseEngine
 
 
 def main():
-    print datetime.now()
+    print datetime.utcnow()
 
     user_id = 1
     user_name = 'nwp_xp'
@@ -99,7 +99,7 @@ def main():
     update_engine.close_cursor()
     update_engine.close_connect()
 
-    print datetime.now()
+    print datetime.utcnow()
 
 
 if __name__ == "__main__":

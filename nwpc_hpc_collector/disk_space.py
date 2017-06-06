@@ -95,7 +95,7 @@ def disk_space_command_show_handler(args):
     result = {
         'app': 'nwpc_hpc_collector.disk_usage',
         'type': 'command',
-        'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'time': datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
         'data': {
             'request': {
                 'sub_command': args.sub_command,
@@ -138,7 +138,7 @@ def disk_space_command_collect_handler(args):
     result = {
         'app': 'nwpc_hpc_collector.disk_space',
         'type': 'command',
-        'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'time': datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
         'data': {
             'request': {
                 'sub_command': args.sub_command,
