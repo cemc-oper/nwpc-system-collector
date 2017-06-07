@@ -1,0 +1,16 @@
+                         Block Limits                                    |     File Limits
+Filesystem type             KB      quota      limit   in_doubt    grace |    files   quota    limit in_doubt    grace  Remarks
+cma_g1     USR         no limits                    uranus
+cma_u      USR         1212928   10485760   15728640      93184     none |     4454       0        0       20     none uranus
+cma_g2     USR         no limits                  uranus
+cma_g3     USR       940512640 1048576000 1101004800     491648     none |  1121544       0        0      121     none uranus
+cma_g4     USR         no limits                  uranus
+cma_g5     USR         no limits                  uranus
+cma_g6     USR         no limits                  uranus
+cma_g7     USR         no limits                  uranus
+cmb_g2     USR         no limits                  neptune
+cmb_g3     USR         no limits                  neptune
+cmb_g4     USR         no limits                  neptune
+cmb_g5     USR         no limits                  neptune
+cmb_g6     USR         no limits                  neptune
+cmb_g7     USR         no limits                  neptune
