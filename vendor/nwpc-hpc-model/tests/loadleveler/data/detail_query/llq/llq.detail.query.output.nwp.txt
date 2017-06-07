@@ -1,0 +1,929 @@
+===== Job Step cma20n04.3473800.0 =====
+        Job Step Id: cma20n04.3473800.0
+           Job Name: cma20n04.3473800
+          Step Name: 0
+  Structure Version: 10
+              Owner: nwp
+         Queue Date: Thu Nov  3 07:44:05 2016
+             Status: Running
+     Reservation ID:
+  Requested Res. ID:
+   Flexible Res. ID:
+          Recurring: False
+ Scheduling Cluster:
+ Submitting Cluster:
+    Sending Cluster:
+  Requested Cluster:
+     Schedd History:
+   Outbound Schedds:
+    Submitting User:
+   Eligibility Time: Thu Nov  3 07:44:05 2016
+      Dispatch Time: Thu Nov  3 07:44:05 2016
+    Completion Date:
+    Completion Code:
+        Favored Job: No
+      User Priority: 100
+       user_sysprio: 0
+      class_sysprio: 0
+      group_sysprio: 0
+    System Priority: 100000
+          q_sysprio: 100000
+ Previous q_sysprio: 0
+      Notifications: Error
+ Virtual Image Size: 11 kb
+         Large Page: N
+              Trace: no
+         Coschedule: no
+       SMT required: as_is
+    MetaCluster Job: no
+     Checkpointable: no
+    Ckpt Start Time:
+Good Ckpt Time/Date:
+   Ckpt Elapse Time: 0 seconds
+Fail Ckpt Time/Date:
+    Ckpt Accum Time: 0 seconds
+    Checkpoint File:
+   Ckpt Execute Dir:
+  Restart From Ckpt: no
+ Restart Same Nodes: no
+            Restart: no
+        Preemptable: yes
+ Preempt Wait Count: 0
+     Hold Job Until:
+     User Hold Time: 00:00:00 (0 seconds)
+               RSet: RSET_NONE
+Mcm Affinity Option:
+      Task Affinity:
+      Cpus Per Core:  0
+   Parallel Threads:  0
+                Cmd: /cma/g1/nwp/SMSOUT/gda_grapes_gfs_v2_0_diag/grapes_global/00/diag/diag_synop.job1
+               Args:
+                Env:
+                 In: /dev/null
+                Out: /cma/g1/nwp/SMSOUT/gda_grapes_gfs_v2_0_diag/grapes_global/00/diag/diag_synop.1
+                Err: /cma/g1/nwp/SMSOUT/gda_grapes_gfs_v2_0_diag/grapes_global/00/diag/diag_synop.1.err
+Initial Working Dir: /cma/u/nwp/smsworks/sms
+         Dependency:
+Data Stg Dependency:
+          Resources:
+     Node Resources:
+     Step Resources:
+       Requirements:
+        Preferences:
+          Step Type: Serial
+     Min Processors:
+     Max Processors:
+     Allocated Host: cma18n04
+         Node Usage: shared
+    Submitting Host: cma20n03
+        Schedd Host: cma20n04
+      Job Queue Key:
+        Notify User: nwp@cma20n03
+              Shell: /usr/bin/ksh
+  LoadLeveler Group: No_Group
+              Class: serial_op
+    Ckpt Hard Limit: undefined
+    Ckpt Soft Limit: undefined
+     Cpu Hard Limit: undefined
+     Cpu Soft Limit: undefined
+    Data Hard Limit: undefined
+    Data Soft Limit: undefined
+      As Hard Limit: undefined
+      As Soft Limit: undefined
+   Nproc Hard Limit: undefined
+   Nproc Soft Limit: undefined
+ Memlock Hard Limit: undefined
+ Memlock Soft Limit: undefined
+   Locks Hard Limit: undefined
+   Locks Soft Limit: undefined
+  Nofile Hard Limit: undefined
+  Nofile Soft Limit: undefined
+    Core Hard Limit: undefined
+    Core Soft Limit: undefined
+    File Hard Limit: undefined
+    File Soft Limit: undefined
+   Stack Hard Limit: undefined
+   Stack Soft Limit: undefined
+     Rss Hard Limit: undefined
+     Rss Soft Limit: undefined
+Step Cpu Hard Limit: undefined
+Step Cpu Soft Limit: undefined
+Wall Clk Hard Limit: 100+00:00:10 (8640010 seconds)
+Wall Clk Soft Limit: 100+00:00:00 (8640000 seconds)
+            Comment: Grapes_gfs
+            Account:
+         Unix Group: nwpop
+Negotiator Messages:
+      Bulk Transfer: No
+Adapter Requirement:
+          Step Cpus: 0
+Step Virtual Memory: 0.000 mb
+   Step Real Memory: 0.000 mb
+Step Large Page Mem: 0.000 mb
+     Cluster Option: none
+Topology Requirement: none
+     Network Usages:
+Stripe Min Networks: False
+    Monitor Program:
+===== Job Step cma19n04.3473768.0 =====
+        Job Step Id: cma19n04.3473768.0
+           Job Name: cma19n04.3473768
+          Step Name: 0
+  Structure Version: 10
+              Owner: nwp
+         Queue Date: Thu Nov  3 07:43:26 2016
+             Status: Running
+     Reservation ID:
+  Requested Res. ID:
+   Flexible Res. ID:
+          Recurring: False
+ Scheduling Cluster:
+ Submitting Cluster:
+    Sending Cluster:
+  Requested Cluster:
+     Schedd History:
+   Outbound Schedds:
+    Submitting User:
+   Eligibility Time: Thu Nov  3 07:43:26 2016
+      Dispatch Time: Thu Nov  3 07:43:26 2016
+    Completion Date:
+    Completion Code:
+        Favored Job: No
+      User Priority: 100
+       user_sysprio: 0
+      class_sysprio: 0
+      group_sysprio: 0
+    System Priority: 100000
+          q_sysprio: 100000
+ Previous q_sysprio: 0
+      Notifications: Error
+ Virtual Image Size: 12 kb
+         Large Page: N
+              Trace: no
+         Coschedule: no
+       SMT required: as_is
+    MetaCluster Job: no
+     Checkpointable: no
+    Ckpt Start Time:
+Good Ckpt Time/Date:
+   Ckpt Elapse Time: 0 seconds
+Fail Ckpt Time/Date:
+    Ckpt Accum Time: 0 seconds
+    Checkpoint File:
+   Ckpt Execute Dir:
+  Restart From Ckpt: no
+ Restart Same Nodes: no
+            Restart: no
+        Preemptable: yes
+ Preempt Wait Count: 0
+     Hold Job Until:
+     User Hold Time: 00:00:00 (0 seconds)
+               RSet: RSET_NONE
+Mcm Affinity Option:
+      Task Affinity:
+      Cpus Per Core:  0
+   Parallel Threads:  0
+                Env:
+                 In: /dev/null
+                Out: /cma/g1/nwp/SMSOUT/gda_grapes_gfs_v2_0/grapes_global/00/dfilter/df_xa.1
+                Err: /cma/g1/nwp/SMSOUT/gda_grapes_gfs_v2_0/grapes_global/00/dfilter/df_xa.1.err
+Initial Working Dir: /cma/u/nwp/smsworks/sms
+         Dependency:
+Data Stg Dependency:
+          Resources:
+     Node Resources:
+     Step Resources:
+          Step Type: General Parallel
+         Node Usage: shared
+    Submitting Host: cma20n03
+        Schedd Host: cma19n04
+      Job Queue Key:
+        Notify User: nwp@cma20n03
+              Shell: /usr/bin/ksh
+  LoadLeveler Group: No_Group
+              Class: operation
+    Ckpt Hard Limit: undefined
+    Ckpt Soft Limit: undefined
+     Cpu Hard Limit: undefined
+     Cpu Soft Limit: undefined
+    Data Hard Limit: undefined
+    Data Soft Limit: undefined
+      As Hard Limit: undefined
+      As Soft Limit: undefined
+   Nproc Hard Limit: undefined
+   Nproc Soft Limit: undefined
+ Memlock Hard Limit: undefined
+ Memlock Soft Limit: undefined
+   Locks Hard Limit: undefined
+   Locks Soft Limit: undefined
+  Nofile Hard Limit: undefined
+  Nofile Soft Limit: undefined
+    Core Hard Limit: undefined
+    Core Soft Limit: undefined
+    File Hard Limit: undefined
+    File Soft Limit: undefined
+   Stack Hard Limit: undefined
+   Stack Soft Limit: undefined
+     Rss Hard Limit: undefined
+     Rss Soft Limit: undefined
+Step Cpu Hard Limit: undefined
+Step Cpu Soft Limit: undefined
+Wall Clk Hard Limit: 100+00:00:10 (8640010 seconds)
+Wall Clk Soft Limit: 100+00:00:00 (8640000 seconds)
+            Comment: Grapes_gfs
+            Account:
+         Unix Group: nwpop
+Negotiator Messages:
+      Bulk Transfer: No
+Adapter Requirement: (sn_all,mpi,US,shared,AVERAGE,instances=1,imm_send_buffers=1,collective_groups=0,endpoints=1)
+          Step Cpus: 0
+Step Virtual Memory: 0.000 mb
+   Step Real Memory: 0.000 mb
+Step Large Page Mem: 0.000 mb
+     Cluster Option: none
+Topology Requirement: none
+     Network Usages: 0(1,mpi,US,1,0,1,0,1),
+
+Stripe Min Networks: False
+    Monitor Program:
+--------------------------------------------------------------------------------
+Node
+----
+
+   Name            :
+   Requirements    :
+   Preferences     :
+   Node minimum    : 16
+   Node maximum    : 16
+   Node actual     : 16
+   Allocated Hosts : cma05n04::
+                   + cma02n04::
+                   + cma03n09::
+                   + cma03n03::
+                   + cma07n01::
+                   + cma01n03::
+                   + cma03n01::
+                   + cma02n08::
+                   + cma08n01::
+                   + cma02n12::
+                   + cma08n04::
+                   + cma05n06::
+                   + cma08n06::
+                   + cma08n03::
+                   + cma01n01::
+                   + cma07n03::
+
+   Master Task
+   -----------
+
+      Executable   : /cma/g1/nwp/SMSOUT/gda_grapes_gfs_v2_0/grapes_global/00/dfilter/df_xa.job1
+      Exec Args    :
+      Num Task Inst: 1
+      Task Instance: cma05n04:-1:,
+
+   Task
+   ----
+
+      Num Task Inst: 512
+      Task Instance: cma05n04:0:,
+      Task Instance: cma05n04:1:,
+      Task Instance: cma05n04:2:,
+      Task Instance: cma05n04:3:,
+      Task Instance: cma05n04:4:,
+      Task Instance: cma05n04:5:,
+      Task Instance: cma05n04:6:,
+      Task Instance: cma05n04:7:,
+      Task Instance: cma05n04:8:,
+      Task Instance: cma05n04:9:,
+      Task Instance: cma05n04:10:,
+      Task Instance: cma05n04:11:,
+      Task Instance: cma05n04:12:,
+      Task Instance: cma05n04:13:,
+      Task Instance: cma05n04:14:,
+      Task Instance: cma05n04:15:,
+      Task Instance: cma05n04:16:,
+      Task Instance: cma05n04:17:,
+      Task Instance: cma05n04:18:,
+      Task Instance: cma05n04:19:,
+      Task Instance: cma05n04:20:,
+      Task Instance: cma05n04:21:,
+      Task Instance: cma05n04:22:,
+      Task Instance: cma05n04:23:,
+      Task Instance: cma05n04:24:,
+      Task Instance: cma05n04:25:,
+      Task Instance: cma05n04:26:,
+      Task Instance: cma05n04:27:,
+      Task Instance: cma05n04:28:,
+      Task Instance: cma05n04:29:,
+      Task Instance: cma05n04:30:,
+      Task Instance: cma05n04:31:,
+      Task Instance: cma02n04:32:,
+      Task Instance: cma02n04:33:,
+      Task Instance: cma02n04:34:,
+      Task Instance: cma02n04:35:,
+      Task Instance: cma02n04:36:,
+      Task Instance: cma02n04:37:,
+      Task Instance: cma02n04:38:,
+      Task Instance: cma02n04:39:,
+      Task Instance: cma02n04:40:,
+      Task Instance: cma02n04:41:,
+      Task Instance: cma02n04:42:,
+      Task Instance: cma02n04:43:,
+      Task Instance: cma02n04:44:,
+      Task Instance: cma02n04:45:,
+      Task Instance: cma02n04:46:,
+      Task Instance: cma02n04:47:,
+      Task Instance: cma02n04:48:,
+      Task Instance: cma02n04:49:,
+      Task Instance: cma02n04:50:,
+      Task Instance: cma02n04:51:,
+      Task Instance: cma02n04:52:,
+      Task Instance: cma02n04:53:,
+      Task Instance: cma02n04:54:,
+      Task Instance: cma02n04:55:,
+      Task Instance: cma02n04:56:,
+      Task Instance: cma02n04:57:,
+      Task Instance: cma02n04:58:,
+      Task Instance: cma02n04:59:,
+      Task Instance: cma02n04:60:,
+      Task Instance: cma02n04:61:,
+      Task Instance: cma02n04:62:,
+      Task Instance: cma02n04:63:,
+      Task Instance: cma03n09:64:,
+      Task Instance: cma03n09:65:,
+      Task Instance: cma03n09:66:,
+      Task Instance: cma03n09:67:,
+      Task Instance: cma03n09:68:,
+      Task Instance: cma03n09:69:,
+      Task Instance: cma03n09:70:,
+      Task Instance: cma03n09:71:,
+      Task Instance: cma03n09:72:,
+      Task Instance: cma03n09:73:,
+      Task Instance: cma03n09:74:,
+      Task Instance: cma03n09:75:,
+      Task Instance: cma03n09:76:,
+      Task Instance: cma03n09:77:,
+      Task Instance: cma03n09:78:,
+      Task Instance: cma03n09:79:,
+      Task Instance: cma03n09:80:,
+      Task Instance: cma03n09:81:,
+      Task Instance: cma03n09:82:,
+      Task Instance: cma03n09:83:,
+      Task Instance: cma03n09:84:,
+      Task Instance: cma03n09:85:,
+      Task Instance: cma03n09:86:,
+      Task Instance: cma03n09:87:,
+      Task Instance: cma03n09:88:,
+      Task Instance: cma03n09:89:,
+      Task Instance: cma03n09:90:,
+      Task Instance: cma03n09:91:,
+      Task Instance: cma03n09:92:,
+      Task Instance: cma03n09:93:,
+      Task Instance: cma03n09:94:,
+      Task Instance: cma03n09:95:,
+      Task Instance: cma03n03:96:,
+      Task Instance: cma03n03:97:,
+      Task Instance: cma03n03:98:,
+      Task Instance: cma03n03:99:,
+      Task Instance: cma03n03:100:,
+      Task Instance: cma03n03:101:,
+      Task Instance: cma03n03:102:,
+      Task Instance: cma03n03:103:,
+      Task Instance: cma03n03:104:,
+      Task Instance: cma03n03:105:,
+      Task Instance: cma03n03:106:,
+      Task Instance: cma03n03:107:,
+      Task Instance: cma03n03:108:,
+      Task Instance: cma03n03:109:,
+      Task Instance: cma03n03:110:,
+      Task Instance: cma03n03:111:,
+      Task Instance: cma03n03:112:,
+      Task Instance: cma03n03:113:,
+      Task Instance: cma03n03:114:,
+      Task Instance: cma03n03:115:,
+      Task Instance: cma03n03:116:,
+      Task Instance: cma03n03:117:,
+      Task Instance: cma03n03:118:,
+      Task Instance: cma03n03:119:,
+      Task Instance: cma03n03:120:,
+      Task Instance: cma03n03:121:,
+      Task Instance: cma03n03:122:,
+      Task Instance: cma03n03:123:,
+      Task Instance: cma03n03:124:,
+      Task Instance: cma03n03:125:,
+      Task Instance: cma03n03:126:,
+      Task Instance: cma03n03:127:,
+      Task Instance: cma07n01:128:,
+      Task Instance: cma07n01:129:,
+      Task Instance: cma07n01:130:,
+      Task Instance: cma07n01:131:,
+      Task Instance: cma07n01:132:,
+      Task Instance: cma07n01:133:,
+      Task Instance: cma07n01:134:,
+      Task Instance: cma07n01:135:,
+      Task Instance: cma07n01:136:,
+      Task Instance: cma07n01:137:,
+      Task Instance: cma07n01:138:,
+      Task Instance: cma07n01:139:,
+      Task Instance: cma07n01:140:,
+      Task Instance: cma07n01:141:,
+      Task Instance: cma07n01:142:,
+      Task Instance: cma07n01:143:,
+      Task Instance: cma07n01:144:,
+      Task Instance: cma07n01:145:,
+      Task Instance: cma07n01:146:,
+      Task Instance: cma07n01:147:,
+      Task Instance: cma07n01:148:,
+      Task Instance: cma07n01:149:,
+      Task Instance: cma07n01:150:,
+      Task Instance: cma07n01:151:,
+      Task Instance: cma07n01:152:,
+      Task Instance: cma07n01:153:,
+      Task Instance: cma07n01:154:,
+      Task Instance: cma07n01:155:,
+      Task Instance: cma07n01:156:,
+      Task Instance: cma07n01:157:,
+      Task Instance: cma07n01:158:,
+      Task Instance: cma07n01:159:,
+      Task Instance: cma01n03:160:,
+      Task Instance: cma01n03:161:,
+      Task Instance: cma01n03:162:,
+      Task Instance: cma01n03:163:,
+      Task Instance: cma01n03:164:,
+      Task Instance: cma01n03:165:,
+      Task Instance: cma01n03:166:,
+      Task Instance: cma01n03:167:,
+      Task Instance: cma01n03:168:,
+      Task Instance: cma01n03:169:,
+      Task Instance: cma01n03:170:,
+      Task Instance: cma01n03:171:,
+      Task Instance: cma01n03:172:,
+      Task Instance: cma01n03:173:,
+      Task Instance: cma01n03:174:,
+      Task Instance: cma01n03:175:,
+      Task Instance: cma01n03:176:,
+      Task Instance: cma01n03:177:,
+      Task Instance: cma01n03:178:,
+      Task Instance: cma01n03:179:,
+      Task Instance: cma01n03:180:,
+      Task Instance: cma01n03:181:,
+      Task Instance: cma01n03:182:,
+      Task Instance: cma01n03:183:,
+      Task Instance: cma01n03:184:,
+      Task Instance: cma01n03:185:,
+      Task Instance: cma01n03:186:,
+      Task Instance: cma01n03:187:,
+      Task Instance: cma01n03:188:,
+      Task Instance: cma01n03:189:,
+      Task Instance: cma01n03:190:,
+      Task Instance: cma01n03:191:,
+      Task Instance: cma03n01:192:,
+      Task Instance: cma03n01:193:,
+      Task Instance: cma03n01:194:,
+      Task Instance: cma03n01:195:,
+      Task Instance: cma03n01:196:,
+      Task Instance: cma03n01:197:,
+      Task Instance: cma03n01:198:,
+      Task Instance: cma03n01:199:,
+      Task Instance: cma03n01:200:,
+      Task Instance: cma03n01:201:,
+      Task Instance: cma03n01:202:,
+      Task Instance: cma03n01:203:,
+      Task Instance: cma03n01:204:,
+      Task Instance: cma03n01:205:,
+      Task Instance: cma03n01:206:,
+      Task Instance: cma03n01:207:,
+      Task Instance: cma03n01:208:,
+      Task Instance: cma03n01:209:,
+      Task Instance: cma03n01:210:,
+      Task Instance: cma03n01:211:,
+      Task Instance: cma03n01:212:,
+      Task Instance: cma03n01:213:,
+      Task Instance: cma03n01:214:,
+      Task Instance: cma03n01:215:,
+      Task Instance: cma03n01:216:,
+      Task Instance: cma03n01:217:,
+      Task Instance: cma03n01:218:,
+      Task Instance: cma03n01:219:,
+      Task Instance: cma03n01:220:,
+      Task Instance: cma03n01:221:,
+      Task Instance: cma03n01:222:,
+      Task Instance: cma03n01:223:,
+      Task Instance: cma02n08:224:,
+      Task Instance: cma02n08:225:,
+      Task Instance: cma02n08:226:,
+      Task Instance: cma02n08:227:,
+      Task Instance: cma02n08:228:,
+      Task Instance: cma02n08:229:,
+      Task Instance: cma02n08:230:,
+      Task Instance: cma02n08:231:,
+      Task Instance: cma02n08:232:,
+      Task Instance: cma02n08:233:,
+      Task Instance: cma02n08:234:,
+      Task Instance: cma02n08:235:,
+      Task Instance: cma02n08:236:,
+      Task Instance: cma02n08:237:,
+      Task Instance: cma02n08:238:,
+      Task Instance: cma02n08:239:,
+      Task Instance: cma02n08:240:,
+      Task Instance: cma02n08:241:,
+      Task Instance: cma02n08:242:,
+      Task Instance: cma02n08:243:,
+      Task Instance: cma02n08:244:,
+      Task Instance: cma02n08:245:,
+      Task Instance: cma02n08:246:,
+      Task Instance: cma02n08:247:,
+      Task Instance: cma02n08:248:,
+      Task Instance: cma02n08:249:,
+      Task Instance: cma02n08:250:,
+      Task Instance: cma02n08:251:,
+      Task Instance: cma02n08:252:,
+      Task Instance: cma02n08:253:,
+      Task Instance: cma02n08:254:,
+      Task Instance: cma02n08:255:,
+      Task Instance: cma08n01:256:,
+      Task Instance: cma08n01:257:,
+      Task Instance: cma08n01:258:,
+      Task Instance: cma08n01:259:,
+      Task Instance: cma08n01:260:,
+      Task Instance: cma08n01:261:,
+      Task Instance: cma08n01:262:,
+      Task Instance: cma08n01:263:,
+      Task Instance: cma08n01:264:,
+      Task Instance: cma08n01:265:,
+      Task Instance: cma08n01:266:,
+      Task Instance: cma08n01:267:,
+      Task Instance: cma08n01:268:,
+      Task Instance: cma08n01:269:,
+      Task Instance: cma08n01:270:,
+      Task Instance: cma08n01:271:,
+      Task Instance: cma08n01:272:,
+      Task Instance: cma08n01:273:,
+      Task Instance: cma08n01:274:,
+      Task Instance: cma08n01:275:,
+      Task Instance: cma08n01:276:,
+      Task Instance: cma08n01:277:,
+      Task Instance: cma08n01:278:,
+      Task Instance: cma08n01:279:,
+      Task Instance: cma08n01:280:,
+      Task Instance: cma08n01:281:,
+      Task Instance: cma08n01:282:,
+      Task Instance: cma08n01:283:,
+      Task Instance: cma08n01:284:,
+      Task Instance: cma08n01:285:,
+      Task Instance: cma08n01:286:,
+      Task Instance: cma08n01:287:,
+      Task Instance: cma02n12:288:,
+      Task Instance: cma02n12:289:,
+      Task Instance: cma02n12:290:,
+      Task Instance: cma02n12:291:,
+      Task Instance: cma02n12:292:,
+      Task Instance: cma02n12:293:,
+      Task Instance: cma02n12:294:,
+      Task Instance: cma02n12:295:,
+      Task Instance: cma02n12:296:,
+      Task Instance: cma02n12:297:,
+      Task Instance: cma02n12:298:,
+      Task Instance: cma02n12:299:,
+      Task Instance: cma02n12:300:,
+      Task Instance: cma02n12:301:,
+      Task Instance: cma02n12:302:,
+      Task Instance: cma02n12:303:,
+      Task Instance: cma02n12:304:,
+      Task Instance: cma02n12:305:,
+      Task Instance: cma02n12:306:,
+      Task Instance: cma02n12:307:,
+      Task Instance: cma02n12:308:,
+      Task Instance: cma02n12:309:,
+      Task Instance: cma02n12:310:,
+      Task Instance: cma02n12:311:,
+      Task Instance: cma02n12:312:,
+      Task Instance: cma02n12:313:,
+      Task Instance: cma02n12:314:,
+      Task Instance: cma02n12:315:,
+      Task Instance: cma02n12:316:,
+      Task Instance: cma02n12:317:,
+      Task Instance: cma02n12:318:,
+      Task Instance: cma02n12:319:,
+      Task Instance: cma08n04:320:,
+      Task Instance: cma08n04:321:,
+      Task Instance: cma08n04:322:,
+      Task Instance: cma08n04:323:,
+      Task Instance: cma08n04:324:,
+      Task Instance: cma08n04:325:,
+      Task Instance: cma08n04:326:,
+      Task Instance: cma08n04:327:,
+      Task Instance: cma08n04:328:,
+      Task Instance: cma08n04:329:,
+      Task Instance: cma08n04:330:,
+      Task Instance: cma08n04:331:,
+      Task Instance: cma08n04:332:,
+      Task Instance: cma08n04:333:,
+      Task Instance: cma08n04:334:,
+      Task Instance: cma08n04:335:,
+      Task Instance: cma08n04:336:,
+      Task Instance: cma08n04:337:,
+      Task Instance: cma08n04:338:,
+      Task Instance: cma08n04:339:,
+      Task Instance: cma08n04:340:,
+      Task Instance: cma08n04:341:,
+      Task Instance: cma08n04:342:,
+      Task Instance: cma08n04:343:,
+      Task Instance: cma08n04:344:,
+      Task Instance: cma08n04:345:,
+      Task Instance: cma08n04:346:,
+      Task Instance: cma08n04:347:,
+      Task Instance: cma08n04:348:,
+      Task Instance: cma08n04:349:,
+      Task Instance: cma08n04:350:,
+      Task Instance: cma08n04:351:,
+      Task Instance: cma05n06:352:,
+      Task Instance: cma05n06:353:,
+      Task Instance: cma05n06:354:,
+      Task Instance: cma05n06:355:,
+      Task Instance: cma05n06:356:,
+      Task Instance: cma05n06:357:,
+      Task Instance: cma05n06:358:,
+      Task Instance: cma05n06:359:,
+      Task Instance: cma05n06:360:,
+      Task Instance: cma05n06:361:,
+      Task Instance: cma05n06:362:,
+      Task Instance: cma05n06:363:,
+      Task Instance: cma05n06:364:,
+      Task Instance: cma05n06:365:,
+      Task Instance: cma05n06:366:,
+      Task Instance: cma05n06:367:,
+      Task Instance: cma05n06:368:,
+      Task Instance: cma05n06:369:,
+      Task Instance: cma05n06:370:,
+      Task Instance: cma05n06:371:,
+      Task Instance: cma05n06:372:,
+      Task Instance: cma05n06:373:,
+      Task Instance: cma05n06:374:,
+      Task Instance: cma05n06:375:,
+      Task Instance: cma05n06:376:,
+      Task Instance: cma05n06:377:,
+      Task Instance: cma05n06:378:,
+      Task Instance: cma05n06:379:,
+      Task Instance: cma05n06:380:,
+      Task Instance: cma05n06:381:,
+      Task Instance: cma05n06:382:,
+      Task Instance: cma05n06:383:,
+      Task Instance: cma08n06:384:,
+      Task Instance: cma08n06:385:,
+      Task Instance: cma08n06:386:,
+      Task Instance: cma08n06:387:,
+      Task Instance: cma08n06:388:,
+      Task Instance: cma08n06:389:,
+      Task Instance: cma08n06:390:,
+      Task Instance: cma08n06:391:,
+      Task Instance: cma08n06:392:,
+      Task Instance: cma08n06:393:,
+      Task Instance: cma08n06:394:,
+      Task Instance: cma08n06:395:,
+      Task Instance: cma08n06:396:,
+      Task Instance: cma08n06:397:,
+      Task Instance: cma08n06:398:,
+      Task Instance: cma08n06:399:,
+      Task Instance: cma08n06:400:,
+      Task Instance: cma08n06:401:,
+      Task Instance: cma08n06:402:,
+      Task Instance: cma08n06:403:,
+      Task Instance: cma08n06:404:,
+      Task Instance: cma08n06:405:,
+      Task Instance: cma08n06:406:,
+      Task Instance: cma08n06:407:,
+      Task Instance: cma08n06:408:,
+      Task Instance: cma08n06:409:,
+      Task Instance: cma08n06:410:,
+      Task Instance: cma08n06:411:,
+      Task Instance: cma08n06:412:,
+      Task Instance: cma08n06:413:,
+      Task Instance: cma08n06:414:,
+      Task Instance: cma08n06:415:,
+      Task Instance: cma08n03:416:,
+      Task Instance: cma08n03:417:,
+      Task Instance: cma08n03:418:,
+      Task Instance: cma08n03:419:,
+      Task Instance: cma08n03:420:,
+      Task Instance: cma08n03:421:,
+      Task Instance: cma08n03:422:,
+      Task Instance: cma08n03:423:,
+      Task Instance: cma08n03:424:,
+      Task Instance: cma08n03:425:,
+      Task Instance: cma08n03:426:,
+      Task Instance: cma08n03:427:,
+      Task Instance: cma08n03:428:,
+      Task Instance: cma08n03:429:,
+      Task Instance: cma08n03:430:,
+      Task Instance: cma08n03:431:,
+      Task Instance: cma08n03:432:,
+      Task Instance: cma08n03:433:,
+      Task Instance: cma08n03:434:,
+      Task Instance: cma08n03:435:,
+      Task Instance: cma08n03:436:,
+      Task Instance: cma08n03:437:,
+      Task Instance: cma08n03:438:,
+      Task Instance: cma08n03:439:,
+      Task Instance: cma08n03:440:,
+      Task Instance: cma08n03:441:,
+      Task Instance: cma08n03:442:,
+      Task Instance: cma08n03:443:,
+      Task Instance: cma08n03:444:,
+      Task Instance: cma08n03:445:,
+      Task Instance: cma08n03:446:,
+      Task Instance: cma08n03:447:,
+      Task Instance: cma01n01:448:,
+      Task Instance: cma01n01:449:,
+      Task Instance: cma01n01:450:,
+      Task Instance: cma01n01:451:,
+      Task Instance: cma01n01:452:,
+      Task Instance: cma01n01:453:,
+      Task Instance: cma01n01:454:,
+      Task Instance: cma01n01:455:,
+      Task Instance: cma01n01:456:,
+      Task Instance: cma01n01:457:,
+      Task Instance: cma01n01:458:,
+      Task Instance: cma01n01:459:,
+      Task Instance: cma01n01:460:,
+      Task Instance: cma01n01:461:,
+      Task Instance: cma01n01:462:,
+      Task Instance: cma01n01:463:,
+      Task Instance: cma01n01:464:,
+      Task Instance: cma01n01:465:,
+      Task Instance: cma01n01:466:,
+      Task Instance: cma01n01:467:,
+      Task Instance: cma01n01:468:,
+      Task Instance: cma01n01:469:,
+      Task Instance: cma01n01:470:,
+      Task Instance: cma01n01:471:,
+      Task Instance: cma01n01:472:,
+      Task Instance: cma01n01:473:,
+      Task Instance: cma01n01:474:,
+      Task Instance: cma01n01:475:,
+      Task Instance: cma01n01:476:,
+      Task Instance: cma01n01:477:,
+      Task Instance: cma01n01:478:,
+      Task Instance: cma01n01:479:,
+      Task Instance: cma07n03:480:,
+      Task Instance: cma07n03:481:,
+      Task Instance: cma07n03:482:,
+      Task Instance: cma07n03:483:,
+      Task Instance: cma07n03:484:,
+      Task Instance: cma07n03:485:,
+      Task Instance: cma07n03:486:,
+      Task Instance: cma07n03:487:,
+      Task Instance: cma07n03:488:,
+      Task Instance: cma07n03:489:,
+      Task Instance: cma07n03:490:,
+      Task Instance: cma07n03:491:,
+      Task Instance: cma07n03:492:,
+      Task Instance: cma07n03:493:,
+      Task Instance: cma07n03:494:,
+      Task Instance: cma07n03:495:,
+      Task Instance: cma07n03:496:,
+      Task Instance: cma07n03:497:,
+      Task Instance: cma07n03:498:,
+      Task Instance: cma07n03:499:,
+      Task Instance: cma07n03:500:,
+      Task Instance: cma07n03:501:,
+      Task Instance: cma07n03:502:,
+      Task Instance: cma07n03:503:,
+      Task Instance: cma07n03:504:,
+      Task Instance: cma07n03:505:,
+      Task Instance: cma07n03:506:,
+      Task Instance: cma07n03:507:,
+      Task Instance: cma07n03:508:,
+      Task Instance: cma07n03:509:,
+      Task Instance: cma07n03:510:,
+      Task Instance: cma07n03:511:,
+--------------------------------------------------------------------------------
+===== Job Step cma19n02.3473980.0 =====
+        Job Step Id: cma19n02.3473980.0
+           Job Name: cma19n02.3473980
+          Step Name: 0
+  Structure Version: 10
+              Owner: nwp
+         Queue Date: Thu Nov  3 07:44:05 2016
+             Status: Running
+     Reservation ID:
+  Requested Res. ID:
+   Flexible Res. ID:
+          Recurring: False
+ Scheduling Cluster:
+ Submitting Cluster:
+    Sending Cluster:
+  Requested Cluster:
+     Schedd History:
+   Outbound Schedds:
+    Submitting User:
+   Eligibility Time: Thu Nov  3 07:44:05 2016
+      Dispatch Time: Thu Nov  3 07:44:05 2016
+    Completion Date:
+    Completion Code:
+        Favored Job: No
+      User Priority: 100
+       user_sysprio: 0
+      class_sysprio: 0
+      group_sysprio: 0
+    System Priority: 100000
+          q_sysprio: 100000
+ Previous q_sysprio: 0
+      Notifications: Error
+ Virtual Image Size: 11 kb
+         Large Page: N
+              Trace: no
+         Coschedule: no
+       SMT required: as_is
+    MetaCluster Job: no
+     Checkpointable: no
+    Ckpt Start Time:
+Good Ckpt Time/Date:
+   Ckpt Elapse Time: 0 seconds
+Fail Ckpt Time/Date:
+    Ckpt Accum Time: 0 seconds
+    Checkpoint File:
+   Ckpt Execute Dir:
+  Restart From Ckpt: no
+ Restart Same Nodes: no
+            Restart: no
+        Preemptable: yes
+ Preempt Wait Count: 0
+     Hold Job Until:
+     User Hold Time: 00:00:00 (0 seconds)
+               RSet: RSET_NONE
+Mcm Affinity Option:
+      Task Affinity:
+      Cpus Per Core:  0
+   Parallel Threads:  0
+                Cmd: /cma/g1/nwp/SMSOUT/gda_grapes_gfs_v2_0_diag/grapes_global/00/diag/diag_satob.job1
+               Args:
+                Env:
+                 In: /dev/null
+                Out: /cma/g1/nwp/SMSOUT/gda_grapes_gfs_v2_0_diag/grapes_global/00/diag/diag_satob.1
+                Err: /cma/g1/nwp/SMSOUT/gda_grapes_gfs_v2_0_diag/grapes_global/00/diag/diag_satob.1.err
+Initial Working Dir: /cma/u/nwp/smsworks/sms
+         Dependency:
+Data Stg Dependency:
+          Resources:
+     Node Resources:
+     Step Resources:
+       Requirements:
+        Preferences:
+          Step Type: Serial
+     Min Processors:
+     Max Processors:
+     Allocated Host: cma18n04
+         Node Usage: shared
+    Submitting Host: cma20n03
+        Schedd Host: cma19n02
+      Job Queue Key:
+        Notify User: nwp@cma20n03
+              Shell: /usr/bin/ksh
+  LoadLeveler Group: No_Group
+              Class: serial_op
+    Ckpt Hard Limit: undefined
+    Ckpt Soft Limit: undefined
+     Cpu Hard Limit: undefined
+     Cpu Soft Limit: undefined
+    Data Hard Limit: undefined
+    Data Soft Limit: undefined
+      As Hard Limit: undefined
+      As Soft Limit: undefined
+   Nproc Hard Limit: undefined
+   Nproc Soft Limit: undefined
+ Memlock Hard Limit: undefined
+ Memlock Soft Limit: undefined
+   Locks Hard Limit: undefined
+   Locks Soft Limit: undefined
+  Nofile Hard Limit: undefined
+  Nofile Soft Limit: undefined
+    Core Hard Limit: undefined
+    Core Soft Limit: undefined
+    File Hard Limit: undefined
+    File Soft Limit: undefined
+   Stack Hard Limit: undefined
+   Stack Soft Limit: undefined
+     Rss Hard Limit: undefined
+     Rss Soft Limit: undefined
+Step Cpu Hard Limit: undefined
+Step Cpu Soft Limit: undefined
+Wall Clk Hard Limit: 100+00:00:10 (8640010 seconds)
+Wall Clk Soft Limit: 100+00:00:00 (8640000 seconds)
+            Comment: Grapes_gfs
+            Account:
+         Unix Group: nwpop
+Negotiator Messages:
+      Bulk Transfer: No
+Adapter Requirement:
+          Step Cpus: 0
+Step Virtual Memory: 0.000 mb
+   Step Real Memory: 0.000 mb
+Step Large Page Mem: 0.000 mb
+     Cluster Option: none
+Topology Requirement: none
+     Network Usages:
+Stripe Min Networks: False
+    Monitor Program:
+
+3 job step(s) in query, 0 waiting, 0 pending, 3 running, 0 held, 0 preempted

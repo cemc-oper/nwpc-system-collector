@@ -1,0 +1,541 @@
+===== Job Step cma20n04.2877020.0 =====
+        Job Step Id: cma20n04.2877020.0
+           Job Name: LAF_fcst
+          Step Name: 0
+  Structure Version: 10
+              Owner: bcccsm
+         Queue Date: Wed Sep  7 08:46:01 2016
+             Status: Running
+     Reservation ID:  
+  Requested Res. ID:  
+   Flexible Res. ID:  
+          Recurring: False
+ Scheduling Cluster: 
+ Submitting Cluster: 
+    Sending Cluster: 
+  Requested Cluster: 
+     Schedd History: 
+   Outbound Schedds: 
+    Submitting User: 
+   Eligibility Time: Wed Sep  7 08:46:01 2016
+      Dispatch Time: Wed Sep  7 23:21:24 2016
+    Completion Date: 
+    Completion Code: 
+        Favored Job: No
+      User Priority: 50
+       user_sysprio: 0
+      class_sysprio: 0
+      group_sysprio: 0
+    System Priority: 50000
+          q_sysprio: 50000
+ Previous q_sysprio: 0
+      Notifications: Complete
+ Virtual Image Size: 19 kb
+         Large Page: N
+              Trace: no
+         Coschedule: no
+       SMT required: as_is
+    MetaCluster Job: no
+     Checkpointable: no
+    Ckpt Start Time: 
+Good Ckpt Time/Date: 
+   Ckpt Elapse Time: 0 seconds
+Fail Ckpt Time/Date: 
+    Ckpt Accum Time: 0 seconds
+    Checkpoint File: 
+   Ckpt Execute Dir: 
+  Restart From Ckpt: no
+ Restart Same Nodes: no
+            Restart: yes
+        Preemptable: yes
+ Preempt Wait Count: 0
+     Hold Job Until: 
+     User Hold Time: 00:00:00 (0 seconds)
+               RSet: RSET_NONE
+Mcm Affinity Option:   
+      Task Affinity: 
+      Cpus Per Core:  0
+   Parallel Threads:  0
+                Env: 
+                 In: /dev/null
+                Out: /cma/g1/bcccsm/smsout/CSM_20160901/model/a160901_o160831/LAF_fcst.1
+                Err: /cma/g1/bcccsm/smsout/CSM_20160901/model/a160901_o160831/LAF_fcst.1.err
+Initial Working Dir: /cma/u/bcccsm/smsworks/sms
+         Dependency: 
+Data Stg Dependency: 
+      Task_geometry: {(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)(32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63)(64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95)(96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127)(128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159)(160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175)(176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191)(192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223)(224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255)(256)}
+          Resources: 
+     Node Resources: 
+     Step Resources: 
+          Step Type: General Parallel
+         Node Usage: shared
+    Submitting Host: cma18n01
+        Schedd Host: cma20n04
+      Job Queue Key: 
+        Notify User: bcccsm@cma18n01
+              Shell: /usr/bin/ksh
+  LoadLeveler Group: No_Group
+              Class: normal
+    Ckpt Hard Limit: undefined
+    Ckpt Soft Limit: undefined
+     Cpu Hard Limit: undefined
+     Cpu Soft Limit: undefined
+    Data Hard Limit: undefined
+    Data Soft Limit: undefined
+      As Hard Limit: undefined
+      As Soft Limit: undefined
+   Nproc Hard Limit: undefined
+   Nproc Soft Limit: undefined
+ Memlock Hard Limit: undefined
+ Memlock Soft Limit: undefined
+   Locks Hard Limit: undefined
+   Locks Soft Limit: undefined
+  Nofile Hard Limit: undefined
+  Nofile Soft Limit: undefined
+    Core Hard Limit: undefined
+    Core Soft Limit: undefined
+    File Hard Limit: undefined
+    File Soft Limit: undefined
+   Stack Hard Limit: undefined
+   Stack Soft Limit: undefined
+     Rss Hard Limit: undefined
+     Rss Soft Limit: undefined
+Step Cpu Hard Limit: undefined
+Step Cpu Soft Limit: undefined
+Wall Clk Hard Limit: 07:59:00 (28740 seconds)
+Wall Clk Soft Limit: 07:59:00 (28740 seconds)
+            Comment: T106csm
+            Account: 
+         Unix Group: csmdop
+Negotiator Messages: 
+      Bulk Transfer: No
+Adapter Requirement: (sn_all,mpi,US,shared,AVERAGE,instances=1,imm_send_buffers=1,collective_groups=0,endpoints=1)
+          Step Cpus: 0
+Step Virtual Memory: 0.000 mb
+   Step Real Memory: 0.000 mb
+Step Large Page Mem: 0.000 mb
+     Cluster Option: none
+Topology Requirement: none
+     Network Usages: 0(1,mpi,US,1,0,1,0,1),
+
+Stripe Min Networks: False
+    Monitor Program: 
+--------------------------------------------------------------------------------
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 1
+   Allocated Hosts : cma18n23::
+
+   Master Task
+   -----------
+
+      Executable   : /cma/g1/bcccsm/smsout/CSM_20160901/model/a160901_o160831/LAF_fcst.job1
+      Exec Args    : 
+      Num Task Inst: 1
+      Task Instance: cma18n23:-1:,
+
+   Task
+   ----
+
+      Num Task Inst: 32
+      Task Instance: cma18n23:0:,
+      Task Instance: cma18n23:1:,
+      Task Instance: cma18n23:2:,
+      Task Instance: cma18n23:3:,
+      Task Instance: cma18n23:4:,
+      Task Instance: cma18n23:5:,
+      Task Instance: cma18n23:6:,
+      Task Instance: cma18n23:7:,
+      Task Instance: cma18n23:8:,
+      Task Instance: cma18n23:9:,
+      Task Instance: cma18n23:10:,
+      Task Instance: cma18n23:11:,
+      Task Instance: cma18n23:12:,
+      Task Instance: cma18n23:13:,
+      Task Instance: cma18n23:14:,
+      Task Instance: cma18n23:15:,
+      Task Instance: cma18n23:16:,
+      Task Instance: cma18n23:17:,
+      Task Instance: cma18n23:18:,
+      Task Instance: cma18n23:19:,
+      Task Instance: cma18n23:20:,
+      Task Instance: cma18n23:21:,
+      Task Instance: cma18n23:22:,
+      Task Instance: cma18n23:23:,
+      Task Instance: cma18n23:24:,
+      Task Instance: cma18n23:25:,
+      Task Instance: cma18n23:26:,
+      Task Instance: cma18n23:27:,
+      Task Instance: cma18n23:28:,
+      Task Instance: cma18n23:29:,
+      Task Instance: cma18n23:30:,
+      Task Instance: cma18n23:31:,
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 1
+   Allocated Hosts : cma07n14::
+
+   Task
+   ----
+
+      Num Task Inst: 32
+      Task Instance: cma07n14:32:,
+      Task Instance: cma07n14:33:,
+      Task Instance: cma07n14:34:,
+      Task Instance: cma07n14:35:,
+      Task Instance: cma07n14:36:,
+      Task Instance: cma07n14:37:,
+      Task Instance: cma07n14:38:,
+      Task Instance: cma07n14:39:,
+      Task Instance: cma07n14:40:,
+      Task Instance: cma07n14:41:,
+      Task Instance: cma07n14:42:,
+      Task Instance: cma07n14:43:,
+      Task Instance: cma07n14:44:,
+      Task Instance: cma07n14:45:,
+      Task Instance: cma07n14:46:,
+      Task Instance: cma07n14:47:,
+      Task Instance: cma07n14:48:,
+      Task Instance: cma07n14:49:,
+      Task Instance: cma07n14:50:,
+      Task Instance: cma07n14:51:,
+      Task Instance: cma07n14:52:,
+      Task Instance: cma07n14:53:,
+      Task Instance: cma07n14:54:,
+      Task Instance: cma07n14:55:,
+      Task Instance: cma07n14:56:,
+      Task Instance: cma07n14:57:,
+      Task Instance: cma07n14:58:,
+      Task Instance: cma07n14:59:,
+      Task Instance: cma07n14:60:,
+      Task Instance: cma07n14:61:,
+      Task Instance: cma07n14:62:,
+      Task Instance: cma07n14:63:,
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 1
+   Allocated Hosts : cma18n27::
+
+   Task
+   ----
+
+      Num Task Inst: 32
+      Task Instance: cma18n27:64:,
+      Task Instance: cma18n27:65:,
+      Task Instance: cma18n27:66:,
+      Task Instance: cma18n27:67:,
+      Task Instance: cma18n27:68:,
+      Task Instance: cma18n27:69:,
+      Task Instance: cma18n27:70:,
+      Task Instance: cma18n27:71:,
+      Task Instance: cma18n27:72:,
+      Task Instance: cma18n27:73:,
+      Task Instance: cma18n27:74:,
+      Task Instance: cma18n27:75:,
+      Task Instance: cma18n27:76:,
+      Task Instance: cma18n27:77:,
+      Task Instance: cma18n27:78:,
+      Task Instance: cma18n27:79:,
+      Task Instance: cma18n27:80:,
+      Task Instance: cma18n27:81:,
+      Task Instance: cma18n27:82:,
+      Task Instance: cma18n27:83:,
+      Task Instance: cma18n27:84:,
+      Task Instance: cma18n27:85:,
+      Task Instance: cma18n27:86:,
+      Task Instance: cma18n27:87:,
+      Task Instance: cma18n27:88:,
+      Task Instance: cma18n27:89:,
+      Task Instance: cma18n27:90:,
+      Task Instance: cma18n27:91:,
+      Task Instance: cma18n27:92:,
+      Task Instance: cma18n27:93:,
+      Task Instance: cma18n27:94:,
+      Task Instance: cma18n27:95:,
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 1
+   Allocated Hosts : cma06n10::
+
+   Task
+   ----
+
+      Num Task Inst: 32
+      Task Instance: cma06n10:96:,
+      Task Instance: cma06n10:97:,
+      Task Instance: cma06n10:98:,
+      Task Instance: cma06n10:99:,
+      Task Instance: cma06n10:100:,
+      Task Instance: cma06n10:101:,
+      Task Instance: cma06n10:102:,
+      Task Instance: cma06n10:103:,
+      Task Instance: cma06n10:104:,
+      Task Instance: cma06n10:105:,
+      Task Instance: cma06n10:106:,
+      Task Instance: cma06n10:107:,
+      Task Instance: cma06n10:108:,
+      Task Instance: cma06n10:109:,
+      Task Instance: cma06n10:110:,
+      Task Instance: cma06n10:111:,
+      Task Instance: cma06n10:112:,
+      Task Instance: cma06n10:113:,
+      Task Instance: cma06n10:114:,
+      Task Instance: cma06n10:115:,
+      Task Instance: cma06n10:116:,
+      Task Instance: cma06n10:117:,
+      Task Instance: cma06n10:118:,
+      Task Instance: cma06n10:119:,
+      Task Instance: cma06n10:120:,
+      Task Instance: cma06n10:121:,
+      Task Instance: cma06n10:122:,
+      Task Instance: cma06n10:123:,
+      Task Instance: cma06n10:124:,
+      Task Instance: cma06n10:125:,
+      Task Instance: cma06n10:126:,
+      Task Instance: cma06n10:127:,
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 1
+   Allocated Hosts : cma06n11::
+
+   Task
+   ----
+
+      Num Task Inst: 32
+      Task Instance: cma06n11:128:,
+      Task Instance: cma06n11:129:,
+      Task Instance: cma06n11:130:,
+      Task Instance: cma06n11:131:,
+      Task Instance: cma06n11:132:,
+      Task Instance: cma06n11:133:,
+      Task Instance: cma06n11:134:,
+      Task Instance: cma06n11:135:,
+      Task Instance: cma06n11:136:,
+      Task Instance: cma06n11:137:,
+      Task Instance: cma06n11:138:,
+      Task Instance: cma06n11:139:,
+      Task Instance: cma06n11:140:,
+      Task Instance: cma06n11:141:,
+      Task Instance: cma06n11:142:,
+      Task Instance: cma06n11:143:,
+      Task Instance: cma06n11:144:,
+      Task Instance: cma06n11:145:,
+      Task Instance: cma06n11:146:,
+      Task Instance: cma06n11:147:,
+      Task Instance: cma06n11:148:,
+      Task Instance: cma06n11:149:,
+      Task Instance: cma06n11:150:,
+      Task Instance: cma06n11:151:,
+      Task Instance: cma06n11:152:,
+      Task Instance: cma06n11:153:,
+      Task Instance: cma06n11:154:,
+      Task Instance: cma06n11:155:,
+      Task Instance: cma06n11:156:,
+      Task Instance: cma06n11:157:,
+      Task Instance: cma06n11:158:,
+      Task Instance: cma06n11:159:,
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 1
+   Allocated Hosts : cma20n28::
+
+   Task
+   ----
+
+      Num Task Inst: 16
+      Task Instance: cma20n28:160:,
+      Task Instance: cma20n28:161:,
+      Task Instance: cma20n28:162:,
+      Task Instance: cma20n28:163:,
+      Task Instance: cma20n28:164:,
+      Task Instance: cma20n28:165:,
+      Task Instance: cma20n28:166:,
+      Task Instance: cma20n28:167:,
+      Task Instance: cma20n28:168:,
+      Task Instance: cma20n28:169:,
+      Task Instance: cma20n28:170:,
+      Task Instance: cma20n28:171:,
+      Task Instance: cma20n28:172:,
+      Task Instance: cma20n28:173:,
+      Task Instance: cma20n28:174:,
+      Task Instance: cma20n28:175:,
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 1
+   Allocated Hosts : cma05n11::
+
+   Task
+   ----
+
+      Num Task Inst: 16
+      Task Instance: cma05n11:176:,
+      Task Instance: cma05n11:177:,
+      Task Instance: cma05n11:178:,
+      Task Instance: cma05n11:179:,
+      Task Instance: cma05n11:180:,
+      Task Instance: cma05n11:181:,
+      Task Instance: cma05n11:182:,
+      Task Instance: cma05n11:183:,
+      Task Instance: cma05n11:184:,
+      Task Instance: cma05n11:185:,
+      Task Instance: cma05n11:186:,
+      Task Instance: cma05n11:187:,
+      Task Instance: cma05n11:188:,
+      Task Instance: cma05n11:189:,
+      Task Instance: cma05n11:190:,
+      Task Instance: cma05n11:191:,
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 1
+   Allocated Hosts : cma03n13::
+
+   Task
+   ----
+
+      Num Task Inst: 32
+      Task Instance: cma03n13:192:,
+      Task Instance: cma03n13:193:,
+      Task Instance: cma03n13:194:,
+      Task Instance: cma03n13:195:,
+      Task Instance: cma03n13:196:,
+      Task Instance: cma03n13:197:,
+      Task Instance: cma03n13:198:,
+      Task Instance: cma03n13:199:,
+      Task Instance: cma03n13:200:,
+      Task Instance: cma03n13:201:,
+      Task Instance: cma03n13:202:,
+      Task Instance: cma03n13:203:,
+      Task Instance: cma03n13:204:,
+      Task Instance: cma03n13:205:,
+      Task Instance: cma03n13:206:,
+      Task Instance: cma03n13:207:,
+      Task Instance: cma03n13:208:,
+      Task Instance: cma03n13:209:,
+      Task Instance: cma03n13:210:,
+      Task Instance: cma03n13:211:,
+      Task Instance: cma03n13:212:,
+      Task Instance: cma03n13:213:,
+      Task Instance: cma03n13:214:,
+      Task Instance: cma03n13:215:,
+      Task Instance: cma03n13:216:,
+      Task Instance: cma03n13:217:,
+      Task Instance: cma03n13:218:,
+      Task Instance: cma03n13:219:,
+      Task Instance: cma03n13:220:,
+      Task Instance: cma03n13:221:,
+      Task Instance: cma03n13:222:,
+      Task Instance: cma03n13:223:,
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 1
+   Allocated Hosts : cma11n24::
+
+   Task
+   ----
+
+      Num Task Inst: 32
+      Task Instance: cma11n24:224:,
+      Task Instance: cma11n24:225:,
+      Task Instance: cma11n24:226:,
+      Task Instance: cma11n24:227:,
+      Task Instance: cma11n24:228:,
+      Task Instance: cma11n24:229:,
+      Task Instance: cma11n24:230:,
+      Task Instance: cma11n24:231:,
+      Task Instance: cma11n24:232:,
+      Task Instance: cma11n24:233:,
+      Task Instance: cma11n24:234:,
+      Task Instance: cma11n24:235:,
+      Task Instance: cma11n24:236:,
+      Task Instance: cma11n24:237:,
+      Task Instance: cma11n24:238:,
+      Task Instance: cma11n24:239:,
+      Task Instance: cma11n24:240:,
+      Task Instance: cma11n24:241:,
+      Task Instance: cma11n24:242:,
+      Task Instance: cma11n24:243:,
+      Task Instance: cma11n24:244:,
+      Task Instance: cma11n24:245:,
+      Task Instance: cma11n24:246:,
+      Task Instance: cma11n24:247:,
+      Task Instance: cma11n24:248:,
+      Task Instance: cma11n24:249:,
+      Task Instance: cma11n24:250:,
+      Task Instance: cma11n24:251:,
+      Task Instance: cma11n24:252:,
+      Task Instance: cma11n24:253:,
+      Task Instance: cma11n24:254:,
+      Task Instance: cma11n24:255:,
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 1
+   Node maximum    : 1
+   Node actual     : 1
+   Allocated Hosts : cma20n18::
+
+   Task
+   ----
+
+      Num Task Inst: 1
+      Task Instance: cma20n18:256:,
+--------------------------------------------------------------------------------
+
+1 job step(s) in query, 0 waiting, 0 pending, 1 running, 0 held, 0 preempted
