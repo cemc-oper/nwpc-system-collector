@@ -1,0 +1,24 @@
+smslog_collector:
+  agent:
+    host: 10.28.32.175
+    port: 6501
+
+    sms:
+      info:
+        url: http://{host}:{port}/agent/repos/{owner}/{repo}/collector/sms/file/info
+      login:
+        url: http://{host}:{port}/agent/repos/{owner}/{repo}/collector/sms/file/manage/login
+      logout:
+        url: http://{host}:{port}/agent/repos/{owner}/{repo}/collector/sms/file/manage/logout
+      post:
+        max_count: 1000
+        target:
+          mysql:
+            url: http://{host}:{port}/agent/repos/{owner}/{repo}/collector/sms/file
+          kafka:
+            url: http://{host}:{port}/agent/repos/{owner}/{repo}/collector/sms/file/kafka
+
+    log:
+      post:
+        url: http://{host}:{port}/agent/repos/{owner}/{repo}/collector/log
+        error_url: http://{host}:{port}/agent/repos/{owner}/{repo}/collector/log/err
