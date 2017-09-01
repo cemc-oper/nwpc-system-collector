@@ -24,7 +24,7 @@ class SmsLogCollector(object):
 
     def load_config(self, config_file_path):
         f = open(config_file_path, 'r')
-        config= yaml.load(f)
+        config = yaml.load(f)
         f.close()
         self.config = config['smslog_collector']
         self.agent_config = self.config['agent']
@@ -379,9 +379,9 @@ def collect(config, owner, repo, limit, upload_type):
 
 
 @cli.command()
-@click.option('-c','--config', default=DEFAULT_CONFIG_FILE_PATH, help="config file path")
-@click.option('-o','--owner', help="owner name", required=True)
-@click.option('-r','--repo', help="repo name", required=True)
+@click.option('-c', '--config', default=DEFAULT_CONFIG_FILE_PATH, help="config file path")
+@click.option('-o', '--owner', help="owner name", required=True)
+@click.option('-r', '--repo', help="repo name", required=True)
 def show(config, owner, repo):
     """
     处理 show 命令，显示项目信息
