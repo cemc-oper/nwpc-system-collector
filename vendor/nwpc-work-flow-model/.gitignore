@@ -52,4 +52,5 @@ node_modules
 celerybeat-schedule
 celerybeat.pid
 
-.cache
+.cache/
+.pytest_cache/

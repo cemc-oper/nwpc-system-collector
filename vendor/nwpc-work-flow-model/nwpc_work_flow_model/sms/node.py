@@ -61,12 +61,12 @@ class Node(object):
         ret = dict()
         ret['name'] = self.name
         ret['children'] = list()
-        ret['node_type'] = self.get_node_type()
+        ret['node_type'] = self.get_node_type().value
 
         ret['node_path'] = self.get_node_path()
         ret['path'] = self.get_node_path()
 
-        ret['status'] = self.status
+        ret['status'] = self.status.value
 
         for a_child in self.children:
             ret['children'].append(a_child.to_dict())

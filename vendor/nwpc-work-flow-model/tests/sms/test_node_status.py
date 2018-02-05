@@ -8,13 +8,16 @@ class TestNodeStatus:
         pass
 
     def test_construction(self):
-        node_status = NodeStatus()
-        assert node_status.status == NodeStatus.Unknown
+        node_status = NodeStatus.Unknown
+        assert node_status == NodeStatus.Unknown
 
         node_status = NodeStatus('act')
-        assert node_status.status == NodeStatus.Active
+        assert node_status == NodeStatus.Active
 
-        with pytest.raises(AttributeError):
+        node_status = NodeStatus['Active']
+        assert node_status == NodeStatus.Active
+
+        with pytest.raises(ValueError):
             NodeStatus('non-exist-status')
 
     def test_get_node_status(self):
@@ -31,6 +34,9 @@ class TestNodeStatus:
         }
 
         result_list = [NodeStatus.get_node_status(i) == mapper[i] for i in mapper]
+        assert all(result_list)
+
+        result_list = [NodeStatus(i) == mapper[i] for i in mapper]
         assert all(result_list)
 
         assert NodeStatus.get_node_status('non-exist-status') is None

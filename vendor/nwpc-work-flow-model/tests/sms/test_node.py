@@ -1,6 +1,6 @@
 import unittest
 
-from nwpc_work_flow_model.sms import Node, NodeType
+from nwpc_work_flow_model.sms import Node, NodeType, NodeStatus
 
 
 class TestNode(unittest.TestCase):
@@ -88,7 +88,7 @@ class TestNode(unittest.TestCase):
         self.assertIsInstance(node.children, list)
         self.assertEqual(len(node.children), 0)
         self.assertEqual(node.name, '')
-        self.assertEqual(node.status, 'unk')
+        self.assertEqual(node.status, NodeStatus.Unknown)
 
     def test_add_child(self):
         self.assertEqual(
@@ -201,7 +201,7 @@ class TestNode(unittest.TestCase):
             root_dict,
             {
                 'name': '',
-                'node_type': NodeType.Root,
+                'node_type': NodeType.Root.value,
                 'node_path': '/',
                 'path': '/',
                 'status': 'unk'
@@ -215,7 +215,7 @@ class TestNode(unittest.TestCase):
             family1_dict,
             {
                 'name': 'family1',
-                'node_type': NodeType.Family,
+                'node_type': NodeType.Family.value,
                 'node_path': '/suite1/family1',
                 'path': '/suite1/family1',
                 'status': 'unk'
@@ -225,7 +225,7 @@ class TestNode(unittest.TestCase):
         task1_dict_required = {
             'name': 'task1',
             'children': [],
-            'node_type': NodeType.Task,
+            'node_type': NodeType.Task.value,
             'node_path': '/suite1/family1/task1',
             'path': '/suite1/family1/task1',
             'status': 'unk'
@@ -235,7 +235,7 @@ class TestNode(unittest.TestCase):
         alias_dict_required = {
             'name': 'alias0',
             'children': [],
-            'node_type': NodeType.Alias,
+            'node_type': NodeType.Alias.value,
             'node_path': '/suite4/task12/alias0',
             'path': '/suite4/task12/alias0',
             'status': 'unk'
@@ -255,25 +255,25 @@ class TestNode(unittest.TestCase):
                                 {
                                     "name": "task1",
                                     "children": [],
-                                    "node_type": 5,
+                                    "node_type": NodeType.Task.value,
                                     "node_path": "/suite1/family1/task1",
                                     "path": "/suite1/family1/task1",
                                     "status": "act"
                                 }
                             ],
-                            "node_type": 4,
+                            "node_type": NodeType.Family.value,
                             "node_path": "/suite1/family1",
                             "path": "/suite1/family1",
                             "status": "act"
                         }
                     ],
-                    "node_type": 3,
+                    "node_type": NodeType.Suite.value,
                     "node_path": "/suite1",
                     "path": "/suite1",
                     "status": "act"
                 }
             ],
-            "node_type": 2,
+            "node_type": NodeType.Root.value,
             "node_path": "/",
             "path": "/",
             "status": "act"
@@ -293,10 +293,10 @@ class TestNode(unittest.TestCase):
         self.assertEqual(family1.get_node_path(), '/suite1/family1')
         self.assertEqual(task1.get_node_path(), '/suite1/family1/task1')
 
-        self.assertEqual(root.status, 'act')
-        self.assertEqual(suite1.status, 'act')
-        self.assertEqual(family1.status, 'act')
-        self.assertEqual(task1.status, 'act')
+        self.assertEqual(root.status, NodeStatus.Active)
+        self.assertEqual(suite1.status, NodeStatus.Active)
+        self.assertEqual(family1.status, NodeStatus.Active)
+        self.assertEqual(task1.status, NodeStatus.Active)
 
         self.assertEqual(root.parent, None)
         self.assertEqual(suite1.parent, root)
