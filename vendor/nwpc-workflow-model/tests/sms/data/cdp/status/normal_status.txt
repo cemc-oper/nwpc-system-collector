@@ -1,0 +1,52 @@
+Welcome to cdp version 4.4.5 compiled on Tue Oct  8 09:23:20 GMT 2013
+# MSG:SMS-CLIENT-LOGIN:nwp_pd logged into nwpc_pd with password [76755148]
+/{que}   Web_post   [que]   checker      [que]   GRAPES_MESO       [que]   00          [que]   11    [que]   get_result_00      [que]
+                                                                                                             get_result_30_1    [que]
+
+                                                                                               12    [que]   get_result_00      [que]
+                                                                                                             get_result_30_1    [que]
+
+                                                                                               13    [que]   get_result_00      [que]
+                                                                                                             get_result_30_1    [que]
+
+                                                                           12          [que]   00    [com]   get_result_00      [com]
+
+                                                                                               01    [com]   get_result_00      [com]
+                                                                                                             get_result_30_1    [com]
+
+                                                                                               02    [que]   get_result_00      [com]
+                                                                                                             get_result_30_1    [que]
+
+                                                                                               03    [que]   get_result_00      [que]
+                                                                                                             get_result_30_1    [que]
+
+                                                                                               04    [que]   get_result_00      [que]
+                                                                                                             get_result_30_1    [que]
+
+                                                 GFS               [que]   00          [que]   11    [que]   get_result_00      [que]
+                                                                                                             get_result_30_1    [que]
+
+                                                                                               12    [que]   get_result_00      [que]
+                                                                                                             get_result_30_1    [que]
+
+                                                                                               13    [que]   get_result_00      [que]
+                                                                                                             get_result_30_1    [que]
+
+                                                                           12          [que]   00    [com]   get_result_00      [com]
+
+                                                                                               01    [com]   get_result_00      [com]
+                                                                                                             get_result_30_1    [com]
+
+                                                                                               02    [que]   get_result_00      [com]
+                                                                                                             get_result_30_1    [que]
+
+                                                                                               03    [que]   get_result_00      [que]
+                                                                                                             get_result_30_1    [que]
+
+                                                                                               04    [que]   get_result_00      [que]
+                                                                                                             get_result_30_1    [que]
+
+                                                 housekeep         [que]   houskeep    [que]
+
+# MSG:SMS-CLIENT-LOGOUT:logout from nwpc_pd
+Goodbye nwp_pd

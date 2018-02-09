@@ -1,7 +1,7 @@
 import os
 from nwpc_sms_collector import sms_node_collector
-from nwpc_work_flow_model.sms.sms_node import SmsNode
-from nwpc_work_flow_model.sms.node_type import NodeType
+from nwpc_workflow_model.sms.sms_node import SmsNode
+from nwpc_workflow_model.sms.node_type import NodeType
 
 
 class ArgObject(object):

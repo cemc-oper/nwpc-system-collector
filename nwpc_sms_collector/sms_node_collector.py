@@ -2,7 +2,7 @@ import argparse
 import datetime
 import json
 import subprocess
-from nwpc_work_flow_model.sms.sms_node import SmsNode
+from nwpc_workflow_model.sms.sms_node import SmsNode
 
 
 def get_cdp_output(cdp_command_string):
