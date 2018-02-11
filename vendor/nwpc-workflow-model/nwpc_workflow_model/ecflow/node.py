@@ -103,24 +103,24 @@ class Node(object):
 
     def get_node_type(self):
         if self.parent is None:
-            return NodeType.Root
+            return NodeType.root
 
         if self.parent.parent is None:
-            return NodeType.Suite
+            return NodeType.suite
 
         if len(self.children) > 0:
             if self.children[0].is_alias():
-                return NodeType.Task
+                return NodeType.task
             else:
-                return NodeType.Family
+                return NodeType.family
         else:
             if self.name.find(":") != -1:
-                return NodeType.NonTaskNode
+                return NodeType.nonTaskNode
             else:
                 if self.is_alias():
-                    return NodeType.Alias
+                    return NodeType.alias
                 else:
-                    return NodeType.Task
+                    return NodeType.task
 
     def get_node_type_string(self):
         return NodeType.get_node_type_string(self.get_node_type())

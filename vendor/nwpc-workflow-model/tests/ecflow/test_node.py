@@ -127,22 +127,22 @@ class TestEcflowNode(unittest.TestCase):
         self.assertEqual(self.alias0.get_node_path(), '/suite4/task12/alias0')
 
     def test_get_node_type(self):
-        self.assertEqual(self.root.get_node_type(), NodeType.Root)
+        self.assertEqual(self.root.get_node_type(), NodeType.root)
         self.assertEqual(self.root.get_node_type_string(), 'root')
 
         for node in [getattr(self, 'suite' + str(i)) for i in range(1, 5)]:
-            self.assertEqual(node.get_node_type(), NodeType.Suite)
+            self.assertEqual(node.get_node_type(), NodeType.suite)
             self.assertEqual(node.get_node_type_string(), 'suite')
 
         for node in [getattr(self, 'family' + str(i)) for i in range(1, 7)]:
-            self.assertEqual(node.get_node_type(), NodeType.Family)
+            self.assertEqual(node.get_node_type(), NodeType.family)
             self.assertEqual(node.get_node_type_string(), 'family')
 
         for node in [getattr(self, 'task' + str(i)) for i in range(1, 13)]:
-            self.assertEqual(node.get_node_type(), NodeType.Task)
+            self.assertEqual(node.get_node_type(), NodeType.task)
             self.assertEqual(node.get_node_type_string(), 'task')
 
-        self.assertEqual(self.alias0.get_node_type(), NodeType.Alias)
+        self.assertEqual(self.alias0.get_node_type(), NodeType.alias)
         self.assertEqual(self.alias0.get_node_type_string(), 'alias')
 
     def test_is_leaf(self):
@@ -201,7 +201,7 @@ class TestEcflowNode(unittest.TestCase):
             root_dict,
             {
                 'name': '',
-                'node_type': NodeType.Root.value,
+                'node_type': NodeType.root.value,
                 'node_path': '/',
                 'path': '/',
                 'status': 'unknown'
@@ -215,7 +215,7 @@ class TestEcflowNode(unittest.TestCase):
             family1_dict,
             {
                 'name': 'family1',
-                'node_type': NodeType.Family.value,
+                'node_type': NodeType.family.value,
                 'node_path': '/suite1/family1',
                 'path': '/suite1/family1',
                 'status': 'unknown'
@@ -225,7 +225,7 @@ class TestEcflowNode(unittest.TestCase):
         task1_dict_required = {
             'name': 'task1',
             'children': [],
-            'node_type': NodeType.Task.value,
+            'node_type': NodeType.task.value,
             'node_path': '/suite1/family1/task1',
             'path': '/suite1/family1/task1',
             'status': 'unknown'
@@ -235,7 +235,7 @@ class TestEcflowNode(unittest.TestCase):
         alias_dict_required = {
             'name': 'alias0',
             'children': [],
-            'node_type': NodeType.Alias.value,
+            'node_type': NodeType.alias.value,
             'node_path': '/suite4/task12/alias0',
             'path': '/suite4/task12/alias0',
             'status': 'unknown'
@@ -255,25 +255,25 @@ class TestEcflowNode(unittest.TestCase):
                                 {
                                     "name": "task1",
                                     "children": [],
-                                    "node_type": NodeType.Task.value,
+                                    "node_type": NodeType.task.value,
                                     "node_path": "/suite1/family1/task1",
                                     "path": "/suite1/family1/task1",
                                     "status": "active"
                                 }
                             ],
-                            "node_type": NodeType.Family.value,
+                            "node_type": NodeType.family.value,
                             "node_path": "/suite1/family1",
                             "path": "/suite1/family1",
                             "status": "active"
                         }
                     ],
-                    "node_type": NodeType.Suite.value,
+                    "node_type": NodeType.suite.value,
                     "node_path": "/suite1",
                     "path": "/suite1",
                     "status": "active"
                 }
             ],
-            "node_type": NodeType.Root.value,
+            "node_type": NodeType.root.value,
             "node_path": "/",
             "path": "/",
             "status": "active"
