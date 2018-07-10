@@ -1,0 +1,6 @@
+post:
+  url: http://{host}:{port}/api/v2/hpc/ecflow/status # some url with host and port.
+  host: some host
+  port: some port
+  headers:
+    content-encoding: gzip
