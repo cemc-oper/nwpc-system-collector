@@ -35,7 +35,8 @@ setup(
 
     install_requires=[
         'click',
-        'PyYAML'
+        'PyYAML',
+        'ecflow'
     ],
 
     extras_require={
