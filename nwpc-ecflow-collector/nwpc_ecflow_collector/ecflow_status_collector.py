@@ -11,6 +11,8 @@ import ecflow
 
 from nwpc_workflow_model.ecflow import Bunch, NodeStatus
 
+from nwpc_ecflow_collector.ecflow_util import server_util
+
 
 def get_config(config_file_path):
     with open(config_file_path) as config_file:
@@ -26,10 +28,12 @@ def cli():
 @cli.command()
 @click.option('--owner', '-o', help='owner name')
 @click.option('--repo', '-r', help='repo name')
-@click.option('--host', help='ecflow host, ECF_HOST')
+@click.option('--host', help='ecflow host, if not set, use environment variable ECF_HOST')
 @click.option('--port', help='ecflow port, ECF_PORT')
 @click.option('--config', '-c', 'config_file_path', help='config file path')
 def show(owner, repo, host, port, config_file_path):
+    host, port = server_util.get_server_address(host, port)
+
     client = ecflow.Client(host, port)
     client.sync_local()
     defs = client.get_defs()
@@ -73,6 +77,8 @@ def collect(owner, repo, host, port, config_file_path, disable_post, post_url, c
         config = get_config(config_file_path)
     else:
         config = None
+
+    host, port = server_util.get_server_address(host, port)
 
     client = ecflow.Client(host, port)
     client.sync_local()
@@ -119,7 +125,7 @@ def collect(owner, repo, host, port, config_file_path, disable_post, post_url, c
         'message': json.dumps(result)
     }
 
-    if disable_post:
+    if not disable_post:
         if verbose:
             print("Posting sms status...")
 
