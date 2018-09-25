@@ -62,12 +62,16 @@ def show(owner, repo, host, port, config_file_path):
 @click.option('--repo', '-r', help='repo name')
 @click.option('--host', help='ecflow host, ECF_HOST')
 @click.option('--port', help='ecflow port, ECF_PORT')
-@click.option('--config', '-c', 'config_file_path', help='config file path', required=True)
+@click.option('--config', '-c', 'config_file_path', help='config file path')
 @click.option('--disable-post', is_flag=True, help='disable post to agent', default=False)
+@click.option('--post-url', help='post URL')
+@click.option('--gzip', 'content_encoding', flag_value='gzip', help='use gzip to post data.')
 @click.option('--verbose', is_flag=True, help='show more outputs', default=False)
-def collect(owner, repo, host, port, config_file_path, disable_post, verbose):
-
-    config = get_config(config_file_path)
+def collect(owner, repo, host, port, config_file_path, disable_post, post_url, content_encoding, verbose):
+    if config_file_path:
+        config = get_config(config_file_path)
+    else:
+        config = None
 
     client = ecflow.Client(host, port)
     client.sync_local()
@@ -117,14 +121,20 @@ def collect(owner, repo, host, port, config_file_path, disable_post, verbose):
     if not disable_post:
         if verbose:
             print("Posting sms status...")
-        host = config['post']['host']
-        port = config['post']['port']
-        url = config['post']['url'].format(host=host, port=port)
-
-        if 'content-encoding' in config['post']['headers']:
-            content_encoding = config['post']['headers']['content-encoding']
+        if post_url:
+            url = post_url
+        elif config:
+            host = config['post']['host']
+            port = config['post']['port']
+            url = config['post']['url'].format(host=host, port=port)
         else:
-            content_encoding = ''
+            raise Exception("post url is not set.")
+
+        if content_encoding is None:
+            if config:
+                if 'content-encoding' in config['post']['headers']:
+                    content_encoding = config['post']['headers']['content-encoding']
+
 
         if content_encoding == 'gzip':
             gzipped_data = gzip.compress(bytes(json.dumps(post_data), 'utf-8'))
