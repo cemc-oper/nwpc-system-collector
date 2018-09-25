@@ -1,5 +1,6 @@
 # coding=utf-8
 import json
+import sys
 from datetime import datetime, timedelta
 import gzip
 
@@ -58,8 +59,8 @@ def show(owner, repo, host, port, config_file_path):
 
 
 @cli.command()
-@click.option('--owner', '-o', help='owner name')
-@click.option('--repo', '-r', help='repo name')
+@click.option('--owner', '-o', help='owner name', required=True)
+@click.option('--repo', '-r', help='repo name', required=True)
 @click.option('--host', help='ecflow host, ECF_HOST')
 @click.option('--port', help='ecflow port, ECF_PORT')
 @click.option('--config', '-c', 'config_file_path', help='config file path')
@@ -78,7 +79,7 @@ def collect(owner, repo, host, port, config_file_path, disable_post, post_url, c
     defs = client.get_defs()
 
     if defs is None:
-        print("The server has no definition")
+        print("The server has no definition", file=sys.stderr)
         return
 
     nodes = defs.get_all_nodes()
@@ -118,9 +119,10 @@ def collect(owner, repo, host, port, config_file_path, disable_post, post_url, c
         'message': json.dumps(result)
     }
 
-    if not disable_post:
+    if disable_post:
         if verbose:
             print("Posting sms status...")
+
         if post_url:
             url = post_url
         elif config:
@@ -134,7 +136,6 @@ def collect(owner, repo, host, port, config_file_path, disable_post, post_url, c
             if config:
                 if 'content-encoding' in config['post']['headers']:
                     content_encoding = config['post']['headers']['content-encoding']
-
 
         if content_encoding == 'gzip':
             gzipped_data = gzip.compress(bytes(json.dumps(post_data), 'utf-8'))

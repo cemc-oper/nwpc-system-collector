@@ -18,7 +18,7 @@ def cli():
 @click.option('--repo', '-r', help='repo name')
 @click.option('--host', help='ecflow host, ECF_HOST')
 @click.option('--port', help='ecflow port, ECF_PORT')
-@click.option('--path', '-p', 'node_path', help='node path')
+@click.option('--path', '-p', 'node_path', help='node path', requried=True)
 @click.option('--config', '-c', 'config_file_path', help='config file path')
 def variable(owner, repo, host, port, node_path, config_file_path):
     request_date_time = datetime.datetime.utcnow()
