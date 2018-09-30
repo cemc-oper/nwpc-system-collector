@@ -36,7 +36,6 @@ setup(
     install_requires=[
         'click',
         'PyYAML',
-        'ecflow',
         'requests',
         'nwpc_workflow_model'
     ],
