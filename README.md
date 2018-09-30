@@ -8,7 +8,6 @@ A colletion of collectors for monitoring operation systems in NWPC.
 
 Collect SMS server status.
 
-
 ### nwpc-log-collector
 
 Collect SMS log.
