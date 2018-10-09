@@ -1,0 +1,279 @@
+===== Job Step cma19n04.6173907.0 =====
+        Job Step Id: cma19n04.6173907.0
+           Job Name: cma19n04.6173907
+          Step Name: 0
+  Structure Version: 10
+              Owner: chenjing
+         Queue Date: Wed Jul 12 00:53:58 2017
+             Status: Running
+     Reservation ID:  
+  Requested Res. ID:  
+   Flexible Res. ID:  
+          Recurring: False
+ Scheduling Cluster: 
+ Submitting Cluster: 
+    Sending Cluster: 
+  Requested Cluster: 
+     Schedd History: 
+   Outbound Schedds: 
+    Submitting User: 
+   Eligibility Time: Wed Jul 12 00:53:58 2017
+      Dispatch Time: Wed Jul 12 00:53:59 2017
+    Completion Date: 
+    Completion Code: 
+        Favored Job: No
+      User Priority: 50
+       user_sysprio: 0
+      class_sysprio: 0
+      group_sysprio: 0
+    System Priority: 50000
+          q_sysprio: 50000
+ Previous q_sysprio: 0
+      Notifications: Complete
+ Virtual Image Size: 1 kb
+         Large Page: N
+              Trace: no
+         Coschedule: no
+       SMT required: as_is
+    MetaCluster Job: no
+     Checkpointable: no
+    Ckpt Start Time: 
+Good Ckpt Time/Date: 
+   Ckpt Elapse Time: 0 seconds
+Fail Ckpt Time/Date: 
+    Ckpt Accum Time: 0 seconds
+    Checkpoint File: 
+   Ckpt Execute Dir: 
+  Restart From Ckpt: no
+ Restart Same Nodes: no
+            Restart: yes
+        Preemptable: yes
+ Preempt Wait Count: 0
+     Hold Job Until: 
+     User Hold Time: 00:00:00 (0 seconds)
+               RSet: RSET_NONE
+Mcm Affinity Option:   
+      Task Affinity: 
+      Cpus Per Core:  0
+   Parallel Threads:  0
+                Env: 
+                 In: /dev/null
+                Out: ./printout/wrf_6173907.out
+                Err: ./printout/wrf_6173907.err
+Initial Working Dir: /cmb/g3/chenjing/WRF-REPS/operation/gefs_ruc/2017052112/p02/tmpdir_wrf/./
+         Dependency: 
+Data Stg Dependency: 
+          Resources: 
+     Node Resources: 
+     Step Resources: 
+          Step Type: General Parallel
+         Node Usage: shared
+    Submitting Host: cma19n03
+        Schedd Host: cma19n04
+      Job Queue Key: 
+        Notify User: chenjing@cma19n03
+              Shell: /usr/bin/ksh
+  LoadLeveler Group: No_Group
+              Class: normal1
+    Ckpt Hard Limit: undefined
+    Ckpt Soft Limit: undefined
+     Cpu Hard Limit: undefined
+     Cpu Soft Limit: undefined
+    Data Hard Limit: undefined
+    Data Soft Limit: undefined
+      As Hard Limit: undefined
+      As Soft Limit: undefined
+   Nproc Hard Limit: undefined
+   Nproc Soft Limit: undefined
+ Memlock Hard Limit: undefined
+ Memlock Soft Limit: undefined
+   Locks Hard Limit: undefined
+   Locks Soft Limit: undefined
+  Nofile Hard Limit: undefined
+  Nofile Soft Limit: undefined
+    Core Hard Limit: undefined
+    Core Soft Limit: undefined
+    File Hard Limit: undefined
+    File Soft Limit: undefined
+   Stack Hard Limit: undefined
+   Stack Soft Limit: undefined
+     Rss Hard Limit: undefined
+     Rss Soft Limit: undefined
+Step Cpu Hard Limit: undefined
+Step Cpu Soft Limit: undefined
+Wall Clk Hard Limit: 15+00:00:10 (1296010 seconds)
+Wall Clk Soft Limit: 15+00:00:00 (1296000 seconds)
+            Comment: WRF
+            Account: 
+         Unix Group: eps
+Negotiator Messages: 
+      Bulk Transfer: No
+Adapter Requirement: (sn_all,mpi,US,shared,AVERAGE,instances=1,imm_send_buffers=1,collective_groups=0,endpoints=1)
+          Step Cpus: 0
+Step Virtual Memory: 0.000 mb
+   Step Real Memory: 0.000 mb
+Step Large Page Mem: 0.000 mb
+     Cluster Option: none
+Topology Requirement: none
+     Network Usages: 0(1,mpi,US,1,0,1,0,1),
+
+Stripe Min Networks: False
+    Monitor Program: 
+--------------------------------------------------------------------------------
+Node
+----
+
+   Name            : 
+   Requirements    : 
+   Preferences     : 
+   Node minimum    : 4
+   Node maximum    : 4
+   Node actual     : 4
+   Allocated Hosts : cma13n08::
+                   + cma05n21::
+                   + cma16n06::
+                   + cma15n15::
+
+   Master Task
+   -----------
+
+      Executable   : /cmb/g3/chenjing/WRF-REPS/operation/gefs_ruc/2017052112/p02/tmpdir_wrf/wrf.cmd
+      Exec Args    : 
+      Num Task Inst: 1
+      Task Instance: cma13n08:-1:,
+
+   Task
+   ----
+
+      Num Task Inst: 128
+      Task Instance: cma13n08:0:,
+      Task Instance: cma13n08:1:,
+      Task Instance: cma13n08:2:,
+      Task Instance: cma13n08:3:,
+      Task Instance: cma13n08:4:,
+      Task Instance: cma13n08:5:,
+      Task Instance: cma13n08:6:,
+      Task Instance: cma13n08:7:,
+      Task Instance: cma13n08:8:,
+      Task Instance: cma13n08:9:,
+      Task Instance: cma13n08:10:,
+      Task Instance: cma13n08:11:,
+      Task Instance: cma13n08:12:,
+      Task Instance: cma13n08:13:,
+      Task Instance: cma13n08:14:,
+      Task Instance: cma13n08:15:,
+      Task Instance: cma13n08:16:,
+      Task Instance: cma13n08:17:,
+      Task Instance: cma13n08:18:,
+      Task Instance: cma13n08:19:,
+      Task Instance: cma13n08:20:,
+      Task Instance: cma13n08:21:,
+      Task Instance: cma13n08:22:,
+      Task Instance: cma13n08:23:,
+      Task Instance: cma13n08:24:,
+      Task Instance: cma13n08:25:,
+      Task Instance: cma13n08:26:,
+      Task Instance: cma13n08:27:,
+      Task Instance: cma13n08:28:,
+      Task Instance: cma13n08:29:,
+      Task Instance: cma13n08:30:,
+      Task Instance: cma13n08:31:,
+      Task Instance: cma05n21:32:,
+      Task Instance: cma05n21:33:,
+      Task Instance: cma05n21:34:,
+      Task Instance: cma05n21:35:,
+      Task Instance: cma05n21:36:,
+      Task Instance: cma05n21:37:,
+      Task Instance: cma05n21:38:,
+      Task Instance: cma05n21:39:,
+      Task Instance: cma05n21:40:,
+      Task Instance: cma05n21:41:,
+      Task Instance: cma05n21:42:,
+      Task Instance: cma05n21:43:,
+      Task Instance: cma05n21:44:,
+      Task Instance: cma05n21:45:,
+      Task Instance: cma05n21:46:,
+      Task Instance: cma05n21:47:,
+      Task Instance: cma05n21:48:,
+      Task Instance: cma05n21:49:,
+      Task Instance: cma05n21:50:,
+      Task Instance: cma05n21:51:,
+      Task Instance: cma05n21:52:,
+      Task Instance: cma05n21:53:,
+      Task Instance: cma05n21:54:,
+      Task Instance: cma05n21:55:,
+      Task Instance: cma05n21:56:,
+      Task Instance: cma05n21:57:,
+      Task Instance: cma05n21:58:,
+      Task Instance: cma05n21:59:,
+      Task Instance: cma05n21:60:,
+      Task Instance: cma05n21:61:,
+      Task Instance: cma05n21:62:,
+      Task Instance: cma05n21:63:,
+      Task Instance: cma16n06:64:,
+      Task Instance: cma16n06:65:,
+      Task Instance: cma16n06:66:,
+      Task Instance: cma16n06:67:,
+      Task Instance: cma16n06:68:,
+      Task Instance: cma16n06:69:,
+      Task Instance: cma16n06:70:,
+      Task Instance: cma16n06:71:,
+      Task Instance: cma16n06:72:,
+      Task Instance: cma16n06:73:,
+      Task Instance: cma16n06:74:,
+      Task Instance: cma16n06:75:,
+      Task Instance: cma16n06:76:,
+      Task Instance: cma16n06:77:,
+      Task Instance: cma16n06:78:,
+      Task Instance: cma16n06:79:,
+      Task Instance: cma16n06:80:,
+      Task Instance: cma16n06:81:,
+      Task Instance: cma16n06:82:,
+      Task Instance: cma16n06:83:,
+      Task Instance: cma16n06:84:,
+      Task Instance: cma16n06:85:,
+      Task Instance: cma16n06:86:,
+      Task Instance: cma16n06:87:,
+      Task Instance: cma16n06:88:,
+      Task Instance: cma16n06:89:,
+      Task Instance: cma16n06:90:,
+      Task Instance: cma16n06:91:,
+      Task Instance: cma16n06:92:,
+      Task Instance: cma16n06:93:,
+      Task Instance: cma16n06:94:,
+      Task Instance: cma16n06:95:,
+      Task Instance: cma15n15:96:,
+      Task Instance: cma15n15:97:,
+      Task Instance: cma15n15:98:,
+      Task Instance: cma15n15:99:,
+      Task Instance: cma15n15:100:,
+      Task Instance: cma15n15:101:,
+      Task Instance: cma15n15:102:,
+      Task Instance: cma15n15:103:,
+      Task Instance: cma15n15:104:,
+      Task Instance: cma15n15:105:,
+      Task Instance: cma15n15:106:,
+      Task Instance: cma15n15:107:,
+      Task Instance: cma15n15:108:,
+      Task Instance: cma15n15:109:,
+      Task Instance: cma15n15:110:,
+      Task Instance: cma15n15:111:,
+      Task Instance: cma15n15:112:,
+      Task Instance: cma15n15:113:,
+      Task Instance: cma15n15:114:,
+      Task Instance: cma15n15:115:,
+      Task Instance: cma15n15:116:,
+      Task Instance: cma15n15:117:,
+      Task Instance: cma15n15:118:,
+      Task Instance: cma15n15:119:,
+      Task Instance: cma15n15:120:,
+      Task Instance: cma15n15:121:,
+      Task Instance: cma15n15:122:,
+      Task Instance: cma15n15:123:,
+      Task Instance: cma15n15:124:,
+      Task Instance: cma15n15:125:,
+      Task Instance: cma15n15:126:,
+      Task Instance: cma15n15:127:,
+--------------------------------------------------------------------------------
+
+1 job step(s) in query, 0 waiting, 0 pending, 1 running, 0 held, 0 preempted

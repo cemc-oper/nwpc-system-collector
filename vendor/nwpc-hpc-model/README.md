@@ -1,55 +1,60 @@
 # nwpc-hpc-model
 
-A collection of models for HPC used in NWPC. Including model for:
+[![Build Status](https://travis-ci.org/perillaroc/nwpc-hpc-model.svg?branch=master)](https://travis-ci.org/perillaroc/nwpc-hpc-model)
+[![codecov](https://codecov.io/gh/perillaroc/nwpc-hpc-model/branch/master/graph/badge.svg)](https://codecov.io/gh/perillaroc/nwpc-hpc-model)
 
-* LoadLeveler's job query
+A collection of models for HPC used in NWPC. Including models for:
+
+* LoadLeveler's `llq -l` query
+* Slurm's `sinfo` and `squeue -o %all` query
+* Disk usage and disk space query
 
 ## Installation
 
-Download source code from Github releases. Run `python setup.py install` to install.
+Download source code from Github releases or get the latest code from Github repo. 
+Run `pip install .` to install.
 
-## Example
+## Getting start
 
-The following example use nwpc-hpc-model to extract job id and job owner from a llq -l query.
+The following example uses `nwpc-hpc-model` to extract job id and job owner from a `llq -l` query.
  
-A config json file is used to create query categories.
+A config YAML file is used to create query categories.
 
-```json
-[
-    {
-      "id": "llq.id",
-      "display_name": "Id",
-      "label": "Job Step Id",
-      "record_parser_class": "DetailLabelParser",
-      "record_parser_arguments": ["Job Step Id"],
-      "value_saver_class": "StringSaver",
-      "value_saver_arguments": []
-    },
-    {
-      "id": "llq.owner",
-      "display_name": "Owner",
-      "label": "Owner",
-      "record_parser_class": "DetailLabelParser",
-      "record_parser_arguments": ["Owner"],
-      "value_saver_class": "StringSaver",
-      "value_saver_arguments": []
-    }
- ]
+```yaml
+category_list:
+  -
+    id: "llq.id"
+    display_name: "Id"
+    label: "Job Step Id"
+    record_parser_class: "DetailLabelParser"
+    record_parser_arguments:
+      - "Job Step Id"
+    value_saver_class: "StringSaver"
+    value_saver_arguments: []
+  -
+    id: "llq.owner"
+    display_name: "Owner"
+    label: "Owner"
+    record_parser_class: "DetailLabelParser"
+    record_parser_arguments:
+      - "Owner"
+    value_saver_class: "StringSaver"
+    value_saver_arguments: []
 
 ```
 
-First create some `QueryCategory` according to the config json file.
+First create `QueryCategoryList` according to the config json file.
 
 ```python
-from nwpc_hpc_model.loadleveler import QueryCategoryList, \
+from nwpc_hpc_model.workload.loadleveler import QueryCategoryList, \
     QueryCategory, record_parser, value_saver
-import json
+import yaml
 
 with open('config_file_path', 'r') as f:
-    config = json.load(f)
+    config = yaml.load(f)
     
 category_list = QueryCategoryList()
-for an_item in config:
+for an_item in config['category_list']:
     category = QueryCategory(
         category_id=an_item['id'],
         display_name=an_item['display_name'],
@@ -77,9 +82,9 @@ output_lines = output_string.split("\n")
 Build `QueryModel` from `QueryCategoryList`
 
 ```python
-from nwpc_hpc_model.loadleveler import QueryModel
+from nwpc_hpc_model.workload.loadleveler import LoadLevelerQueryModel
 
-model = QueryModel.build_from_category_list(output_lines, category_list)
+model = LoadLevelerQueryModel.build_from_category_list(output_lines, category_list)
 ```
 
 `model` contains data of all categories in the config file.
@@ -90,6 +95,6 @@ Use `pytest` to run all tests.
 
 ## License
 
-Copyright &copy; 2016-2017, Perilla Roc.
+Copyright &copy; 2016-2018, Perilla Roc.
 
 `nwpc-hpc-model` is licensed under [The MIT License](https://opensource.org/licenses/MIT).

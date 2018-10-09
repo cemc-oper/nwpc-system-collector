@@ -10,7 +10,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 setup(
     name='nwpc-hpc-model',
 
-    version='0.1.0',
+    version='0.3.0',
 
     description='A collection of models for HPC used in NWPC.',
     long_description=long_description,
@@ -26,17 +26,29 @@ setup(
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3.6'
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7'
     ],
 
     keywords='nwpc hpc model',
 
-    packages=find_packages(exclude=['contrib', 'docs', 'tests']),
+    packages=find_packages(exclude=[
+        'contrib', 'docs', 'tests', 'docker'
+    ]),
 
     install_requires=[],
 
     extras_require={
-        'test': ['pytest'],
+        'test': [
+            'pyyaml',
+            'pytest',
+            'pytest-cov',
+            'codecov'
+        ],
+        'cov': [
+            'pytest-cov',
+            'codecov'
+        ]
     },
 
     entry_points={}

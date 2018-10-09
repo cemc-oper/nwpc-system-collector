@@ -91,7 +91,6 @@ ENV/
 
 # Logs
 logs
-*.log
 npm-debug.log*
 
 # Runtime data
@@ -137,8 +136,8 @@ jspm_packages
 # Yarn Integrity file
 .yarn-integrity
 
-#pycharm
+# pycharm
 
 .idea
 
-dist
+.pytest_cache/
