@@ -1,0 +1,222 @@
+squeue:
+  command: 'squeue -o %all'
+  category_list:
+    -
+      id: "squeue.job_id"
+      display_name: "Job Id"
+      label: "JOBID"
+      record_parser_class: "TokenRecordParser"
+      record_parser_arguments:
+        - -1
+        - "|"
+      value_saver_class: "StringSaver"
+      value_saver_arguments: []
+    -
+      id: "squeue.account"
+      display_name: "Account"
+      label: "ACCOUNT"
+      record_parser_class: "TokenRecordParser"
+      record_parser_arguments:
+        - -1
+        - "|"
+      value_saver_class: "StringSaver"
+      value_saver_arguments: []
+    -
+      id: "squeue.partition"
+      display_name: "Partition"
+      label: "PARTITION"
+      record_parser_class: "TokenRecordParser"
+      record_parser_arguments:
+        - -1
+        - "|"
+      value_saver_class: "StringSaver"
+      value_saver_arguments: []
+    -
+      id: "squeue.command"
+      display_name: "Command"
+      label: "COMMAND"
+      record_parser_class: "TokenRecordParser"
+      record_parser_arguments:
+        - -1
+        - "|"
+      value_saver_class: "StringSaver"
+      value_saver_arguments: []
+    -
+      id: "squeue.state"
+      display_name: "State"
+      label: "STATE"
+      record_parser_class: "TokenRecordParser"
+      record_parser_arguments:
+        - -1
+        - "|"
+      value_saver_class: "StringSaver"
+      value_saver_arguments: []
+    -
+      id: "squeue.submit_time"
+      display_name: "Submit Time"
+      label: "SUBMIT_TIME"
+      record_parser_class: "TokenRecordParser"
+      record_parser_arguments:
+        - -1
+        - "|"
+      value_saver_class: "DateTimeSaver"
+      value_saver_arguments:
+        - "%Y-%m-%dT%H:%M:%S"
+    -
+      id: "squeue.work_dir"
+      display_name: "Work Dir"
+      label: "WORK_DIR"
+      record_parser_class: "TokenRecordParser"
+      record_parser_arguments:
+        - -1
+        - "|"
+      value_saver_class: "StringSaver"
+      value_saver_arguments: []
+
+
+sinfo:
+  command: 'sinfo -o "%20P %.5a %.20F %.30C"'
+  category_list:
+    -
+      id: "sinfo.partition"
+      display_name: Partition
+      label: PARTITION
+      record_parser_class: TokenRecordParser
+      record_parser_arguments:
+        - -1
+      value_saver_class: StringSaver
+      value_saver_arguments: []
+    -
+      id: "sinfo.avail"
+      display_name: "Avail"
+      label: AVAIL
+      record_parser_class: TokenRecordParser
+      record_parser_arguments:
+        - -1
+      value_saver_class: StringSaver
+      value_saver_arguments: []
+    -
+      id: "sinfo.nodes"
+      display_name: "Nodes(A/I/O/T)"
+      label: "NODES(A/I/O/T)"
+      record_parser_class: TokenRecordParser
+      record_parser_arguments:
+        - -1
+      value_saver_class: StringSaver
+      value_saver_arguments: []
+    -
+      id: "sinfo.cpus"
+      display_name: "CPUs(A/I/O/T)"
+      label: "CPUS(A/I/O/T)"
+      record_parser_class: TokenRecordParser
+      record_parser_arguments:
+        - -1
+      value_saver_class: StringSaver
+      value_saver_arguments: []
+
+sacct:
+  command: 'sacct -X -P -o "ALL"'
+  category_list:
+    -
+      id: "sacct.job_id"
+      display_name: "Job ID"
+      label: "JobID"
+      record_parser_class: TokenRecordParser
+      record_parser_arguments:
+        - -1
+        - '|'
+      value_saver_class: StringSaver
+      value_saver_arguments: []
+    -
+      id: "sacct.job_name"
+      display_name: "Job Name"
+      label: "JobName"
+      record_parser_class: TokenRecordParser
+      record_parser_arguments:
+        - -1
+        - '|'
+      value_saver_class: StringSaver
+      value_saver_arguments: []
+    -
+      id: "sacct.partition"
+      display_name: "Partition"
+      label: "Partition"
+      record_parser_class: TokenRecordParser
+      record_parser_arguments:
+        - -1
+        - '|'
+      value_saver_class: StringSaver
+      value_saver_arguments: []
+    -
+      id: "sacct.account"
+      display_name: "Account"
+      label: "Account"
+      record_parser_class: TokenRecordParser
+      record_parser_arguments:
+        - -1
+        - '|'
+      value_saver_class: StringSaver
+      value_saver_arguments: []
+    -
+      id: "sacct.alloc_cpus"
+      display_name: "Alloc CPUs"
+      label: "AllocCPUS"
+      record_parser_class: TokenRecordParser
+      record_parser_arguments:
+        - -1
+        - '|'
+      value_saver_class: NumberSaver
+      value_saver_arguments: []
+    -
+      id: "sacct.alloc_nodes"
+      display_name: "Alloc Nodes"
+      label: "AllocNodes"
+      record_parser_class: TokenRecordParser
+      record_parser_arguments:
+        - -1
+        - '|'
+      value_saver_class: NumberSaver
+      value_saver_arguments: []
+    -
+      id: "sacct.state"
+      display_name: "State"
+      label: "State"
+      record_parser_class: TokenRecordParser
+      record_parser_arguments:
+        - -1
+        - '|'
+      value_saver_class: StringSaver
+      value_saver_arguments: []
+    -
+      id: "sacct.exit_code"
+      display_name: "Exit Code"
+      label: "ExitCode"
+      record_parser_class: TokenRecordParser
+      record_parser_arguments:
+        - -1
+        - '|'
+      value_saver_class: StringSaver
+      value_saver_arguments: []
+    -
+      id: "sacct.eligible"
+      display_name: "Eligible"
+      label: "Eligible"
+      record_parser_class: TokenRecordParser
+      record_parser_arguments:
+        - -1
+        - '|'
+      value_saver_class: StringSaver
+      value_saver_arguments: []
+    -
+      id: "sacct.end"
+      display_name: "End"
+      label: "End"
+      record_parser_class: TokenRecordParser
+      record_parser_arguments:
+        - -1
+        - '|'
+      value_saver_class: StringSaver
+      value_saver_arguments: []
+
+
+
