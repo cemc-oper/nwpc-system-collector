@@ -2,7 +2,9 @@
 
 from paramiko import SSHClient
 
-from nwpc_workload_collector.slurm.common.model_util import build_category_list, sort_items
+
+from nwpc_workload_collector.base.model_util import sort_items
+from nwpc_workload_collector.slurm.common.model_util import build_category_list
 from nwpc_hpc_model.workload.slurm import SlurmQueryModel
 from nwpc_workload_collector.base.run import run_command
 

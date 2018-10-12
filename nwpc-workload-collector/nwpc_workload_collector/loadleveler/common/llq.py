@@ -3,7 +3,8 @@
 from paramiko import SSHClient
 
 from nwpc_hpc_model.workload.loadleveler import LoadLevelerQueryModel
-from nwpc_workload_collector.loadleveler.common.model_util import build_category_list, sort_items
+from nwpc_workload_collector.loadleveler.common.model_util import build_category_list
+from nwpc_workload_collector.base.model_util import sort_items
 from nwpc_workload_collector.base.run import run_command
 
 
