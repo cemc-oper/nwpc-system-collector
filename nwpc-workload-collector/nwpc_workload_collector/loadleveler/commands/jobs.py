@@ -5,9 +5,9 @@ import json
 import click
 
 from nwpc_workload_collector.base.connection import get_ssh_client
-from nwpc_workload_collector.slurm.common.config import get_config
 from nwpc_workload_collector.base.encoder import CollectorJSONEncoder
-from nwpc_workload_collector.slurm.common.squeue import get_squeue_query_model
+from nwpc_workload_collector.loadleveler.common.config import get_config
+from nwpc_workload_collector.loadleveler.common.llq import get_llq_query_model
 
 
 @click.command('jobs', short_help='query jobs in slurm')
@@ -30,20 +30,20 @@ def command(config_file, host, port, user, password, output_style):
 
     client = get_ssh_client(auth)
 
-    query_model = get_squeue_query_model(client, config)
+    query_model = get_llq_query_model(client, config)
 
     current_time = datetime.utcnow().replace(microsecond=0)
 
     result = {
-        'app': 'nwpc_workload_collector.slurm.collector',
+        'app': 'nwpc_workload_collector.loadleveler.collector',
         'type': 'command',
         'time': current_time.isoformat(),
         'data': {
-            'workload_system': 'slurm',
+            'workload_system': 'loadleveler',
             'collected_time': current_time.isoformat(),
             'type': 'JobListContent',
             'request': {
-                'command': 'slurm_collector',
+                'command': 'loadleveler_collector',
                 'sub_command': 'jobs',
                 'arguments': []
             },
