@@ -1,9 +1,12 @@
-import datetime
+# coding: utf-8
+from datetime import datetime
+import json
 
 import click
 
 from nwpc_workload_collector.base.connection import get_ssh_client
 from nwpc_workload_collector.slurm.common.config import get_config
+from nwpc_workload_collector.slurm.common.encoder import CollectorJSONEncoder
 from nwpc_workload_collector.slurm.common.squeue import get_squeue_query_model
 
 
@@ -13,7 +16,9 @@ from nwpc_workload_collector.slurm.common.squeue import get_squeue_query_model
 @click.option('--port', help='remote port', type=int, default=22)
 @click.option('--user', help='remote user')
 @click.option('--password', help='remote password')
-def command(config_file, host, port, user, password):
+@click.option('--show', 'output_style', flag_value='show', default=True)
+@click.option('--post', 'output_style', flag_value='post')
+def command(config_file, host, port, user, password, output_style):
     config = get_config(config_file)
 
     auth = {
@@ -27,17 +32,26 @@ def command(config_file, host, port, user, password):
 
     query_model = get_squeue_query_model(client, config)
 
+    current_time = datetime.utcnow().replace(microsecond=0)
+
     result = {
         'app': 'nwpc_workload_collector.slurm.collector',
         'type': 'command',
-        'time': datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S"),
+        'time': current_time.isoformat(),
         'data': {
+            'workload_system': 'slurm',
+            'collected_time': current_time.isoformat(),
+            'type': 'JobListContent',
             'request': {
+                'command': 'slurm_collector',
                 'sub_command': 'jobs',
+                'arguments': []
             },
             'response': {
-                'jobs': query_model.to_dict()['items']
+                'items': query_model.to_dict()['items']
             }
         }
     }
-    print(result)
+
+    if output_style == 'show':
+        print(json.dumps(result, indent=2, cls=CollectorJSONEncoder))
