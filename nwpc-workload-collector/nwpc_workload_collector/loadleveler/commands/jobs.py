@@ -10,7 +10,7 @@ from nwpc_workload_collector.loadleveler.common.config import get_config
 from nwpc_workload_collector.loadleveler.common.llq import get_llq_query_model
 
 
-@click.command('jobs', short_help='query jobs in slurm')
+@click.command('jobs', short_help='query jobs in loadleveler')
 @click.option('--config-file', help="config file path")
 @click.option('--host', help='remote host')
 @click.option('--port', help='remote port', type=int, default=22)
@@ -41,7 +41,6 @@ def command(config_file, host, port, user, password, output_style):
         'data': {
             'workload_system': 'loadleveler',
             'collected_time': current_time.isoformat(),
-            'type': 'JobListContent',
             'request': {
                 'command': 'loadleveler_collector',
                 'sub_command': 'jobs',

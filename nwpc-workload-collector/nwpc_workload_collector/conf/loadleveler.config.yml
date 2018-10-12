@@ -1,4 +1,5 @@
 llq:
+  command: '/usr/bin/llq -l'
   category_list:
     -
       id: "llq.id"
@@ -58,6 +59,7 @@ llq:
       value_saver_arguments: []
 
 llclass:
+  command: '/usr/bin/llclass -l'
   category_list:
     -
       id: "llclass.name"

@@ -7,10 +7,10 @@ import click
 from nwpc_workload_collector.base.connection import get_ssh_client
 from nwpc_workload_collector.slurm.common.config import get_config
 from nwpc_workload_collector.base.encoder import CollectorJSONEncoder
-from nwpc_workload_collector.slurm.common.squeue import get_squeue_query_model
+from nwpc_workload_collector.slurm.common.sinfo import get_sinfo_query_model
 
 
-@click.command('jobs', short_help='query jobs in slurm')
+@click.command('queues', short_help='show queues information in slurm')
 @click.option('--config-file', help="config file path")
 @click.option('--host', help='remote host')
 @click.option('--port', help='remote port', type=int, default=22)
@@ -30,7 +30,7 @@ def command(config_file, host, port, user, password, output_style):
 
     client = get_ssh_client(auth)
 
-    query_model = get_squeue_query_model(client, config)
+    query_model = get_sinfo_query_model(client, config)
 
     current_time = datetime.utcnow().replace(microsecond=0)
 
@@ -43,7 +43,7 @@ def command(config_file, host, port, user, password, output_style):
             'collected_time': current_time.isoformat(),
             'request': {
                 'command': 'slurm_collector',
-                'sub_command': 'jobs',
+                'sub_command': 'queues',
                 'arguments': []
             },
             'response': {
