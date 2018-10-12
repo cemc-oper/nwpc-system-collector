@@ -8,11 +8,11 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='nwpc-ecflow-collector',
+    name='nwpc-workload-collector',
 
     version='0.1.0',
 
-    description='An ecFlow collector at NWPC.',
+    description='Collectors for workload systems at NWPC.',
     long_description=long_description,
 
     url='https://github.com/perillaroc/nwpc-system-collector',
@@ -29,20 +29,29 @@ setup(
         'Programming Language :: Python :: 3.6'
     ],
 
-    keywords='nwpc ecflow collector',
+    keywords='nwpc collector loadleveler slurm',
 
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
 
     install_requires=[
         'click',
         'PyYAML',
+        'paramiko',
         'requests',
-        'nwpc_workflow_model'
+        'nwpc_hpc_model'
     ],
+
+    package_data={
+        'nwpc_workload_collector': ['conf/*.yml']
+    },
 
     extras_require={
         'test': ['pytest'],
     },
 
-    entry_points={}
+    entry_points={
+        'console_scripts': [
+            'loadleveler_collector=nwpc_workload_collector.loadleveler.collector:cli',
+            'slurm_collector=nwpc_workload_collector.slurm.collector:cli',
+        ]}
 )
