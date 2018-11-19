@@ -73,6 +73,7 @@ def show(owner, repo, host, port, config_file_path):
 @click.option('--gzip', 'content_encoding', flag_value='gzip', help='use gzip to post data.')
 @click.option('--verbose', is_flag=True, help='show more outputs', default=False)
 def collect(owner, repo, host, port, config_file_path, disable_post, post_url, content_encoding, verbose):
+    start_time = datetime.utcnow()
     if config_file_path:
         config = get_config(config_file_path)
     else:
@@ -127,7 +128,7 @@ def collect(owner, repo, host, port, config_file_path, disable_post, post_url, c
 
     if not disable_post:
         if verbose:
-            print("Posting sms status...")
+            print("Posting ecflow status for {owner}/{repo}...".format(owner=owner, repo=repo))
 
         if post_url:
             url = post_url
@@ -153,7 +154,12 @@ def collect(owner, repo, host, port, config_file_path, disable_post, post_url, c
             requests.post(url, data=post_data)
 
         if verbose:
-            print("Posting sms status...done")
+            print("Posting ecflow status for {owner}/{repo}...done".format(owner=owner, repo=repo))
+
+    end_time = datetime.utcnow()
+    if verbose:
+        print("Collect ecflow status for {owner}/{repo}...used {time}".format(
+            owner=owner, repo=repo, time=end_time - start_time))
 
 
 if __name__ == "__main__":
