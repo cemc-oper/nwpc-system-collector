@@ -6,10 +6,8 @@ RUN apt-get update \
     && apt-get -y install sudo \
     && rm -rf /var/lib/apt/lists/*
 
-RUN groupadd -r nwpc && useradd -r -g nwpc nwpc
-
-COPY --chown=nwpc:nwpc vendor /tmp/vendor
-COPY --chown=nwpc:nwpc nwpc-ecflow-collector /srv/nwpc-ecflow-collector
+COPY vendor /tmp/vendor
+COPY nwpc-ecflow-collector /srv/nwpc-ecflow-collector
 
 RUN set -ex \
     && cd /tmp/vendor/nwpc-hpc-model \
@@ -22,7 +20,5 @@ RUN set -ex \
     && chmod -R go+rx /srv/nwpc-ecflow-collector
 
 WORKDIR /srv/nwpc-ecflow-collector/nwpc_ecflow_collector
-
-USER nwpc
 
 ENTRYPOINT ["python3"]

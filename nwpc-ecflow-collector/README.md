@@ -24,3 +24,17 @@ python setup.py install
 ## Getting started
 
 Run script `ecflow_node_collector.py` or `ecflow_status_collector.py`.
+
+## Docker
+
+Build docker image from project's root directory.
+
+```
+docker build --tag nwpc/ecflow-collector -f nwpc-ecflow-collector/Dockerfile --rm . 
+```
+
+Run script `ecflow_node_collector.py` or `ecflow_status_collector.py`. Such as
+
+```
+docker run --rm nwpc/ecflow-collector ecflow_node_collector.py --help
+```
