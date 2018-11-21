@@ -27,6 +27,10 @@ Run script `ecflow_node_collector.py` or `ecflow_status_collector.py`.
 
 ## Docker
 
+`nwpc-ecflow-collector` docker uses `nwpc/ecflow:python` image 
+which is build from [`ecflow-docker`](https://github.com/perillaroc/ecflow-docker).
+Please make sure you have this image before building.
+
 Build docker image from project's root directory.
 
 ```

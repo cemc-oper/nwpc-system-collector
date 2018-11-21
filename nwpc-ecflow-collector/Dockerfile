@@ -2,22 +2,19 @@ FROM nwpc/ecflow:python
 
 LABEL maintainer="perillaroc@gmail.com"
 
-RUN apt-get update \
-    && apt-get -y install sudo \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY vendor /tmp/vendor
-COPY nwpc-ecflow-collector /srv/nwpc-ecflow-collector
+COPY . /srv/nwpc-system-collector
 
 RUN set -ex \
-    && cd /tmp/vendor/nwpc-hpc-model \
+    && cd /srv/nwpc-system-collector/vendor/nwpc-hpc-model \
     && pip install . \
-    && cd /tmp/vendor/nwpc-workflow-model \
+    && cd /srv/nwpc-system-collector/vendor/nwpc-workflow-model \
     && pip install . \
-    && rm -rf /tmp/* \
+    && cd /srv/nwpc-system-collector \
+    && cp -r nwpc-ecflow-collector /srv \
     && cd /srv/nwpc-ecflow-collector \
     && pip install . \
-    && chmod -R go+rx /srv/nwpc-ecflow-collector
+    && chmod -R go+rx /srv/nwpc-ecflow-collector \
+    && rm -rf /srv/nwpc-system-collector
 
 WORKDIR /srv/nwpc-ecflow-collector/nwpc_ecflow_collector
 
