@@ -21,6 +21,25 @@ def get_config(config_file_path):
 
 
 def collect_status(owner, repo, host, port, config_file_path, disable_post, post_url, content_encoding, verbose):
+    """
+    collect ecflow server's status and post it to nmp-broker.
+
+    POST data
+    message: json string
+        {
+            'app': 'ecflow_status_collector',
+            'type': 'ecflow_status',
+            'timestamp': current_time,
+            'data': {
+                'owner': owner,
+                'repo': repo,
+                'ecflow_host': host,
+                'ecflow_port': port,
+                'time': current_time,
+                'status': bunch_dict
+            }
+        }
+    """
     start_time = datetime.utcnow()
     if config_file_path:
         config = get_config(config_file_path)
