@@ -20,59 +20,7 @@ def get_config(config_file_path):
         return config
 
 
-@click.group()
-def cli():
-    pass
-
-
-@cli.command()
-@click.option('--owner', '-o', help='owner name')
-@click.option('--repo', '-r', help='repo name')
-@click.option('--host', help='ecflow host, if not set, use environment variable ECF_HOST')
-@click.option('--port', help='ecflow port, ECF_PORT')
-@click.option('--config', '-c', 'config_file_path', help='config file path')
-def show(owner, repo, host, port, config_file_path):
-    host, port = server_util.get_server_address(host, port)
-
-    client = ecflow.Client(host, port)
-    client.sync_local()
-    defs = client.get_defs()
-
-    if defs is None:
-        print("The server has no definition")
-        return
-
-    nodes = defs.get_all_nodes()
-
-    bunch = Bunch()
-
-    for node in nodes:
-        node_path = node.get_abs_node_path()
-        node_name = node.name()
-        node_status = NodeStatus(str(node.get_dstate()))
-        node = {
-            'path': node_path,
-            'status': node_status,
-            'name': node_name
-        }
-        bunch.add_node_status(node)
-
-    bunch.status = NodeStatus(str(defs.get_state()))
-
-    print(json.dumps(bunch.to_dict(), indent=2))
-
-
-@cli.command()
-@click.option('--owner', '-o', help='owner name', required=True)
-@click.option('--repo', '-r', help='repo name', required=True)
-@click.option('--host', help='ecflow host, ECF_HOST')
-@click.option('--port', help='ecflow port, ECF_PORT')
-@click.option('--config', '-c', 'config_file_path', help='config file path')
-@click.option('--disable-post', is_flag=True, help='disable post to agent', default=False)
-@click.option('--post-url', help='post URL')
-@click.option('--gzip', 'content_encoding', flag_value='gzip', help='use gzip to post data.')
-@click.option('--verbose', is_flag=True, help='show more outputs', default=False)
-def collect(owner, repo, host, port, config_file_path, disable_post, post_url, content_encoding, verbose):
+def collect_status(owner, repo, host, port, config_file_path, disable_post, post_url, content_encoding, verbose):
     start_time = datetime.utcnow()
     if config_file_path:
         config = get_config(config_file_path)
@@ -160,6 +108,65 @@ def collect(owner, repo, host, port, config_file_path, disable_post, post_url, c
     if verbose:
         print("Collect ecflow status for {owner}/{repo}...used {time}".format(
             owner=owner, repo=repo, time=end_time - start_time))
+
+
+@click.group()
+def cli():
+    pass
+
+
+@cli.command()
+@click.option('--owner', '-o', help='owner name')
+@click.option('--repo', '-r', help='repo name')
+@click.option('--host', help='ecflow host, if not set, use environment variable ECF_HOST')
+@click.option('--port', help='ecflow port, ECF_PORT')
+@click.option('--config', '-c', 'config_file_path', help='config file path')
+def show(owner, repo, host, port, config_file_path):
+    host, port = server_util.get_server_address(host, port)
+
+    client = ecflow.Client(host, port)
+    client.sync_local()
+    defs = client.get_defs()
+
+    if defs is None:
+        print("The server has no definition")
+        return
+
+    nodes = defs.get_all_nodes()
+
+    bunch = Bunch()
+
+    for node in nodes:
+        node_path = node.get_abs_node_path()
+        node_name = node.name()
+        node_status = NodeStatus(str(node.get_dstate()))
+        node = {
+            'path': node_path,
+            'status': node_status,
+            'name': node_name
+        }
+        bunch.add_node_status(node)
+
+    bunch.status = NodeStatus(str(defs.get_state()))
+
+    print(json.dumps(bunch.to_dict(), indent=2))
+
+
+@cli.command()
+@click.option('--owner', '-o', help='owner name', required=True)
+@click.option('--repo', '-r', help='repo name', required=True)
+@click.option('--host', help='ecflow host, ECF_HOST')
+@click.option('--port', help='ecflow port, ECF_PORT')
+@click.option('--config', '-c', 'config_file_path', help='config file path')
+@click.option('--disable-post', is_flag=True, help='disable post to agent', default=False)
+@click.option('--post-url', help='post URL')
+@click.option('--gzip', 'content_encoding', flag_value='gzip', help='use gzip to post data.')
+@click.option('--verbose', is_flag=True, help='show more outputs', default=False)
+def collect(owner, repo, host, port, config_file_path, disable_post, post_url, content_encoding, verbose):
+    collect_status(
+        owner, repo, host, port, config_file_path,
+        disable_post, post_url, content_encoding, verbose
+    )
 
 
 if __name__ == "__main__":
