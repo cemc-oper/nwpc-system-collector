@@ -15,17 +15,25 @@ Building ecFlow by ECMWF with python support before installing.
 
 ## Installing
 
-Download the latest release and install:
+Download the latest release from github.
+
+Install `nwpc-workflow-model` in `vendor` directory.
+
+Then install `nwpc_ecflow_collector`:
 
 ```
-python setup.py install
+pip install .
 ```
 
 ## Getting started
 
 Run script `ecflow_node_collector.py` or `ecflow_status_collector.py`.
 
-## Docker
+## RPC Server
+
+Run script `nwpc_ecflow_collector/server/ecflow_collector_server.py`.
+
+## Using Docker
 
 `nwpc-ecflow-collector` docker uses `nwpc/ecflow:python` image 
 which is build from [`ecflow-docker`](https://github.com/perillaroc/ecflow-docker).
