@@ -42,6 +42,7 @@ setup(
 
     extras_require={
         'test': ['pytest'],
+        'grpc': ['grpcio', 'googleapis-common-protos']
     },
 
     entry_points={}

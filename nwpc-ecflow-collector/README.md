@@ -37,8 +37,12 @@ Build docker image from project's root directory.
 docker build --tag nwpc/ecflow-collector -f nwpc-ecflow-collector/Dockerfile --rm . 
 ```
 
-Run script `ecflow_node_collector.py` or `ecflow_status_collector.py`. Such as
+Run ecflow collector server.
 
 ```
-docker run --rm nwpc/ecflow-collector ecflow_node_collector.py --help
+docker run --rm nwpc/ecflow-collector
 ```
+
+Default status config file path is `/etc/nwpc-ecflow-collector/ecflow_status_collector.config.yml`.
+
+Default RPC target is `[::]:50051` .
