@@ -501,9 +501,9 @@ def collect_handler(args):
     if args.verbose:
         verbose = True
 
-    print('Getting sms status')
+    print('Getting sms status for {owner}/{repo}'.format(owner=owner, repo=repo))
     result = get_sms_whole_status(owner, repo, sms_name, sms_user, sms_password, verbose)
-    print('Getting sms status...Done')
+    print('Getting sms status for {owner}/{repo}...Done'.format(owner=owner, repo=repo))
 
     post_data = {
         'message': json.dumps(result)
@@ -525,7 +525,7 @@ def collect_handler(args):
 
     if not args.disable_post:
         if verbose:
-            print("Posting sms status...")
+            print("Posting sms status for {owner}/{repo}...".format(owner=owner, repo=repo))
         host = SMS_STATUS_POST_HOST
         port = SMS_STATUS_POST_PORT
         url = SMS_STATUS_POST_URL.format(host=host, port=port)
@@ -545,7 +545,7 @@ def collect_handler(args):
             requests.post(url, data=post_data)
 
         if verbose:
-            print("Posting sms status...done")
+            print("Posting sms status for {owner}/{repo}...done".format(owner=owner, repo=repo))
 
 
 def show_handler(args):
