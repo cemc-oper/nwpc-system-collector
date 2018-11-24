@@ -35,20 +35,46 @@ Run script `nwpc_ecflow_collector/server/ecflow_collector_server.py`.
 
 ## Using Docker
 
+### Requirements
+
 `nwpc-ecflow-collector` docker uses `nwpc/ecflow:python` image 
 which is build from [`ecflow-docker`](https://github.com/perillaroc/ecflow-docker).
 Please make sure you have this image before building.
 
+### Base
+
 Build docker image from project's root directory.
 
 ```
-docker build --tag nwpc/ecflow-collector -f nwpc-ecflow-collector/Dockerfile --rm . 
+docker build --tag nwpc/ecflow-collector:base -f nwpc-ecflow-collector/docker/base/Dockerfile --rm . 
+```
+
+Run script `ecflow_node_collector.py` or `ecflow_status_collector.py` using `docker run`.
+
+For example, use the following command to collect server status from ecflow server.
+
+```
+sudo docker run -v /some/path/to/conf:/etc/nwpc-ecflow-collector \
+    nwpc/ecflow-collector:base \
+    ecflow_status_collector.py \
+    collect --owner=some_owner --repo=some_repo \
+    --host=some_host --port=some_port \
+    --config=/etc/nwpc-ecflow-collector/ecflow_status_collector.config.yml \
+    --disable-post --verbose
+```
+
+### Server
+
+Build ecflow collector server.
+
+```
+docker build --tag nwpc/ecflow-collector:server -f nwpc-ecflow-collector/docker/server/Dockerfile --rm . 
 ```
 
 Run ecflow collector server.
 
 ```
-docker run --rm nwpc/ecflow-collector
+docker run --rm nwpc/ecflow-collector:server
 ```
 
 Default status config file path is `/etc/nwpc-ecflow-collector/ecflow_status_collector.config.yml`.
