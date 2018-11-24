@@ -33,7 +33,8 @@ def collect_status(owner, repo, host, port, config_file_path, disable_post, post
             'data': {
                 'owner': owner,
                 'repo': repo,
-                'ecflow_host': host,
+                'server_name': repo,
+                'ecflow_host': port,
                 'ecflow_port': port,
                 'time': current_time,
                 'status': bunch_dict
@@ -82,6 +83,7 @@ def collect_status(owner, repo, host, port, config_file_path, disable_post, post
         'data': {
             'owner': owner,
             'repo': repo,
+            'server_name': repo,
             'ecflow_host': host,
             'ecflow_port': port,
             'time': current_time,
@@ -98,11 +100,16 @@ def collect_status(owner, repo, host, port, config_file_path, disable_post, post
             print("Posting ecflow status for {owner}/{repo}...".format(owner=owner, repo=repo))
 
         if post_url:
-            url = post_url
+            url = post_url.format(owner=owner, repo=repo)
         elif config:
             host = config['post']['host']
             port = config['post']['port']
-            url = config['post']['url'].format(host=host, port=port)
+            url = config['post']['url'].format(
+                host=host,
+                port=port,
+                owner=owner,
+                repo=repo
+            )
         else:
             raise Exception("post url is not set.")
 

@@ -1,4 +1,6 @@
 post:
+  # api v2: http://{host}:{port}/api/v2/hpc/ecflow/status
+  # api v3: http://{host}:{port}/api/v3/workflow/repos/{owner}/{repo}/status
   url: http://{host}:{port}/api/v2/hpc/ecflow/status # some url with host and port.
   host: some host
   port: some port
