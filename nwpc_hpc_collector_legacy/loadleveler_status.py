@@ -15,7 +15,7 @@ from nwpc_hpc_model.loadleveler import value_saver
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "../"))
 
-from nwpc_hpc_collector.util import json_default
+from nwpc_hpc_collector_legacy.util import json_default
 
 
 config_file_name = "loadleveler_status.develop.config"

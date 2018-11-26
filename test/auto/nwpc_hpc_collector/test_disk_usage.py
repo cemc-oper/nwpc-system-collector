@@ -3,7 +3,7 @@ from unittest import mock
 import os
 import importlib
 
-from nwpc_hpc_collector import disk_usage
+from nwpc_hpc_collector_legacy import disk_usage
 
 
 nwp_cmquota_output = """                         Block Limits                                    |     File Limits

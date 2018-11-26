@@ -12,11 +12,7 @@ Collect ecFlow server status.
 
 Collect loadleveler and slurm status.
 
-### nwpc-sms-collector (legacy)
-
-Collect SMS server status.
-
-### nwpc_sms_collector (legacy)
+### nwpc-sms-collector
 
 Collect SMS server status.
 
@@ -24,7 +20,11 @@ Collect SMS server status.
 
 Collect SMS log.
 
-### nwpc_hpc_collector (legacy)
+### nwpc_sms_collector_legacy
+
+Collect SMS server status.
+
+### nwpc_hpc_collector_legacy
 
 Collect hpc disk info and loadleveler status.
 
