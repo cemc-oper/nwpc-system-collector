@@ -1,6 +1,6 @@
 # nwpc-system-collector
 
-A colletion of collectors for monitoring operation systems in NWPC.
+A collection of collectors for monitoring operation systems in NWPC.
 
 ## Components
 
@@ -12,7 +12,11 @@ Collect ecFlow server status.
 
 Collect loadleveler and slurm status.
 
-### nwpc_sms_collector
+### nwpc-sms-collector (legacy)
+
+Collect SMS server status.
+
+### nwpc_sms_collector (legacy)
 
 Collect SMS server status.
 
