@@ -10,7 +10,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 setup(
     name='nwpc-workload-collector',
 
-    version='0.1.0',
+    version='0.2.0',
 
     description='Collectors for workload systems at NWPC.',
     long_description=long_description,
@@ -47,6 +47,10 @@ setup(
 
     extras_require={
         'test': ['pytest'],
+        'server': [
+            'grpcio',
+            'googleapis-common-protos'
+        ]
     },
 
     entry_points={
