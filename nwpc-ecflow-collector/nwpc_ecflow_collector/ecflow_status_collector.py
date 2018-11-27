@@ -3,6 +3,7 @@ import json
 import sys
 from datetime import datetime, timedelta
 import gzip
+import logging
 
 import click
 import yaml
@@ -10,8 +11,15 @@ import requests
 import ecflow
 
 from nwpc_workflow_model.ecflow import Bunch, NodeStatus
-
 from nwpc_ecflow_collector.ecflow_util import server_util
+
+
+logging.basicConfig(
+    format='%(asctime)s %(message)s',
+    datefmt='[%Y-%m-%d %H:%M:%S]',
+    level=logging.INFO)
+
+logger = logging.getLogger(__name__)
 
 
 def get_config(config_file_path):
@@ -54,7 +62,7 @@ def collect_status(owner, repo, host, port, config_file_path, disable_post, post
     defs = client.get_defs()
 
     if defs is None:
-        print("The server has no definition", file=sys.stderr)
+        logger.info("The server has no definition", file=sys.stderr)
         return
 
     nodes = defs.get_all_nodes()
@@ -97,7 +105,7 @@ def collect_status(owner, repo, host, port, config_file_path, disable_post, post
 
     if not disable_post:
         if verbose:
-            print("Posting ecflow status for {owner}/{repo}...".format(owner=owner, repo=repo))
+            logger.info("Posting ecflow status for {owner}/{repo}...".format(owner=owner, repo=repo))
 
         if post_url:
             url = post_url.format(owner=owner, repo=repo)
@@ -128,11 +136,11 @@ def collect_status(owner, repo, host, port, config_file_path, disable_post, post
             requests.post(url, data=post_data)
 
         if verbose:
-            print("Posting ecflow status for {owner}/{repo}...done".format(owner=owner, repo=repo))
+            logger.info("Posting ecflow status for {owner}/{repo}...done".format(owner=owner, repo=repo))
 
     end_time = datetime.utcnow()
     if verbose:
-        print("Collect ecflow status for {owner}/{repo}...used {time}".format(
+        logger.info("Collect ecflow status for {owner}/{repo}...used {time}".format(
             owner=owner, repo=repo, time=end_time - start_time))
 
 
