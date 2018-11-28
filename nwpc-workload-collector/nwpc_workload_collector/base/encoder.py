@@ -6,7 +6,7 @@ from json import JSONEncoder
 class CollectorJSONEncoder(JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime):
-            return obj.strftime("%Y-%m-%dT%H:%M:%S")
+            return obj.strftime("%Y-%m-%d %H:%M:%S")
         elif isinstance(obj, date):
             return obj.strftime('%Y-%m-%d')
         elif isinstance(obj, time):
