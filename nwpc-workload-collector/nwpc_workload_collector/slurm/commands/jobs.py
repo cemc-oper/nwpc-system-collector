@@ -32,6 +32,8 @@ def collect_jobs(config, owner, repo, host, port, user, password,
         'type': 'command',
         'time': current_time.isoformat(),
         'data': {
+            'owner': owner,
+            'repo': repo,
             'workload_system': 'slurm',
             'collected_time': current_time.isoformat(),
             'request': {
@@ -57,7 +59,7 @@ def collect_jobs(config, owner, repo, host, port, user, password,
             raise Exception("post url is not set.")
 
         post_data = {
-            'message': json.dumps(result)
+            'message': json.dumps(result, cls=CollectorJSONEncoder)
         }
 
         post_url = post_url.format(owner=owner, repo=repo)

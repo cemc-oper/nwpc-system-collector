@@ -61,7 +61,7 @@ def collect_jobs(config, owner, repo,
             raise Exception("post url is not set.")
 
         post_data = {
-            'message': json.dumps(result)
+            'message': json.dumps(result, cls=CollectorJSONEncoder)
         }
 
         post_url = post_url.format(owner=owner, repo=repo)
