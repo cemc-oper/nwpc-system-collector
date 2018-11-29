@@ -50,6 +50,8 @@ def collect_status(owner, repo, host, port, config_file_path, disable_post, post
         }
     """
     start_time = datetime.utcnow()
+    if verbose:
+        logger.info("[{owner}/{repo}] Fetching ecflow status...".format(owner=owner, repo=repo))
     if config_file_path:
         config = get_config(config_file_path)
     else:
@@ -103,9 +105,16 @@ def collect_status(owner, repo, host, port, config_file_path, disable_post, post
         'message': json.dumps(result)
     }
 
+    get_status_end_time = datetime.utcnow()
+    if verbose:
+        logger.info("[{owner}/{repo}] Fetching ecflow status...Done. Used {cost}".format(
+            owner=owner, repo=repo,
+            cost=get_status_end_time - start_time
+        ))
+
     if not disable_post:
         if verbose:
-            logger.info("Posting ecflow status for {owner}/{repo}...".format(owner=owner, repo=repo))
+            logger.info("[{owner}/{repo}] Posting ecflow status...".format(owner=owner, repo=repo))
 
         if post_url:
             url = post_url.format(owner=owner, repo=repo)
@@ -136,11 +145,15 @@ def collect_status(owner, repo, host, port, config_file_path, disable_post, post
             requests.post(url, data=post_data)
 
         if verbose:
-            logger.info("Posting ecflow status for {owner}/{repo}...done".format(owner=owner, repo=repo))
+            post_end_time = datetime.utcnow()
+            logger.info("[{owner}/{repo}] Posting ecflow status...Done. Used {cost}".format(
+                owner=owner, repo=repo,
+                cost=post_end_time - get_status_end_time
+            ))
 
     end_time = datetime.utcnow()
     if verbose:
-        logger.info("Collect ecflow status for {owner}/{repo}...used {time}".format(
+        logger.info("[{owner}/{repo}] Collect ecflow status used {time}".format(
             owner=owner, repo=repo, time=end_time - start_time))
 
 
