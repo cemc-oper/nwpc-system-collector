@@ -20,8 +20,8 @@ logger = logging.getLogger(__name__)
 
 
 class EcflowCollectorService(ecflow_collector_pb2_grpc.EcflowCollectorServicer):
-    def __init__(self, status_config_file_path):
-        self.status_config_file_path = status_config_file_path
+    def __init__(self):
+        pass
 
     def CollectStatus(self, request, context):
         owner = request.owner
@@ -31,7 +31,7 @@ class EcflowCollectorService(ecflow_collector_pb2_grpc.EcflowCollectorServicer):
 
         config_file_path = request.config
         if len(config_file_path) == 0:
-            config_file_path = self.status_config_file_path
+            config_file_path = None
 
         post_url = request.post_url
         content_encoding = request.content_encoding
@@ -44,7 +44,7 @@ class EcflowCollectorService(ecflow_collector_pb2_grpc.EcflowCollectorServicer):
             disable_post, post_url, content_encoding,
             verbose
         )
-        logger.info('CollectStatus: {owner}/{repo}...done'.format(owner=owner, repo=repo))
+        logger.info('CollectStatus: {owner}/{repo}...Done'.format(owner=owner, repo=repo))
 
         return ecflow_collector_pb2.Response(
             status="ok"
@@ -54,12 +54,10 @@ class EcflowCollectorService(ecflow_collector_pb2_grpc.EcflowCollectorServicer):
 @click.command()
 @click.option('-t', '--rpc-target', help='rpc-target', default="[::]:50051")
 @click.option('-n', '--workers-num', help='max workers number', default=5, type=int)
-@click.option('--status-config', 'status_config_file_path',
-              help="status collector's config file path")
-def serve(rpc_target, workers_num, status_config_file_path):
+def serve(rpc_target, workers_num):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=workers_num))
     ecflow_collector_pb2_grpc.add_EcflowCollectorServicer_to_server(
-        EcflowCollectorService(status_config_file_path), server)
+        EcflowCollectorService(), server)
     server.add_insecure_port('{rpc_target}'.format(rpc_target=rpc_target))
     logger.info('listening on {rpc_target}'.format(rpc_target=rpc_target))
     logger.info('starting server...')
