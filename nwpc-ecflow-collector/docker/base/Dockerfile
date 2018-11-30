@@ -1,21 +1,18 @@
-FROM nwpc/ecflow:python
+FROM nwpcc/ecflow:python
 
 LABEL maintainer="perillaroc@gmail.com"
 
-COPY . /srv/nwpc-system-collector/
-
-VOLUME /etc/nwpc-ecflow-collector
+COPY nwpc-ecflow-collector /srv/nwpc-ecflow-collector/
+COPY vendor/ /srv/vendor/
 
 RUN set -ex \
-    && cd /srv/nwpc-system-collector/vendor/nwpc-hpc-model \
+    && cd /srv/vendor/nwpc-hpc-model \
     && pip install . \
-    && cd /srv/nwpc-system-collector/vendor/nwpc-workflow-model \
+    && cd /srv/vendor/nwpc-workflow-model \
     && pip install . \
-    && cd /srv/nwpc-system-collector \
-    && cp -r nwpc-ecflow-collector /srv \
     && cd /srv/nwpc-ecflow-collector \
     && pip install . \
-    && rm -rf /srv/nwpc-system-collector
+    && rm -rf /srv/vendor
 
 WORKDIR /srv/nwpc-ecflow-collector/nwpc_ecflow_collector
 
