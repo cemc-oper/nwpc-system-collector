@@ -1,4 +1,4 @@
-FROM nwpcc/ecflow-collector:base
+FROM nwpcc/ecflow-collect:base
 
 LABEL maintainer="perillaroc@gmail.com"
 
