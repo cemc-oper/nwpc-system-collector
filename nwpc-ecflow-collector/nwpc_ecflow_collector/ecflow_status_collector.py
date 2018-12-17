@@ -168,7 +168,9 @@ def cli():
 @click.option('--host', help='ecflow host, if not set, use environment variable ECF_HOST')
 @click.option('--port', help='ecflow port, ECF_PORT')
 @click.option('--config', '-c', 'config_file_path', help='config file path')
-def show(owner, repo, host, port, config_file_path):
+@click.option('--save-to-file', 'output_style', flag_value='save_to_file')
+@click.option('--file-path', 'output_file_path')
+def show(owner, repo, host, port, config_file_path, output_file_path, output_style='show'):
     host, port = server_util.get_server_address(host, port)
 
     client = ecflow.Client(host, port)
@@ -196,7 +198,11 @@ def show(owner, repo, host, port, config_file_path):
 
     bunch.status = NodeStatus(str(defs.get_state()))
 
-    print(json.dumps(bunch.to_dict(), indent=2))
+    if output_style == 'show':
+        print(json.dumps(bunch.to_dict(), indent=2))
+    elif output_style == 'save_to_file':
+        with open(output_file_path, 'w') as f:
+            json.dump(bunch.to_dict(), f, indent=2)
 
 
 @cli.command()
