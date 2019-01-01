@@ -30,6 +30,6 @@ Collect hpc disk info and loadleveler status.
 
 ## LICENSE
 
-Copyright &copy; 2017-2018, Perilla Roc.
+Copyright &copy; 2017-2019, Perilla Roc.
 
 `nwpc-system-collector` is licensed under [GPL v3.0](LICENSE.md)

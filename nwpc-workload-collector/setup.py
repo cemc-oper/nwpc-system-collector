@@ -10,7 +10,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 setup(
     name='nwpc-workload-collector',
 
-    version='0.2.0',
+    version='1.0.0',
 
     description='Collectors for workload systems at NWPC.',
     long_description=long_description,
