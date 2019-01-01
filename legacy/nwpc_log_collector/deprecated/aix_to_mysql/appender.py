@@ -3,8 +3,8 @@ import os
 import sys
 from datetime import date, datetime, timedelta
 
-from nwpc_log_collector.record import Record
-from nwpc_log_collector.database_engine import DatabaseEngine
+from legacy.nwpc_log_collector import Record
+from legacy.nwpc_log_collector import DatabaseEngine
 
 
 def main():

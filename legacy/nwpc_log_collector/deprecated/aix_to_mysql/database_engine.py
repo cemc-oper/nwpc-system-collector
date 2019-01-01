@@ -1,6 +1,6 @@
 import mysql.connector
-from nwpc_log_collector.record import Record
-from nwpc_log_collector.message import Message
+from legacy.nwpc_log_collector import Record
+from legacy.nwpc_log_collector import Message
 
 
 class DatabaseEngine(object):

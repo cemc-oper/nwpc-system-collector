@@ -3,8 +3,7 @@ from unittest import mock
 import os
 import importlib
 
-from nwpc_hpc_collector_legacy import disk_usage
-
+from legacy.nwpc_hpc_collector_legacy import disk_usage
 
 nwp_cmquota_output = """                         Block Limits                                    |     File Limits
 Filesystem type             KB      quota      limit   in_doubt    grace |    files   quota    limit in_doubt    grace  Remarks
