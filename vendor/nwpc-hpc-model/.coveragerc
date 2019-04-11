@@ -1,6 +1,0 @@
-[run]
-source = nwpc_hpc_model
-
-[report]
-omit =
-    tests/*
