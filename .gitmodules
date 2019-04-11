@@ -1,0 +1,15 @@
+[submodule "nwpc-sms-collector"]
+	path = nwpc-sms-collector
+	url = https://github.com/nwpc-oper/nwpc-sms-collector.git
+[submodule "nwpc-ecflow-collector"]
+	path = nwpc-ecflow-collector
+	url = https://github.com/nwpc-oper/nwpc-ecflow-collector.git
+[submodule "nwpc-workload-collector"]
+	path = nwpc-workload-collector
+	url = https://github.com/nwpc-oper/nwpc-workload-collector.git
+[submodule "vendor/nwpc-hpc-model"]
+	path = vendor/nwpc-hpc-model
+	url = https://github.com/nwpc-oper/nwpc-hpc-model.git
+[submodule "vendor/nwpc-workflow-model"]
+	path = vendor/nwpc-workflow-model
+	url = https://github.com/nwpc-oper/nwpc-workflow-model.git
